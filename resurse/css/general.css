@@ -1,0 +1,117 @@
+body {
+    --culoare-fundal: rgb(138, 138, 235);
+    --margine-pagina: 120px;
+    --culoare-contur: blue;
+    background-color: var(--culoare-fundal);
+}
+
+p {
+    border: 5px solid var(--culoare-fundal);
+}
+
+main {
+    margin-left: var(--margine-pagina);
+    margin-right: var(--margine-pagina);
+}
+
+figure {
+    margin: 0;
+}
+
+
+#grid-pixelmania>* {
+    border: 5px solid var(--culoare-contur);
+    box-shadow: 0 0 5px var(--culoare-contur);
+    border-radius: 10px;
+    padding: 10px;
+
+}
+
+#grid-pixelmania {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 2fr 1fr 2fr;
+    grid-template-areas: "welcome welcome welcome"
+        "promotii promotii anunturi"
+        "fig1 orar orar"
+        "fig2 orar orar"
+        "fig3 orar orar"
+        "produse produse produse"
+        "index-intrebari index-intrebari index-intrebari";
+}
+
+#welcome {
+    grid-area: welcome;
+}
+
+#promotii {
+    grid-area: promotii;
+}
+
+#anunturi {
+    grid-area: anunturi;
+}
+
+#orar {
+    grid-area: orar;
+}
+
+#fig1 {
+    grid-area: fig1;
+}
+
+#fig2 {
+    grid-area: fig2;
+}
+
+#fig3 {
+    grid-area: fig3;
+}
+
+figure.fg-img>img {
+    width: 100%;
+}
+
+#produse {
+    grid-area: produse;
+}
+
+#index-intrebari {
+    grid-area: index-intrebari;
+}
+
+@media screen and (max-width: 1200px) {
+    body {
+        --margine-pagina: 80px;
+    }
+
+    #grid-pixelmania {
+        display: grid;
+        grid-template-columns: 2fr 1fr 2fr;
+        grid-template-areas: "welcome welcome welcome"
+            "promotii promotii anunturi"
+            "fig1 orar orar"
+            "fig2 orar orar"
+            "fig3 orar orar"
+            "produse produse produse"
+            "index-intrebari index-intrebari index-intrebari";
+    }
+}
+
+@media screen and (max-width: 700px) {
+    body {
+        --margine-pagina: 50px;
+    }
+
+    #grid-pixelmania {
+        display: grid;
+        grid-template-columns: 2fr 1fr 2fr;
+        grid-template-areas: "welcome welcome welcome"
+            "promotii promotii anunturi"
+            "fig1 orar orar"
+            "fig2 orar orar"
+            "fig3 orar orar"
+            "produse produse produse"
+            "index-intrebari index-intrebari index-intrebari";
+    }
+}
