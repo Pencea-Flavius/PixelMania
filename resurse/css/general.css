@@ -1,117 +1,801 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
+
+/*
+=============================================================
+  SCHEMA CROMATICĂ — Pixelmania
+=============================================================
+  Culoare principală: #7c3aed (Violet Electric)
+  Tip schemă: Triadic + Analogică (5 culori de bază + extensii)
+
+  Psihologia culorilor:
+  - #7c3aed (Violet)   → creativitate, mister, tehnologie, futurism
+  - #3a7ced (Albastru) → încredere, stabilitate, digital, date
+  - #00e5ff (Cyan)     → energie, modernitate, interfețe tech
+  - #ed3a7c (Roz/Magenta) → dinamism, retro-gaming, entuziasm
+  - #ffd700 (Auriu)    → premium, valoare, highlight, atenție
+  Extensii pentru fundal/text:
+  - #0a0a1a (Albastru-Negru) → fundal adânc, spațiu cosmic
+  - #f0f0ff (Alb-Albastru)   → text principal, claritate
+  - #a0a0c0 (Gri-Albăstrui)  → text secundar, subtil
+  Motivul alegerii:
+  Tema site-ului este retro-gaming și tehnologie (Pixelmania).
+  Violetul electric evocat futurism și creativitate digitală,
+  cianul și albastrul completează paleta tech, iar rozul/magenta
+  aduce energia jocurilor arcade. Aurul marchează elementele premium.
+=============================================================
+*/
+
 body {
-    --culoare-fundal: rgb(138, 138, 235);
+    font-size: 1rem;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    color: var(--culoare-text-primar);
+
+    /* ——— CULORI PRINCIPALE (schema cromatică) ——— */
+    --culoare-primara: #7c3aed;
+    --culoare-secundara: #3a7ced;
+    --culoare-accent: #00e5ff;
+    --culoare-contrast: #ed3a7c;
+    --culoare-highlight: #ffd700;
+
+    /* ——— CULORI DERIVATE ——— */
+    --culoare-fundal: #0a0a1a;
+    --culoare-card: rgba(15, 15, 35, 0.85);
+    --culoare-text-primar: #f0f0ff;
+    --culoare-text-secundar: #a0a0c0;
+    --culoare-contur: var(--culoare-primara);
+    --culoare-contur-subtil: rgba(124, 58, 237, 0.3);
+    --culoare-hover-link: var(--culoare-contrast);
+
+    /* ——— CULORI RGBA ——— */
+    --culoare-primara-015: rgba(124, 58, 237, 0.15);
+    --culoare-accent-010: rgba(0, 229, 255, 0.1);
+    --culoare-accent-040: rgba(0, 229, 255, 0.4);
+    --culoare-primara-020: rgba(124, 58, 237, 0.2);
+    --culoare-primara-040: rgba(124, 58, 237, 0.4);
+    --culoare-primara-008: rgba(124, 58, 237, 0.08);
+    --culoare-primara-010: rgba(124, 58, 237, 0.1);
+    --culoare-primara-025: rgba(124, 58, 237, 0.25);
+    --culoare-highlight-020: rgba(255, 215, 0, 0.2);
+    --culoare-alb-004: rgba(255, 255, 255, 0.04);
+    --culoare-alb-010: rgba(255, 255, 255, 0.1);
+    --culoare-negru-030: rgba(0, 0, 0, 0.3);
+    --culoare-negru-050: rgba(0, 0, 0, 0.5);
+
+    /* ——— VARIABILE LAYOUT ——— */
     --margine-pagina: 120px;
-    --culoare-contur: blue;
+    --grid-gap: 15px;
+    --padding-zone: 20px;
+
     background-color: var(--culoare-fundal);
+    background-image:
+        radial-gradient(ellipse at 20% 20%, var(--culoare-primara-015) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, var(--culoare-accent-010) 0%, transparent 50%);
+    background-attachment: fixed;
+    margin: 0;
+}
+
+html {
+    font-size: 16px;
+    transition: font-size 0.3s linear;
+    scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+    color: var(--culoare-accent);
+}
+
+h1 {
+    font-size: 2.8rem;
+    text-shadow: 0 0 10px var(--culoare-accent-040);
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+hgroup h2 {
+    font-size: 2rem;
+    margin-bottom: 0.2rem;
+}
+
+p.subtitlu {
+    font-size: 1.2rem;
+    margin-top: 0;
+    font-style: italic;
+    color: var(--culoare-text-secundar);
 }
 
 p {
-    border: 5px solid var(--culoare-fundal);
+    border: none;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    color: var(--culoare-text-secundar);
+}
+
+p b,
+p strong {
+    color: var(--culoare-text-primar);
 }
 
 main {
     margin-left: var(--margine-pagina);
     margin-right: var(--margine-pagina);
+    padding-bottom: 50px;
+    padding-top: 40px;
 }
 
 figure {
     margin: 0;
 }
 
-
-#grid-pixelmania>* {
-    border: 5px solid var(--culoare-contur);
-    box-shadow: 0 0 5px var(--culoare-contur);
-    border-radius: 10px;
-    padding: 10px;
-
+figure.fg-img>img {
+    width: 100%;
 }
 
+a {
+    color: var(--culoare-accent);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--culoare-hover-link);
+}
+
+ul,
+ol {
+    color: var(--culoare-text-secundar);
+    line-height: 1.8;
+}
+
+/* ——— GRID PRINCIPAL ——— */
 #grid-pixelmania {
     display: grid;
-    gap: 10px;
-    grid-template-columns: 2fr 1fr 2fr;
-    grid-template-areas: "welcome welcome welcome"
-        "promotii promotii anunturi"
-        "fig1 orar orar"
-        "fig2 orar orar"
-        "fig3 orar orar"
-        "produse produse produse"
-        "index-intrebari index-intrebari index-intrebari";
+    gap: var(--grid-gap);
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+        "zona1 zona1 zona1 zona1"
+        "zona2 zona2 zona3 zona3"
+        "zona2 zona2 zona4 zona4"
+        "zona5 zona6 zona6 zona7"
+        "zona8 zona8 zona8 zona8";
 }
 
-#welcome {
-    grid-area: welcome;
+#zona1 {
+    grid-area: zona1;
+}
+
+#zona2 {
+    grid-area: zona2;
+}
+
+#zona3 {
+    grid-area: zona3;
+}
+
+#zona4 {
+    grid-area: zona4;
+}
+
+#zona5 {
+    grid-area: zona5;
+}
+
+#zona6 {
+    grid-area: zona6;
+}
+
+#zona7 {
+    grid-area: zona7;
+}
+
+#zona8 {
+    grid-area: zona8;
+
+    display: grid;
+    gap: var(--grid-gap);
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "promotii    produse"
+        "anunturi    anunturi"
+        "stocuri     stocuri"
+        "resurse     intrebari"
+        "revista     revista"
+        "reparatii   reparatii"
+        "galerie     galerie";
+
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* cardurile din zona8 */
+#zona8>section {
+    padding: var(--padding-zone);
+    border: 2px solid var(--culoare-contur);
+    box-shadow: 0 0 15px var(--culoare-primara-020);
+    background-color: var(--culoare-card);
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+#zona8>section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px var(--culoare-primara-040);
+    border-color: var(--culoare-accent);
 }
 
 #promotii {
     grid-area: promotii;
 }
 
-#anunturi {
-    grid-area: anunturi;
-}
-
-#orar {
-    grid-area: orar;
-}
-
-#fig1 {
-    grid-area: fig1;
-}
-
-#fig2 {
-    grid-area: fig2;
-}
-
-#fig3 {
-    grid-area: fig3;
-}
-
-figure.fg-img>img {
-    width: 100%;
-}
-
 #produse {
     grid-area: produse;
 }
 
-#index-intrebari {
-    grid-area: index-intrebari;
+#anunturi {
+    grid-area: anunturi;
 }
 
+#stocuri {
+    grid-area: stocuri;
+}
+
+#resurse-utile {
+    grid-area: resurse;
+}
+
+#index-intrebari {
+    grid-area: intrebari;
+}
+
+#revista-retro {
+    grid-area: revista;
+}
+
+#reparatii {
+    grid-area: reparatii;
+}
+
+#galerie-statica {
+    grid-area: galerie;
+}
+
+/* stocuri — 2 coloane interne */
+#stocuri {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 20px;
+    align-items: center;
+}
+
+#stocuri h2 {
+    grid-column: 1 / -1;
+}
+
+#stocuri p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 2px 0;
+}
+
+/* zone principale */
+#grid-pixelmania>* {
+    padding: var(--padding-zone);
+    border: 2px solid var(--culoare-contur);
+    box-shadow: 0 0 15px var(--culoare-primara-020);
+    background-color: var(--culoare-card);
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+#grid-pixelmania>*:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px var(--culoare-primara-040);
+    border-color: var(--culoare-accent);
+}
+
+/* ——— ZONA 1 Z-PATTERN ——— */
+#zona1.z-pattern #welcome {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    grid-template-areas:
+        "z-1 z-2"
+        "z-3 z-4"
+        "z-3 anunt";
+    gap: 30px;
+    align-items: start;
+}
+
+.z-1 {
+    grid-area: z-1;
+    justify-self: start;
+    align-self: center;
+}
+
+.z-2 {
+    grid-area: z-2;
+    justify-self: stretch;
+    text-align: right;
+}
+
+.z-3 {
+    grid-area: z-3;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+}
+
+.z-4 {
+    grid-area: z-4;
+    justify-self: stretch;
+    text-align: right;
+    align-self: end;
+}
+
+p.anunt.intro {
+    grid-area: anunt;
+    text-align: right;
+    align-self: start;
+}
+
+blockquote {
+    border-left: 3px solid var(--culoare-contur);
+    padding: 16px 20px;
+    margin: 20px 0;
+    background: var(--culoare-primara-008);
+    border-radius: 0 10px 10px 0;
+    font-style: italic;
+    grid-column: 1 / -1;
+}
+
+cite {
+    color: var(--culoare-accent);
+    font-style: normal;
+    font-weight: bold;
+}
+
+dl {
+    background: var(--culoare-alb-004);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 16px;
+    grid-column: 1 / -1;
+}
+
+dt {
+    color: var(--culoare-highlight);
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    margin-top: 14px;
+}
+
+dt:first-child {
+    margin-top: 0;
+}
+
+dd {
+    color: var(--culoare-text-secundar);
+    margin-left: 16px;
+    border-left: 2px solid var(--culoare-highlight-020);
+    padding-left: 12px;
+    margin-top: 4px;
+}
+
+.intro-oferte {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+}
+
+.intro-oferte div {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    background-color: var(--culoare-contur);
+    color: var(--culoare-text-primar);
+    letter-spacing: 0.5px;
+    transition: transform 0.2s;
+}
+
+.intro-oferte div:hover {
+    transform: scale(1.05);
+    background-color: var(--culoare-accent);
+    color: var(--culoare-fundal);
+}
+
+hr.separator-sectiune {
+    border: none;
+    height: 1px;
+    margin: 20px 0;
+    background: linear-gradient(90deg, transparent, var(--culoare-contur), transparent);
+    grid-column: 1 / -1;
+}
+
+/* ——— CONTAINER IFRAME / TABURI ——— */
+.container-iframe {
+    display: flex;
+    flex-direction: row;
+    height: 315px;
+    width: 600px;
+    max-width: 100%;
+    margin-top: 15px;
+    border: 2px solid var(--culoare-contur);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px var(--culoare-negru-050);
+    background-color: var(--culoare-negru-050);
+}
+
+.taburi-iframe {
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+    min-width: 180px;
+    border-right: 2px solid var(--culoare-contur);
+    background-color: var(--culoare-primara-010);
+}
+
+.taburi-iframe>a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 10px;
+    background-color: transparent;
+    color: var(--culoare-accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--culoare-contur-subtil);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-align: center;
+    transition: all 0.2s linear;
+}
+
+.taburi-iframe>a:last-of-type {
+    border-bottom: none;
+}
+
+.taburi-iframe>a:hover {
+    background-color: var(--culoare-contur);
+    color: var(--culoare-text-primar);
+}
+
+.taburi-iframe>br {
+    display: none;
+}
+
+.container-iframe iframe {
+    flex-grow: 1;
+    border: none;
+    height: 100%;
+    width: 100%;
+}
+
+/* ——— TABEL ORAR ——— */
+
+/* Container cu scrollbar orizontal pe ecran mic */
+.tabel-container {
+    overflow-x: auto;
+    width: 100%;
+}
+
+#tab-orar {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    min-width: 500px;
+    /* forțează scrollbar pe ecran mic */
+}
+
+/* Borduri celule tbody/tfoot: 1px */
+#tab-orar td {
+    border: 1px solid var(--culoare-alb-010);
+    padding: 10px;
+    text-align: center;
+    color: var(--culoare-text-secundar);
+    background: transparent;
+}
+
+/* Borduri thead: 3px (mai groase cu 2px față de restul) */
+#tab-orar th {
+    border: 3px solid var(--culoare-alb-010);
+    padding: 10px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--culoare-accent);
+    background-color: var(--culoare-primara-020);
+}
+
+/* Rânduri cu box-shadow alternativ (NU background-color) */
+/* Rând par — umbra cyan subtilă */
+#tab-orar tbody tr:nth-child(even) td {
+    box-shadow: inset 0 0 0 1000px rgba(0, 229, 255, 0.05);
+    color: var(--culoare-accent);
+}
+
+/* Rând impar — umbra violet subtilă */
+#tab-orar tbody tr:nth-child(odd) td {
+    box-shadow: inset 0 0 0 1000px rgba(124, 58, 237, 0.08);
+    color: var(--culoare-text-secundar);
+}
+
+/* Hover pe rând: background + font-size crește 20%, tranziție 0.75s */
+#tab-orar tbody tr {
+    transition: background-color 0.75s, font-size 0.75s;
+}
+
+#tab-orar tbody tr:hover td {
+    background-color: var(--culoare-primara-025);
+    font-size: 1.2em;
+    /* +20% față de 1em */
+    color: var(--culoare-text-primar);
+}
+
+#tab-orar tfoot td {
+    border: 1px solid var(--culoare-alb-010);
+    padding: 10px;
+    text-align: center;
+    color: var(--culoare-text-secundar);
+    font-style: italic;
+}
+
+/* Caption sub tabel */
+#tab-orar caption {
+    caption-side: bottom;
+    color: var(--culoare-text-secundar);
+    font-size: 0.85rem;
+    font-style: italic;
+    padding-top: 8px;
+}
+
+/* ——— FONT AWESOME ICONURI ——— */
+/* Icon static și animat folosite în pagină via HTML cu clase fa- */
+@keyframes spin-icon {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.fa-animat {
+    display: inline-block;
+    animation: spin-icon 2s linear infinite;
+    color: var(--culoare-accent);
+}
+
+.fa-static {
+    color: var(--culoare-highlight);
+}
+
+/* ——— LINK-TOP ——— */
+#link-top {
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    z-index: 999;
+    text-decoration: none;
+
+    width: 4rem;
+    height: 4.5rem;
+    box-sizing: border-box;
+
+    border-radius: 2rem 2rem 8px 8px;
+    border: 3px solid var(--culoare-contur);
+    border-top-color: var(--culoare-accent);
+
+    background-color: var(--culoare-card);
+
+    box-shadow:
+        inset 0 6px 16px var(--culoare-accent-040),
+        inset 0 -4px 10px var(--culoare-primara-020);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0.5;
+    transition: opacity 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+#link-top:hover {
+    opacity: 1;
+    background-color: var(--culoare-primara);
+    box-shadow:
+        inset 0 8px 20px var(--culoare-accent-040),
+        inset 0 -4px 12px var(--culoare-primara-040),
+        0 0 20px var(--culoare-primara-040);
+}
+
+/* Tooltip */
+#link-top::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 10px);
+    right: 0;
+    background-color: var(--culoare-card);
+    color: var(--culoare-text-primar);
+    border: 1px solid var(--culoare-contur);
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#link-top:hover::before {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.link-top-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--culoare-accent);
+    transition: transform 0.4s ease, color 0.4s ease;
+}
+
+#link-top:hover .link-top-arrow {
+    transform: scale(1.35);
+    color: var(--culoare-text-primar);
+}
+
+/* ——— RESPONSIVE 1200px ——— */
 @media screen and (max-width: 1200px) {
     body {
         --margine-pagina: 80px;
+        --grid-gap: 12px;
+        --padding-zone: 16px;
+    }
+
+    html {
+        font-size: 14.5px;
+        transition: font-size 0.3s linear;
     }
 
     #grid-pixelmania {
-        display: grid;
-        grid-template-columns: 2fr 1fr 2fr;
-        grid-template-areas: "welcome welcome welcome"
-            "promotii promotii anunturi"
-            "fig1 orar orar"
-            "fig2 orar orar"
-            "fig3 orar orar"
-            "produse produse produse"
-            "index-intrebari index-intrebari index-intrebari";
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "zona1 zona1"
+            "zona2 zona2"
+            "zona3 zona4"
+            "zona5 zona5"
+            "zona6 zona7"
+            "zona8 zona8";
+    }
+
+    #zona8 {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
+/* ——— RESPONSIVE 700px ——— */
 @media screen and (max-width: 700px) {
     body {
-        --margine-pagina: 50px;
+        --margine-pagina: 30px;
+        --grid-gap: 8px;
+        --padding-zone: 12px;
+    }
+
+    html {
+        font-size: 13px;
+        transition: none !important;
+    }
+
+    html,
+    body,
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
     }
 
     #grid-pixelmania {
-        display: grid;
-        grid-template-columns: 2fr 1fr 2fr;
-        grid-template-areas: "welcome welcome welcome"
-            "promotii promotii anunturi"
-            "fig1 orar orar"
-            "fig2 orar orar"
-            "fig3 orar orar"
-            "produse produse produse"
-            "index-intrebari index-intrebari index-intrebari";
+        grid-template-columns: 1fr;
+        grid-template-areas: "zona1" "zona2" "zona3" "zona4" "zona5" "zona6" "zona7" "zona8";
+    }
+
+    #zona8 {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "promotii"
+            "produse"
+            "anunturi"
+            "stocuri"
+            "resurse"
+            "intrebari"
+            "revista"
+            "reparatii"
+            "galerie";
+    }
+
+    #zona8>section {
+        transition: none !important;
+    }
+
+    #stocuri {
+        grid-template-columns: 1fr;
+    }
+
+    #zona1.z-pattern #welcome {
+        grid-template-columns: 1fr;
+        grid-template-areas: "z-1" "z-2" "z-3" "z-4";
+        justify-items: center;
+        text-align: center;
+    }
+
+    .z-2,
+    .z-3,
+    .z-4 {
+        justify-self: center;
+        text-align: center;
+    }
+
+    .container-iframe {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .taburi-iframe {
+        width: 100%;
+        min-width: unset;
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 2px solid var(--culoare-contur);
+    }
+
+    .taburi-iframe>a {
+        border-bottom: none;
+        border-right: 1px solid var(--culoare-contur-subtil);
+        padding: 10px 5px;
+        font-size: 0.75rem;
+    }
+
+    .taburi-iframe>a:last-of-type {
+        border-right: none;
+    }
+
+    .container-iframe iframe {
+        height: 200px;
+    }
+
+    #link-top {
+        bottom: 0.5em;
+        right: 0.5em;
+        width: 2.8rem;
+        height: 2.8rem;
+    }
+
+    .link-top-arrow {
+        font-size: 3.5rem;
     }
 }
