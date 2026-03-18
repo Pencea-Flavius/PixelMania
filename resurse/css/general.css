@@ -775,6 +775,10 @@ hr.separator-sectiune {
     #zona8 {
         grid-template-columns: 1fr 1fr;
     }
+
+    #stocuri {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ——— RESPONSIVE 700px ——— */
@@ -790,14 +794,6 @@ hr.separator-sectiune {
         transition: none !important;
     }
 
-    html,
-    body,
-    *,
-    *::before,
-    *::after {
-        animation: none !important;
-        transition: none !important;
-    }
 
     #grid-pixelmania {
         grid-template-columns: 1fr;
