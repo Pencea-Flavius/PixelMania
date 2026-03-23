@@ -1,3 +1,46 @@
-.text-icon {
-    display: none;
+@charset "UTF-8";
+/* ============================================================
+   PIXEL MANIA — Navigation SCSS (Ecran Mediu ≤ 1000px)
+   Autor: Pencea Flavius Andrei
+
+   CERINTA 4 — text mai mic, icon casuta prima optiune
+   Aplicat prin media query in HTML:
+     media="screen and (max-width: 1000px)"
+   ============================================================ */
+nav ul.meniu > li {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  font-family: "Orbitron", "Segoe UI", sans-serif;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--culoare-text-secundar);
+  border-bottom: 2px solid transparent;
+  overflow: visible;
+  transition: color 0.3s ease, background 0.3s ease;
 }
+
+nav ul.meniu {
+  padding: 0 40px;
+  justify-content: center;
+}
+nav ul.meniu > li {
+  width: 100px;
+  height: 44px;
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+}
+nav ul.meniu > li .text-nav {
+  display: none;
+}
+nav ul.meniu > li .icon-acasa, nav ul.meniu > li .icon-nav {
+  display: inline-block;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+/*# sourceMappingURL=nav1000.css.map */

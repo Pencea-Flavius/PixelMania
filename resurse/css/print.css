@@ -1,0 +1,152 @@
+/* ============================================================
+   PIXEL MANIA — CSS Pentru Printare
+   Autor: Pencea Flavius Andrei
+   ============================================================ */
+
+/* (7) Margini pagini stanga/dreapta */
+@page :left {
+    margin-left: 2.5cm;
+    margin-right: 0.5cm;
+}
+@page :right {
+    margin-left: 0.5cm;
+    margin-right: 2.5cm;
+}
+
+/* Resetare masiva pentru print */
+* {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+body, main {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* (3) Gridul paginii va fi afișat ca block pentru a nu se secționa celulele aiurea */
+#grid-pixelmania, #grid-galerie, .z-pattern, .tabel-container, #stocuri {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Eliminam absolut orice restrictie de grid/flex pentru containerul principal */
+#grid-pixelmania > section {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 0 1cm 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    page-break-inside: avoid;
+}
+
+/* (2) Ascunde elemente media, elementele dependente (figcaption) și nav/link-top */
+img, video, iframe, object, embed, figure, figcaption, picture, nav, #link-top, .container-iframe, .iframe-standalone {
+    display: none !important;
+}
+
+/* (4) Toate linkurile afișate ca text normal (nu colorate/subliniate) */
+a {
+    text-decoration: none !important;
+    color: black !important;
+}
+
+/* Evitare secționare blocuri in interior */
+article, p, blockquote, dt, dd, li {
+    page-break-inside: avoid;
+}
+
+/* Tabele - Setari pt lizibilitate si evitare strivire */
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    display: table !important;
+}
+th, td {
+    border: 1px solid black !important;
+    padding: 5px !important;
+}
+tr {
+    page-break-inside: avoid !important;
+}
+
+/* Stocuri - Fix strivire elemente meter */
+#stocuri p {
+    display: block !important;
+    margin-bottom: 0.5cm !important;
+}
+meter {
+    display: inline-block !important;
+    width: 150px !important;
+}
+
+/* (5) Titlul (H1) centrat vertical/orizontal pe prima pagină, cu page-break-after */
+header {
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    page-break-after: always !important;
+}
+
+header h1 {
+    text-decoration: underline !important;
+    font-size: 2.5rem !important; /* de 2.5 ori mai mare decat radacina */
+    text-align: center !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+/* Ascunde subtitlul de pe ecran ca titlul h1 sa fie singur evidentiat centrat */
+header p {
+    display: none !important;
+}
+
+/* Page break înainte de footer */
+footer {
+    display: block !important;
+    page-break-before: always !important;
+}
+
+/* (1) Bannerul printat - afișat în susul primei pagini */
+#banner-print {
+    display: block !important;
+    position: absolute !important;
+    top: 1cm !important;
+    left: 10% !important;
+    width: 80% !important;
+    text-align: center !important;
+    border: 2px dotted black !important;
+    padding: 10px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    font-weight: bold !important;
+    font-size: 1.2rem !important;
+}
+
+/* (6) Watermark constant pe fiecare pagina */
+#watermark-print {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    position: fixed !important;
+    right: 1.5cm !important;
+    bottom: 1.5cm !important;
+    width: 100px !important;
+    height: 2cm !important;
+    border: 3px double black !important;
+    opacity: 0.65 !important;
+    font-size: 0.75rem !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    color: black !important;
+    z-index: 9999 !important;
+}

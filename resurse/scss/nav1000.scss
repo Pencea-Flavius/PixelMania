@@ -1,0 +1,53 @@
+/* ============================================================
+   PIXEL MANIA — Navigation SCSS (Ecran Mediu ≤ 1000px)
+   Autor: Pencea Flavius Andrei
+
+   CERINTA 4 — text mai mic, icon casuta prima optiune
+   Aplicat prin media query in HTML:
+     media="screen and (max-width: 1000px)"
+   ============================================================ */
+
+// ——— VARIABILE SASS ———
+$nav-height-md: 44px;
+$nav-item-width-md: 100px;
+$transition-speed: 0.3s;
+
+// Folosit cu @extend
+%nav-item-base-md {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    font-family: 'Orbitron', 'Segoe UI', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--culoare-text-secundar);
+    border-bottom: 2px solid transparent;
+    overflow: visible;
+    transition: color $transition-speed ease, background $transition-speed ease;
+}
+
+// ============================================================
+//   ECRAN MEDIU (≤ 1000px)
+//   Media query-ul e aplicat in HTML prin atributul media
+//   al tag-ului <link>, deci NU punem @media aici
+// ============================================================
+nav ul.meniu {
+    padding: 0 40px;
+    justify-content: center;
+
+    &>li {
+        @extend %nav-item-base-md;
+        width: $nav-item-width-md;
+        height: $nav-height-md;
+        font-size: 0.68rem;
+        letter-spacing: 1px;
+
+        // Toate optiunile: ascunde text, arata icon
+        .text-nav { display: none; }
+        .icon-acasa, .icon-nav { display: inline-block; font-size: 1.3rem; margin: 0; }
+    }
+}

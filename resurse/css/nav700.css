@@ -1,28 +1,209 @@
-#hamburger {
-    display: block;
+@charset "UTF-8";
+/* ============================================================
+   PIXEL MANIA — Navigation SCSS (Ecran Mic ≤ 700px)
+   Autor: Pencea Flavius Andrei
 
+   CERINTA 5 — Hamburger menu
+   - Intregul meniu apare cu clip-path circular din coltul stanga-sus
+   - Pe orice hover (item sau submeniu): doar schimbare background
+   Aplicat prin media query in HTML:
+     media="screen and (max-width: 700px)"
+   ============================================================ */
+@keyframes clip-circle-expand {
+  from {
+    clip-path: circle(0% at top left);
+  }
+  to {
+    clip-path: circle(150% at top left);
+  }
+}
+@keyframes hamburger-entrance {
+  0% {
+    opacity: 0;
+    transform: translateX(-15px) rotate(-10deg) scaleX(0.5);
+    background: var(--culoare-text-secundar);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateX(5px) rotate(5deg) scaleX(1.2);
+    background: var(--culoare-primara);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg) scaleX(1);
+    background: var(--culoare-accent);
+  }
+}
+nav {
+  padding: 0;
+  position: relative;
+}
+nav #hamburger {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 14px 20px;
+  background: rgba(124, 58, 237, 0.2);
+  border: none;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.4);
+  color: #00e5ff;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: left;
+  box-sizing: border-box;
+  gap: 12px;
+}
+nav #hamburger .hamburger-icon {
+  position: relative;
+  width: 26px;
+  height: 18px;
+  display: block;
+}
+nav #hamburger .hamburger-icon span {
+  display: block;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--culoare-accent);
+  opacity: 0;
+  animation: hamburger-entrance 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+nav #hamburger .hamburger-icon span:nth-child(1) {
+  top: 0px;
+}
+nav #hamburger .hamburger-icon span:nth-child(2) {
+  top: 7.5px;
+}
+nav #hamburger .hamburger-icon span:nth-child(3) {
+  bottom: 0px;
+}
+nav #hamburger .hamburger-icon span:nth-child(1) {
+  animation-delay: 300ms;
+}
+nav #hamburger .hamburger-icon span:nth-child(2) {
+  animation-delay: 600ms;
+}
+nav #hamburger .hamburger-icon span:nth-child(3) {
+  animation-delay: 900ms;
+}
+nav #ch-menu {
+  display: none;
+}
+nav ul.meniu {
+  display: none;
+  flex-direction: column;
+  padding: 0;
+  background: #12103a;
+  outline: 2px solid rgba(124, 58, 237, 0.5);
+  outline-offset: -2px;
+}
+nav #ch-menu:checked ~ ul.meniu {
+  display: flex;
+  animation: clip-circle-expand 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+nav ul.meniu > li {
+  width: 100%;
+  height: auto;
+  min-height: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: none;
+  font-size: 0.82rem;
+  overflow: hidden;
+  position: relative;
+}
+nav ul.meniu > li::before {
+  display: none;
+}
+nav ul.meniu > li > span.item-label, nav ul.meniu > li > a.item-label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 20px;
+  color: var(--culoare-text-secundar);
+  text-decoration: none;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+nav ul.meniu > li > span.item-label .icon-nav, nav ul.meniu > li > a.item-label .icon-nav {
+  display: inline-block;
+  margin-right: 8px;
+}
+nav ul.meniu > li > span.item-label:hover, nav ul.meniu > li > a.item-label:hover {
+  background: var(--culoare-primara-015);
+  color: var(--culoare-accent);
+}
+nav ul.meniu > li:first-child .text-nav {
+  display: none;
+}
+nav ul.meniu > li:first-child .icon-acasa {
+  display: inline-block;
+  font-size: 1.2rem;
+}
+nav ul.meniu > li > ul {
+  display: none;
+  position: static;
+  transform: none !important;
+  opacity: 1 !important;
+  pointer-events: auto;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  clip-path: none;
+  transition: none;
+}
+nav ul.meniu > li > ul > li {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: none;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.3px;
+  color: var(--culoare-text-secundar);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+nav ul.meniu > li > ul > li:last-child {
+  border-bottom: none;
+}
+nav ul.meniu > li > ul > li:hover {
+  background: var(--culoare-primara-025);
+  color: var(--culoare-accent);
+}
+nav ul.meniu > li > ul > li > a {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 18px 0 36px;
+  text-decoration: none;
+  color: inherit;
+}
+nav ul.meniu > li:hover > ul {
+  display: block;
 }
 
-#hamburger>img {
-    height: 3em;
-    width: auto;
-}
-
-ul.meniu {
-    display: none;
-}
-
-#ch-menu:checked+ul.meniu {
-    display: block;
-    position: absolute;
-    width: 100%;
-}
-
-ul.meniu li {
-    width: 100%;
-    
-}
-
-ul.meniu li ul {
-    width: 100%;
-}
+/*# sourceMappingURL=nav700.css.map */
