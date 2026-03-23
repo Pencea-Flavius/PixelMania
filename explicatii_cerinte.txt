@@ -1,0 +1,162 @@
+Aici sunt explicațiile pentru toate funcționalitățile adăugate 
+pentru etapa 2, bazate parțial pe cerințele custom 
+(„cerinte custom din folder”) și implementate în principal 
+în fișierul general.css:
+
+
+1. Schema Cromatică (Culori Setate din Diverse Nuante)
+=====================================================
+Cerință: 
+O nuanță principală setată (în acest caz #7c3aed, Violet Electric) 
+plus minim 5 culori definite anterior ca variabile CSS 
+pe întregul body.
+
+Explicație cod: 
+	• În general.css, chiar sus de tot în blocul `body { ... }`, 
+	  au fost definite aceste culori 
+	  (de ex. `--culoare-primara: #7c3aed;`). 
+
+	• Aceste variabile controlează tot designul, astfel încât 
+	  modificarea ei acolo modifică peste tot nuanța respectivă. 
+
+	• De asemenea, au fost adăugate nuanțe cu diferite opacități 
+	  și s-au folosit apoi pentru a colora bordurile, textele, 
+	  elementele box-shadow etc. 
+
+
+2. Layout Responsive (Grid)
+=====================================================
+Cerință: 
+Construirea primei pagini printr-un grid complex împărțit 
+în zone (1, 2, 3.. 8) care trebuie să își schimbe forma complet 
+la dimensiuni mici și medii de ecran, cu texte a căror dimensiune 
+diferă printr-o mică tranzitie de la o restrânge la alta (1-2px) 
+fără overflow. Textul să descrească la ecrane mici.
+
+Explicație cod:  
+	• S-a aplicat `display: grid; grid-template-areas:` pe 
+	  `#grid-pixelmania` definind zonele, ca pe o hartă.
+
+	• În `.z-pattern` (#zona1), e format un grid care afişează 
+	  continutul sub formă de Z-pattern (imagine sus-stânga, 
+	  text opus, etc.).
+
+	• Pentru transformarea responsive s-au folosit @media queries 
+	  la 1200px și la 700px, care schimbă rețeaua grid-ului de la 
+	  4 coloane, la 2 coloane și apoi la una simplă (stacked), 
+	  modificând complet "harta" vizuală.
+
+	• Mărirea/micșorarea textului la diferite vizitări se 
+	  realizează din `html { font-size: X; transition: font-size 0.3s }`. 
+	  
+	• Pe ecran mare fontul este mai mare (16px, setat la 1rem default), 
+	  pe mediu s-a modificat la 14.5px, iar pe mic la 13px, creând 
+	  astfel tranziții vizibile lin ale textului când ecranul 
+	  e redimensionat.
+
+
+3. Stilizare Taburi (Iframe utilizând Flexbox)
+=====================================================
+Cerință: 
+Câteva link-uri funcționale poziționate ca tab-uri pentru un 
+dreptunghi mare (iframe) apărute printr-o stuctură Flexbox. 
+
+Explicație cod: 
+	• Containerul central `.container-iframe` e cu 
+	  `display: flex; flex-direction: row;`. 
+
+	• Coloana cu butoanele din taburi (`.taburi-iframe`) este cu 
+	  `flex-direction: column`. 
+
+	• Link-urile flexează (`flex-grow: 1`) ca să acopere în 
+	  întregime secțiunea și creează iluzia de 
+	  "butoane tabulate verticale".
+
+
+4. Stilizare Tabel + Schimbare culoare la Hover
+=====================================================
+Cerință: 
+O secțiune care include un tabel real cu antet (thead), corp (tbody), 
+subsol (tfoot). Box-shadow alternat pe coloanele interioare și o 
+modificare mărită a textului (+20%) + schimb de background la 
+trecerea cursorului încet (3 sferturi de secundă). Pe ecranele mici 
+tabelul să aducă cu el funcție de scroll orizontal.
+
+Explicație cod + Hover funcțional: 
+	• De ce capătă altă culoare treptat? 
+	  În CSS, există un bloc dedicat `#tab-orar tbody tr`. Acestui 
+	  rând (tr) i se aplică regula:
+	  `transition: background-color 0.75s, font-size 0.75s;`. 
+	  
+	  Asta înseamnă că orice schimbare viitoare la background sau 
+	  mărime de font va dura exact trei sferturi de secundă pentru 
+	  a finaliza modificarea (animația subtilă).
+
+	• Prin blocul `#tab-orar tbody tr:hover td` se specifică precis 
+	  ce să se schimbe când vine mouse-ul peste el: se adaugă lățime 
+	  fontului - explicit 1.2em (= +20%) și o nuanță de albastru/violet 
+	  prin variabila de culoare `--culoare-primara-025`.
+
+	• Umbra alternativă (rânduri par-impar) vine din combinarea 
+	  selecțiilor `#tab-orar tbody tr:nth-child(even)` sau `odd` cu 
+	  proprietatea `box-shadow: inset ...`.
+
+	• Pentru ecranele mici, containerul a primit un 
+	  `overflow-x: auto;`. Deoarece tabelul folosește `min-width`, 
+	  forțează containerul să scoată bara de scroll jos pe telefoane 
+	  ca să nu spargă elementele vizuale ale ecranului.
+
+
+5. Link Top (Pentru întoarcere la început)
+=====================================================
+Cerință: 
+Crearea unui buton fix în colț, fără imagini (caracter creat din 
+text HTML săgeată), ce își micșorează tranziția spre interior la 
+starea hover, scalare text, având formă personalizată. Un ecran sub 
+formă te tooltip trebuie să descrie acțiunea de "susul paginii". 
+Semi-transparent.
+
+Explicație cod: 
+	• Formarea e setată pe id-ul `#link-top` stând stabil in 
+	  colț-dreapta (`position: fixed; bottom...`). Are `opacity: 0.5` 
+	  prin design de bază pentru a nu reține interesul permanent.
+
+	• În momentul hover-ului tranzitează la `opacity: 1`, fundalul 
+	  și border-ul devin opace, iar pentru săgețica `.link-top-arrow` 
+	  mărim caracterul ei `transform: scale(1.35)`. 
+
+	• Tooltip-ul a fost generat prin "pseudo-elemente" `::before`. 
+	  Când cursorul este pe element, pseudo elementul (care conținea 
+	  `opacity: 0` inițial) primește `opacity: 1` direct sub 
+	  butonul sursă.
+
+
+6. Ce face reset CSS (resetare.css)?
+=====================================================
+Explicație: 
+	Aproape toate browserele web (Chrome, Firefox, Safari) aplică 
+	în mod automat propriile lor stiluri "default" asupra paginii, 
+	chiar înainte ca tu să fi scris prima linie de cod. 
+	
+	De exemplu:
+	• Un heading (h1, h2) poate avea o mărime prestabilită mare și 
+	  un surplus de aer pe margini (margin/padding) considerat util 
+	  de browser.
+	• Listele (<ol>, <ul>) își fac acele puncte din stânga și adaugă 
+	  padding la elemente.
+	
+	Fișierul tău `resetare.css` asigură că toate aceste diferențe 
+	"specifice/individuale" de design de la browser la browser sunt 
+	complet șterse, aducând fiecare element din pagină la cel mai 
+	neutru și curat punct posibil (de ex: un heading arată plat 
+	și mic, asemănător codului de text simplu, lista e ștearsă). 
+	
+	Se va forța codul tău cu `margin: 0; padding: 0; border: 0`  
+	pe toate tag-urile uzuale.  Scopul principal e o fundație complet 
+	plată, prin care ești forțat să re-construiești la alegere și 
+	fără intreprinderi un design uniform și care va fi vizual identic 
+	în orice browser în care este vizionat pe web. 
+	
+	Când e corelat cu resetul HTML5 al tag-urilor noi (`article`, 
+	`section` marcate ca `display: block`), îți asigură consecvența 
+	totală a designului fără intervenții ascunse.

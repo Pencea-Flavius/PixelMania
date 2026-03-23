@@ -28,14 +28,14 @@ body {
     font-family: 'Inter', 'Segoe UI', sans-serif;
     color: var(--culoare-text-primar);
 
-    /* ——— CULORI PRINCIPALE (schema cromatică) ——— */
+    /* cerinta 1: culori de baza */
     --culoare-primara: #7c3aed;
     --culoare-secundara: #3a7ced;
     --culoare-accent: #00e5ff;
     --culoare-contrast: #ed3a7c;
     --culoare-highlight: #ffd700;
 
-    /* ——— CULORI DERIVATE ——— */
+    /* culori derivate pt opacitati/bg */
     --culoare-fundal: #0a0a1a;
     --culoare-card: rgba(15, 15, 35, 0.85);
     --culoare-text-primar: #f0f0ff;
@@ -173,7 +173,7 @@ ol {
     line-height: 1.8;
 }
 
-/* ——— GRID PRINCIPAL ——— */
+/* cerinta layout responsive - grid (zone) */
 #grid-pixelmania {
     display: grid;
     gap: var(--grid-gap);
@@ -322,7 +322,7 @@ ol {
     border-color: var(--culoare-accent);
 }
 
-/* ——— ZONA 1 Z-PATTERN ——— */
+/* cerinta: z-pattern in div intern */
 #zona1.z-pattern #welcome {
     display: grid;
     grid-template-columns: 1fr 1.3fr;
@@ -443,7 +443,7 @@ hr.separator-sectiune {
     grid-column: 1 / -1;
 }
 
-/* ——— CONTAINER IFRAME / TABURI ——— */
+/* cerinta flexbox: container iframe + taburi */
 .container-iframe {
     display: flex;
     flex-direction: row;
@@ -538,7 +538,7 @@ hr.separator-sectiune {
 
 /* ——— TABEL ORAR ——— */
 
-/* Container cu scrollbar orizontal pe ecran mic */
+/* cerinta tabel: container pt scroll orizontal pe ecran mic */
 .tabel-container {
     overflow-x: auto;
     width: 100%;
@@ -551,7 +551,7 @@ hr.separator-sectiune {
     border-radius: 8px;
     overflow: hidden;
     min-width: 500px;
-    /* forțează scrollbar pe ecran mic */
+    /* Forțează scroll-ul la sub 500px din containere */
 }
 
 /* Borduri celule tbody/tfoot: 1px */
@@ -563,7 +563,7 @@ hr.separator-sectiune {
     background: transparent;
 }
 
-/* Borduri thead: 3px (mai groase cu 2px față de restul) */
+/* borduri css: thead > restu tbody */
 #tab-orar th {
     border: 3px solid var(--culoare-alb-010);
     padding: 10px;
@@ -573,20 +573,18 @@ hr.separator-sectiune {
     background-color: var(--culoare-primara-020);
 }
 
-/* Rânduri cu box-shadow alternativ (NU background-color) */
-/* Rând par — umbra cyan subtilă */
+/* cerinta tabel: randuri alternate box-shadow */
 #tab-orar tbody tr:nth-child(even) td {
     box-shadow: inset 0 0 0 1000px rgba(0, 229, 255, 0.05);
     color: var(--culoare-accent);
 }
 
-/* Rând impar — umbra violet subtilă */
 #tab-orar tbody tr:nth-child(odd) td {
     box-shadow: inset 0 0 0 1000px rgba(124, 58, 237, 0.08);
     color: var(--culoare-text-secundar);
 }
 
-/* Hover pe rând: background + font-size crește 20%, tranziție 0.75s */
+/* cerinta: tranzitie 0.75s + mărire font pe hover */
 #tab-orar tbody tr {
     transition: background-color 0.75s, font-size 0.75s;
 }
@@ -594,7 +592,6 @@ hr.separator-sectiune {
 #tab-orar tbody tr:hover td {
     background-color: var(--culoare-primara-025);
     font-size: 1.2em;
-    /* +20% față de 1em */
     color: var(--culoare-text-primar);
 }
 
@@ -637,7 +634,7 @@ hr.separator-sectiune {
     color: var(--culoare-highlight);
 }
 
-/* ——— LINK-TOP ——— */
+/* cerinta buton navigare inapoi sus: fixed */
 #link-top {
     position: fixed;
     bottom: 1em;
@@ -676,7 +673,7 @@ hr.separator-sectiune {
         0 0 20px var(--culoare-primara-040);
 }
 
-/* Tooltip */
+/* tooltip buton pus pe before (din data-tooltip attr) */
 #link-top::before {
     content: attr(data-tooltip);
     position: absolute;
