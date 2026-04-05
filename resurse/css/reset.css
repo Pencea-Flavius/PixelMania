@@ -82,9 +82,13 @@ video {
     margin: 0;
     padding: 0;
     border: 0;
+    /*reseteaza textul si fontul: */
     font-size: 100%;
+    /* Reseteaza marimea fontului la nivelul parintelui */
     font: inherit;
+    /* Forteaaza elementele sa mosteneasca familia si greutatea fontului parintelui */
     vertical-align: baseline;
+    /* Asigura o aliniere liniara consistenta a textului */
 }
 
 /* HTML5 display-role reset for older browsers */

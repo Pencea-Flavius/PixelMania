@@ -1,28 +1,3 @@
-/*
-=============================================================
-  SCHEMA CROMATICĂ — Pixelmania
-=============================================================
-  Culoare principală: #7c3aed (Violet Electric)
-  Tip schemă: Triadic + Analogică (5 culori de bază + extensii)
-
-  Psihologia culorilor:
-  - #7c3aed (Violet)   → creativitate, mister, tehnologie, futurism
-  - #3a7ced (Albastru) → încredere, stabilitate, digital, date
-  - #00e5ff (Cyan)     → energie, modernitate, interfețe tech
-  - #ed3a7c (Roz/Magenta) → dinamism, retro-gaming, entuziasm
-  - #ffd700 (Auriu)    → premium, valoare, highlight, atenție
-  Extensii pentru fundal/text:
-  - #0a0a1a (Albastru-Negru) → fundal adânc, spațiu cosmic
-  - #f0f0ff (Alb-Albastru)   → text principal, claritate
-  - #a0a0c0 (Gri-Albăstrui)  → text secundar, subtil
-  Motivul alegerii:
-  Tema site-ului este retro-gaming și tehnologie (Pixelmania).
-  Violetul electric evocat futurism și creativitate digitală,
-  cianul și albastrul completează paleta tech, iar rozul/magenta
-  aduce energia jocurilor arcade. Aurul marchează elementele premium.
-=============================================================
-*/
-
 body {
     font-size: 1rem;
     font-family: 'Inter', 'Segoe UI', sans-serif;
@@ -448,46 +423,42 @@ hr.separator-sectiune {
     display: flex;
     flex-direction: row;
     height: 315px;
-    width: 600px;
+    width: 615px;
     max-width: 100%;
-    margin-top: 15px;
-    border: 2px solid var(--culoare-contur);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px var(--culoare-negru-050);
-    background-color: var(--culoare-negru-050);
 }
 
+/* Containerul taburilor iframe */
 .taburi-iframe {
     display: flex;
     flex-direction: column;
-    width: 180px;
-    min-width: 180px;
-    border-right: 2px solid var(--culoare-contur);
-    background-color: var(--culoare-primara-010);
+    gap: 10px;
+    width: 200px;
 }
 
 .taburi-iframe>a {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-grow: 1;
-    padding: 10px;
-    background-color: transparent;
-    color: var(--culoare-accent);
+    padding: 12px 10px;
+
+    /* Culori bazate pe variabilele proiectului */
+    background-color: var(--culoare-primara-010);
+    color: var(--culoare-text-primar);
     text-decoration: none;
-    border-bottom: 1px solid var(--culoare-contur-subtil);
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.85rem;
+    font-family: Arial, sans-serif;
+    font-size: 0.95rem;
     font-weight: bold;
     text-align: center;
-    transition: all 0.2s linear;
+    line-height: 1.2;
+    border-radius: 10px 0 0 10px;
+    border: 2px solid var(--culoare-contur);
+    box-shadow: inset 4px 0 6px var(--culoare-contur);
+
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
 }
 
-.taburi-iframe>a:last-of-type {
-    border-bottom: none;
-}
-
+/* Stilul la hover - fundalul devine culoarea umbrei (mov închis) */
 .taburi-iframe>a:hover {
     background-color: var(--culoare-contur);
     color: var(--culoare-text-primar);
@@ -519,7 +490,10 @@ hr.separator-sectiune {
 /* Iframe-ul principal din container-iframe (din taburi) */
 .iframe-tab {
     flex-grow: 1;
-    border: none;
+    border: 2px solid var(--culoare-contur);
+    display: block;
+    margin: 0;
+    padding: 0;
     height: 100%;
     width: 100%;
 }
@@ -537,6 +511,14 @@ hr.separator-sectiune {
 
 
 /* ——— TABEL ORAR ——— */
+/*
+.zi-saptamana {
+    background-color: var(--culoare-primara-010);
+}
+.weekend {
+    background-color: var(--culoare-accent-010);
+}
+*/
 
 /* cerinta tabel: container pt scroll orizontal pe ecran mic */
 .tabel-container {
@@ -613,12 +595,10 @@ hr.separator-sectiune {
 }
 
 /* ——— FONT AWESOME ICONURI ——— */
-/* Icon static și animat folosite în pagină via HTML cu clase fa- */
-@keyframes spin-icon {
+@keyframes rotatie-infinita {
     from {
         transform: rotate(0deg);
     }
-
     to {
         transform: rotate(360deg);
     }
@@ -626,8 +606,8 @@ hr.separator-sectiune {
 
 .fa-animat {
     display: inline-block;
-    animation: spin-icon 2s linear infinite;
     color: var(--culoare-accent);
+    animation: rotatie-infinita 4s linear infinite;
 }
 
 .fa-static {
@@ -713,7 +693,7 @@ hr.separator-sectiune {
     color: var(--culoare-text-primar);
 }
 
-/* ——— MATHML BONUS ——— */
+/* ——— MATHML BONUS ——— (Aici este stilizarea pentru formula matematica din cerinta) */
 .math-decorat {
     background: var(--culoare-primara-008);
     padding: 15px;
@@ -758,6 +738,7 @@ hr.separator-sectiune {
         transition: font-size 0.3s linear;
     }
 
+    /* trecem pe 2 coloane la ecrane medii (tableta/laptop mic) */
     #grid-pixelmania {
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
@@ -792,6 +773,7 @@ hr.separator-sectiune {
     }
 
 
+    /* pe telefon se pune tot gridul pe o singura coloana */
     #grid-pixelmania {
         grid-template-columns: 1fr;
         grid-template-areas: "zona1" "zona2" "zona3" "zona4" "zona5" "zona6" "zona7" "zona8";

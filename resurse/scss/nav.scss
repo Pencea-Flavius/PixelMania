@@ -1,12 +1,10 @@
-/* ============================================================
-   PIXEL MANIA — Navigation SCSS (Ecran Mare / Desktop)
+/* PIXEL MANIA — Navigation SCSS (Ecran Mare / Desktop)
    Autor: Pencea Flavius Andrei
 
    Cerinte implementate:
    1. Bara gradient (::before) care coboara la hover — ecran mare
    2. Submeniu scalat din CENTRUL boxului (transform-origin: center center)
-   3. Background change la hover pe optiunile din submeniu
-   ============================================================ */
+   3. Background change la hover pe optiunile din submeniu */
 
 // ——— VARIABILE SASS ———
 $nav-height-lg: 52px;
@@ -41,9 +39,7 @@ $cubic-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
     transition: color $transition-speed ease, background $transition-speed ease;
 }
 
-// ============================================================
-//   NAV — ECRAN MARE (> 1000px)
-// ============================================================
+// NAV — ECRAN MARE (> 1000px)
 nav {
     position: sticky;
     top: 0;
@@ -86,7 +82,7 @@ nav {
             &::before {
                 content: '';
                 position: absolute;
-                bottom: 0;
+                top: 0;
                 left: 0;
                 width: 100%;
                 height: 3px;
@@ -95,9 +91,8 @@ nav {
                         var(--culoare-accent),
                         var(--culoare-fundal));
                 opacity: 0;
-                transform: translateY(4px);
-                transition: opacity $transition-bar ease,
-                    transform $transition-bar ease;
+                transform: translateY(0);
+                transition: transform $transition-bar ease;
                 pointer-events: none;
             }
 
@@ -108,7 +103,7 @@ nav {
 
                 &::before {
                     opacity: 1;
-                    transform: translateY(0);
+                    transform: translateY(#{$nav-height-lg - 3px});
                 }
             }
 

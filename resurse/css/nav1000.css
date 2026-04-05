@@ -1,12 +1,10 @@
 @charset "UTF-8";
-/* ============================================================
-   PIXEL MANIA — Navigation SCSS (Ecran Mediu ≤ 1000px)
+/* PIXEL MANIA — Navigation SCSS (Ecran Mediu ≤ 1000px)
    Autor: Pencea Flavius Andrei
 
    CERINTA 4 — text mai mic, icon casuta prima optiune
    Aplicat prin media query in HTML:
-     media="screen and (max-width: 1000px)"
-   ============================================================ */
+     media="screen and (max-width: 1000px)" */
 nav ul.meniu > li {
   display: inline-flex;
   align-items: center;

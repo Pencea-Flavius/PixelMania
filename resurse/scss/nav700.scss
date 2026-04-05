@@ -1,13 +1,11 @@
-/* ============================================================
-   PIXEL MANIA — Navigation SCSS (Ecran Mic ≤ 700px)
+/* PIXEL MANIA — Navigation SCSS (Ecran Mic ≤ 700px)
    Autor: Pencea Flavius Andrei
 
    CERINTA 5 — Hamburger menu
    - Intregul meniu apare cu clip-path circular din coltul stanga-sus
    - Pe orice hover (item sau submeniu): doar schimbare background
    Aplicat prin media query in HTML:
-     media="screen and (max-width: 700px)"
-   ============================================================ */
+     media="screen and (max-width: 700px)" */
 
 // ——— VARIABILE SASS ———
 $transition-clip: 0.6s;
@@ -47,11 +45,9 @@ $cubic-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
 }
 
-// ============================================================
-//   ECRAN MIC — HAMBURGER (≤ 700px)
-//   Media query-ul e aplicat in HTML prin atributul media
-//   al tag-ului <link>
-// ============================================================
+// ECRAN MIC — HAMBURGER (≤ 700px)
+// Media query-ul e aplicat in HTML prin atributul media
+// al tag-ului <link>
 nav {
     padding: 0;
     position: relative;

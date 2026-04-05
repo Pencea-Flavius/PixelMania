@@ -1,11 +1,9 @@
-/* ============================================================
-   PIXEL MANIA — Navigation SCSS (Ecran Mediu ≤ 1000px)
+/* PIXEL MANIA — Navigation SCSS (Ecran Mediu ≤ 1000px)
    Autor: Pencea Flavius Andrei
 
    CERINTA 4 — text mai mic, icon casuta prima optiune
    Aplicat prin media query in HTML:
-     media="screen and (max-width: 1000px)"
-   ============================================================ */
+     media="screen and (max-width: 1000px)" */
 
 // ——— VARIABILE SASS ———
 $nav-height-md: 44px;
@@ -30,11 +28,9 @@ $transition-speed: 0.3s;
     transition: color $transition-speed ease, background $transition-speed ease;
 }
 
-// ============================================================
-//   ECRAN MEDIU (≤ 1000px)
-//   Media query-ul e aplicat in HTML prin atributul media
-//   al tag-ului <link>, deci NU punem @media aici
-// ============================================================
+// ECRAN MEDIU (≤ 1000px)
+// Media query-ul e aplicat in HTML prin atributul media
+// al tag-ului <link>, deci NU punem @media aici
 nav ul.meniu {
     padding: 0 40px;
     justify-content: center;
