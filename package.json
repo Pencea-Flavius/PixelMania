@@ -1,18 +1,26 @@
 {
-  "name": "proiect",
+  "name": "pixelmania",
   "version": "1.0.0",
-  "description": "",
+  "description": "Magazin online de console de jocuri video second-hand",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Pencea-Flavius/PixelMania.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "console",
+    "jocuri",
+    "second-hand",
+    "playstation",
+    "xbox",
+    "nintendo"
+  ],
+  "author": "Pencea Flavius Andrei",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
@@ -21,7 +29,11 @@
   "homepage": "https://github.com/Pencea-Flavius/PixelMania#readme",
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "ejs": "^5.0.1",
     "express": "^5.2.1",
     "sass": "^1.98.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }

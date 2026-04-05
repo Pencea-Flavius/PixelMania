@@ -854,3 +854,164 @@ hr.separator-sectiune {
         font-size: 3.5rem;
     }
 }
+
+/* =============================================
+   CERINTA: stilizare-linkuri
+   ============================================= */
+
+/* Variabila pentru culoarea linkurilor vizitate */
+body {
+    --culoare-link-vizitat: var(--culoare-contrast);
+}
+
+/* (1) Linkuri vizitate — culoare diferita, din variabila CSS */
+a:visited {
+    color: var(--culoare-link-vizitat);
+}
+
+/* (2) Linkuri externe (href incepe cu "http") — simbol ⮳ inainte, cu font-size 50% mai mare */
+a[href^="http"]::before {
+    content: "⮳ ";
+    font-size: 1.5em;  /* 50% mai mare decat fontul linkului (1em = 100%, deci 1.5em = 150%) */
+    display: inline-block;
+    color: var(--culoare-accent);
+    transition: color 0.2s ease;
+}
+
+/* (3) La hover pe link extern, simbolul ⮳ isi schimba culoarea */
+a[href^="http"]:hover::before {
+    color: var(--culoare-highlight);
+}
+
+/* (4) La hover pe linkuri din main (nu din nav):
+       pata radial-gradient creste din centru */
+main a:not(nav a) {
+    background-image: radial-gradient(
+        ellipse at center,
+        var(--culoare-primara) 0%,
+        var(--culoare-primara) 25%,
+        transparent 70%,
+        transparent 100%
+    );
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 0% 0%;
+    transition: background-size 0.4s ease, color 0.2s ease;
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin: -2px -6px; /* ține la loc spațiul și previne schimbarea structurii */
+}
+
+main a:not(nav a):hover {
+    background-size: 100% 100%;
+}
+
+/* (5) La click (:active) apare un border in jurul linkului */
+main a:not(nav a):active {
+    border: 2px solid var(--culoare-accent);
+    border-radius: 4px;
+}
+
+/* Fix: linkuri din nav nu primesc aceste stiluri suplimentare */
+nav a::before {
+    display: none !important;
+    content: none !important;
+}
+nav a:visited {
+    color: inherit;
+}
+
+/* =============================================
+   CERINTA: video-vtt — stiluri video
+   ============================================= */
+
+/* Subtitluri VTT */
+::cue {
+    background: rgba(0, 50, 80, 0.75);
+    color: #00e5ff;           /* culoare deschisa din schema cromatica */
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+}
+
+#sectiune-video {
+    margin-top: 30px;
+    grid-column: 1 / -1;
+}
+
+/* Video responsive: width in procente, min si max */
+#video-consola {
+    width: 90%;
+    min-width: 280px;
+    max-width: 640px;
+    height: auto;
+    display: block;
+    margin: 10px auto;
+    border-radius: 12px;
+    border: 2px solid var(--culoare-contur);
+    box-shadow: 0 0 20px var(--culoare-primara-040);
+}
+
+/* =============================================
+   PAGINA DE EROARE (404, 403, etc)
+   ============================================= */
+#err-coloane {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    padding: 60px 20px;
+    background: var(--culoare-card);
+    border-radius: 16px;
+    border: 2px solid var(--culoare-contur-subtil);
+    box-shadow: 0 0 30px var(--culoare-primara-015);
+    margin: 40px auto;
+    max-width: 800px;
+}
+
+#err-imag img {
+    max-width: 250px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 20px var(--culoare-primara-040);
+}
+
+#err-coloane section {
+    flex: 1;
+}
+
+#err-coloane h2 {
+    font-size: 2.5rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+#err-coloane p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+#err-coloane a {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--culoare-primara);
+    color: var(--culoare-text-primar);
+    border-radius: 8px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s, background 0.2s;
+    text-decoration: none;
+}
+
+#err-coloane a:hover {
+    transform: translateY(-3px);
+    background: var(--culoare-accent);
+    color: var(--culoare-fundal);
+}
+
+@media screen and (max-width: 700px) {
+    #err-coloane {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+}

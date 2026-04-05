@@ -81,6 +81,34 @@
                             <dd>Generația precedentă (PS4, Xbox One, Switch original) — o alegere excelentă
                                 pentru raportul calitate-preț, cu un catalog bogat de titluri disponibile.</dd>
                         </dl>
+
+                        <!-- CERINTA video-vtt —— Video cu subtitluri VTT -->
+                        <section id="sectiune-video">
+                            <h2>Accesorii PlayStation — Pixel Mania</h2>
+                            <p>Controllere PS4 originale și accesorii testate, disponibile în magazinul nostru:</p>
+                            <video
+                                id="video-consola"
+                                poster="/resurse/imagini/ps4.png"
+                                controls
+                                preload="metadata"
+                                muted>
+                                <source src="/resurse/video/consola-promo.mp4" type="video/mp4">
+                                <source src="/resurse/video/consola-promo.webm" type="video/webm">
+                                <track
+                                    default
+                                    kind="captions"
+                                    src="/resurse/video/vtt/ro.vtt"
+                                    srclang="ro"
+                                    label="Română">
+                                <track
+                                    kind="captions"
+                                    src="/resurse/video/vtt/en.vtt"
+                                    srclang="en"
+                                    label="English">
+                                <p>Browser-ul tău nu suportă tagul <code>video</code>.</p>
+                            </video>
+                        </section>
+
                     </section>
                 </section>
 
@@ -179,10 +207,11 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder pentru avizier.</p>
                 </section>
 
-                <!-- ZONA 5 — Utilizatori Online (placeholder) -->
+                <!-- ZONA 5 — Utilizatori Online -->
                 <section id="zona5">
                     <h2>Utilizatori Online</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder pentru online.</p>
+                    <p>IP-ul tău: <strong><%-locals.ip || '::1'%></strong></p>
+                    <p><small>Momentan rulăm local, deci afișează IP-ul de localhost (::1). Pe internet vei vedea IP-ul real.</small></p>
                 </section>
 
                 <!-- ZONA 6 — Statistici (placeholder) -->

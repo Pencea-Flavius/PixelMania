@@ -31,35 +31,18 @@ for (let folder of vect_foldere) {
 app.use("/resurse", express.static(path.join(__dirname, "resurse")));
 //orice fisier din resurse il trimite si face send file
 app.get("/favicon.ico", function (req, res) {
-    res.sendFile(path.join(__dirname, "resurse/imagini/favicon/favicon.ico"));
+    res.sendFile(path.join(__dirname, "resurse/ico/favicon.ico"));
 })
 app.get(["/", "/index", "/home"], function (req, res) {
-    res.render("pagini/index"), {
+    res.render("pagini/index", {
         ip: req.ip
-    };
-})
-//<p>ip: <%-locals.ip %></p>
-app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "index.html"));
-})
-app.get("/:a/:b", function (req, res) {
-    //res.send("<h1>Calea <b style = 'color:red'>este:</b></h1>");
-    res.sendFile(path.join(__dirname, "index.html"));
-    console.log(parseInt(req.params.a) + parseInt(req.params.b));
+    });
 })
 
-app.get("/cale/:a/:b", function (req, res) {
-    //res.send("<h1>Calea <b style = 'color:red'>este:</b></h1>");
-    res.send(parseInt(req.params.a) + parseInt(req.params.b));
-    console.log("Am primit o cerere Get pe /cale");
-})
-
-
-
-app.get("/cale2", function (req, res) {
-    res.write("<h1>Calea este:</h1>");
-    res.write("<p>A doua cale</p>");
-    res.end();
+app.get("/despre", function (req, res) {
+    res.render("pagini/despre", {
+        ip: req.ip
+    });
 })
 
 function initErori() {
