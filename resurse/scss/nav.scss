@@ -12,7 +12,6 @@ $nav-item-width-lg: 120px;
 $transition-speed: 0.3s;
 $transition-bar: 0.35s;
 $transition-scale: 0.3s;
-$cubic-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
 
 // ——— MIXINS ———
 @mixin glassmorphism {
@@ -80,30 +79,26 @@ nav {
             // CERINTA 1 — Bara gradient cu ::before
             // ---------------------------------------------------
             &::before {
-                content: '';
+                content: ''; // formă invizibilă pt bară
                 position: absolute;
                 top: 0;
-                left: 0;
+                left: 0; // aliniată în stânga
                 width: 100%;
-                height: 3px;
-                background: linear-gradient(90deg,
-                        var(--culoare-fundal),
-                        var(--culoare-accent),
-                        var(--culoare-fundal));
+                height: 6px;
+                background: linear-gradient(to bottom, transparent, var(--culoare-primara), transparent); // gradient ca cerință 
                 opacity: 0;
-                transform: translateY(0);
-                transition: transform $transition-bar ease;
-                pointer-events: none;
+                transform: translateY(0); // nu coboară 
+                transition: transform $transition-bar ease, opacity $transition-bar ease; //(fade in) 
+                pointer-events: none; // ignorăm click ul 
             }
 
             &:hover {
-                color: var(--culoare-accent);
-                background: var(--culoare-primara-010);
-                border-bottom-color: var(--culoare-contur);
+                color: var(--culoare-accent); // text subtil colorat 
+                background: var(--culoare-primara-010); // fundal luminat 
 
                 &::before {
-                    opacity: 1;
-                    transform: translateY(#{$nav-height-lg - 3px});
+                    opacity: 1; // o afișăm pe parcursul animației 
+                    transform: translateY(#{$nav-height-lg - 6px}); // bara glisează jos 
                 }
             }
 
@@ -133,25 +128,25 @@ nav {
             // CERINTA 2 — Submeniu scalat din CENTRUL boxului
             // ---------------------------------------------------
             &>ul {
-                display: block;
-                position: absolute;
-                top: 100%;
-                left: 50%;
-                transform: translateX(-50%) scale(0, 0);
-                transform-origin: center center;
-                z-index: 600;
-                min-width: 220px;
-                background: rgba(10, 10, 26, 0.97);
-                backdrop-filter: blur(20px);
-                border: 1px solid rgba(124, 58, 237, 0.4);
-                border-radius: 12px;
-                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
-                padding: 6px 0;
-                list-style: none;
-                opacity: 0;
-                pointer-events: none;
-                transition:
-                    transform $transition-scale $cubic-elastic,
+                display: block; // bloc
+                position: absolute; // plutitor
+                top: 100%; // sub buton
+                left: 50%; // centrat
+                transform: translateX(-50%) scale(0, 0); // scalat la zero
+                transform-origin: center center; // crește din mijloc
+                z-index: 600; // deasupra
+                min-width: 220px; // lățime minimă
+                background: rgba(10, 10, 26, 0.97); // fundal închis
+                backdrop-filter: blur(20px); // sticlă mată
+                border: 1px solid rgba(124, 58, 237, 0.4); // contur
+                border-radius: 12px; // colțuri rotunde
+                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7); // umbră
+                padding: 6px 0; // spațiere
+                list-style: none; // fără puncte
+                opacity: 0; // invizibil
+                pointer-events: none; // fără click
+                transition: // animatia începe 
+                    transform $transition-scale ease, // mărire proporțională 
                     opacity 0.25s ease;
 
                 // CERINTA 3 — Background change la hover submeniu
@@ -202,9 +197,9 @@ nav {
 
             // Activeaza submeniu la hover pe parinte
             &:hover>ul {
-                transform: translateX(-50%) scale(1, 1);
-                opacity: 1;
-                pointer-events: auto;
+                transform: translateX(-50%) scale(1, 1); // punem gabarit normal 100% ca să iasă la suprafață 
+                opacity: 1; // vizibil complet 
+                pointer-events: auto; // Reactivează utilitatea senzorului de click
             }
         }
     }

@@ -3,7 +3,7 @@
     "eroare_default":{
         "titlu":"Eroare !!!",
         "text": "A survenit o eroare.",
-        "imagine":"interzis.png"
+        "imagine":"eroare_default.png"
     },
     "info_erori": [
         {
@@ -11,21 +11,21 @@
             "status":true,
             "titlu":"404 - N-am, bre!",
             "text": "Nu-i pe serverul ăsta, sorry, caută în altă parte!",
-            "imagine":"lupa.png"
+            "imagine":"eroare_404.png"
         },
         {
             "identificator":403,
             "status":true,
             "titlu":"403 - Da, tu ce cauți aici?!!",
             "text": "Ai greșit ruta. Stânga-împrejur și pa!",
-            "imagine":"interzis.png"
+            "imagine":"eroare_403.png"
         },
         {
             "identificator":400,
             "status":true,
             "titlu":"400 - bad request",
             "text": "Cerere gresita",
-            "imagine":"interzis.png"
+            "imagine":"eroare_400.png"
         },
         
         {
@@ -33,7 +33,7 @@
             "status":false,
             "titlu":"Site în lucru",
             "text": "Muncim, muncim!",
-            "imagine":"interzis.png"
+            "imagine":"eroare_1.png"
         },
         
         {
@@ -41,7 +41,7 @@
             "status":false,
             "titlu":"Eroare baza date",
             "text": "Reveniti mai tarziu!",
-            "imagine":"interzis.png"
+            "imagine":"eroare_2.png"
         },
         
         {
@@ -49,7 +49,7 @@
             "status":false,
             "titlu":"Date gresit",
             "text": "Verificati datele",
-            "imagine":"interzis.png"
+            "imagine":"eroare_3.png"
         }
         
     ]

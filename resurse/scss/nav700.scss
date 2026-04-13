@@ -2,9 +2,6 @@
    Autor: Pencea Flavius Andrei
 
    CERINTA 5 — Hamburger menu
-   - Intregul meniu apare cu clip-path circular din coltul stanga-sus
-   - Pe orice hover (item sau submeniu): doar schimbare background
-   Aplicat prin media query in HTML:
      media="screen and (max-width: 700px)" */
 
 // ——— VARIABILE SASS ———
@@ -70,7 +67,7 @@ nav {
         box-sizing: border-box;
         gap: 12px;
 
-        // Bonus 1: Icon din 3 divuri pozitionate absolut
+            // Bonus 1: Icon din 3 divuri pozitionate absolut
         .hamburger-icon {
             position: relative;
             width: 26px;
@@ -86,7 +83,7 @@ nav {
                 border-radius: 2px;
                 background: var(--culoare-accent);
                 opacity: 0; // începe invizibil pentru animație
-                animation: hamburger-entrance 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+                animation: hamburger-entrance 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
 
                 &:nth-child(1) {
                     top: 0px;
@@ -102,9 +99,10 @@ nav {
             }
 
             // Bonus 3: Delay-uri diferite generate cu o buclă @for
+            $t: 300;
             @for $i from 1 through 3 {
                 span:nth-child(#{$i}) {
-                    animation-delay: #{$i * 300}ms;
+                    animation-delay: #{($i - 1) * $t}ms;
                 }
             }
         }

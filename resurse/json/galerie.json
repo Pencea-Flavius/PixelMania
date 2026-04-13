@@ -1,0 +1,14 @@
+{
+  "cale_galerie": "resurse/imagini",
+  "imagini": [
+    {
+      "fisier": "ps4.png"
+    },
+    {
+      "fisier": "ps5.png"
+    },
+    {
+      "fisier": "switch.png"
+    }
+  ]
+}
