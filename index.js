@@ -48,100 +48,104 @@ app.get(["/", "/index", "/home"], function (req, res) {
 
 
 
-function initErori() {
-    let caleJson = path.join(__dirname, "resurse/json/erori.json");
+function verificaErori() {
+    // (0.025) Verificam daca exista fisierul erori.json — daca nu, inchidem aplicatia
+    const caleJson = path.join(__dirname, "resurse/json/erori.json");
     if (!fs.existsSync(caleJson)) {
-        console.error("Eroare: Nu există fisierul erori.json");
+        console.error("[EROARE CRITICA] Fisierul 'resurse/json/erori.json' nu a fost gasit. Aplicatia nu poate porni fara el.");
         process.exit(1);
     }
-    let continut = fs.readFileSync(caleJson).toString("utf-8");
 
-    // Verificare pentru proprietati duplicate, folosind regex care parseaza blocurile JSON {...}
-    const blocuri = continut.match(/\{[^}]+\}/g) || [];
-    for (let bloc of blocuri) {
-        let chei = bloc.match(/"([^"]+)"\s*:/g);
-        if (chei) {
-            let setKeys = new Set();
-            for (let ch of chei) {
-                if (setKeys.has(ch)) {
-                    console.error("Eroare JSON: Proprietatea " + ch + " este specificată de mai multe ori.");
-                }
-                setKeys.add(ch);
-            }
-        }
-    }
-
+    let stringJson;
     let erori;
     try {
-        erori = obGlobal.obErori = JSON.parse(continut);
-    } catch (e) {
-        console.error("Eroare parsare JSON erori:", e.message);
-        return;
+        stringJson = fs.readFileSync(caleJson).toString("utf-8");
+        erori = JSON.parse(stringJson);
+    } catch {
+        console.error("[EROARE CRITICA] Fisierul 'erori.json' nu poate fi citit sau este invalid (JSON corupt).");
+        process.exit(1);
     }
 
-    if (!erori.info_erori || !erori.cale_baza || !erori.eroare_default) {
-        console.error("Eroare JSON: Lipsește una dintre proprietățile: info_erori, cale_baza, eroare_default din fisier.");
-    }
-
-    let err_default = erori.eroare_default;
-    if (err_default && (!err_default.titlu || !err_default.text || !err_default.imagine)) {
-        console.error("Eroare JSON: Pentru eroarea default lipsește una dintre proprietățile: titlu, text, imagine.");
-    }
-
-    let folderBazaPath = path.join(__dirname, erori.cale_baza || "");
-    if (!fs.existsSync(folderBazaPath)) {
-        console.error("Eroare JSON: Folderul specificat în cale_baza nu există: " + folderBazaPath);
-    } else {
-        if (err_default && err_default.imagine) {
-            let imagineDefCale = path.join(folderBazaPath, err_default.imagine);
-            if (!fs.existsSync(imagineDefCale)) {
-                console.error("Eroare JSON: Imaginea pentru eroarea_default nu există la calea " + imagineDefCale);
-            }
-        }
-        
-        if (erori.info_erori) {
-            let duplicateMap = {};
-            let identificatoriUnici = [];
-            
-            for (let eroare of erori.info_erori) {
-                if (eroare.imagine) {
-                    let imgCalePath = path.join(folderBazaPath, eroare.imagine);
-                    if (!fs.existsSync(imgCalePath)) {
-                        console.error("Eroare JSON: Asociația de imagine pt eroarea " + eroare.identificator + " nu exista la calea " + imgCalePath);
-                    }
-                }
-                
-                if (identificatoriUnici.includes(eroare.identificator)) {
-                    duplicateMap[eroare.identificator] = true;
-                } else {
-                    identificatoriUnici.push(eroare.identificator);
-                }
-            }
-            
-            for (let id of Object.keys(duplicateMap)) {
-                console.error("Eroare JSON: Există mai multe erori cu identificatorul " + id);
-                for (let e of erori.info_erori) {
-                    if (e.identificator == id) {
-                        let eLog = Object.assign({}, e);
-                        delete eLog.identificator;
-                        console.error("Eroare JSON info duplicat:", JSON.stringify(eLog));
-                    }
-                }
-            }
+    // (0.025) Verificam daca exista proprietatile obligatorii la nivel de radacina
+    for (const prop of ["info_erori", "cale_baza", "eroare_default"]) {
+        if (!(prop in erori)) {
+            console.error("[EROARE] Proprietatea '" + prop + "' lipseste din erori.json.");
         }
     }
 
-    // Setam caile in functie de "cale_baza" asa cum facea codul original
-    if (err_default) {
-        err_default.imagine = path.join(erori.cale_baza || "", err_default.imagine || "");
-    }
-    if (erori.info_erori) {
-        for (let eroare of erori.info_erori) {
-            eroare.imagine = path.join(erori.cale_baza || "", eroare.imagine || "");
+    // (0.025) Verificam daca eroare_default are titlu, text si imagine
+    for (const prop of ["titlu", "text", "imagine"]) {
+        if (!(prop in erori.eroare_default)) {
+            console.error("[EROARE] Proprietatea '" + prop + "' lipseste din obiectul 'eroare_default'.");
         }
+    }
+
+    // (0.025) Verificam daca folderul din cale_baza exista pe disk
+    const caleBaza = path.join(__dirname, erori.cale_baza);
+    if (!fs.existsSync(caleBaza) || !fs.statSync(caleBaza).isDirectory()) {
+        console.error("[EROARE] Folderul specificat in 'cale_baza' nu exista: " + caleBaza);
+    }
+
+    // (0.05) Verificam daca toate imaginile (default + cele din info_erori) exista pe disk
+    const toateErorile = [];
+    toateErorile.push({ sursa: "eroare_default", imagine: erori.eroare_default.imagine });
+    for (const e of erori.info_erori) {
+        if (e.imagine) {
+            toateErorile.push({ sursa: "eroare id=" + e.identificator, imagine: e.imagine });
+        }
+    }
+    for (const { sursa, imagine } of toateErorile) {
+        const caleImagine = path.join(caleBaza, imagine);
+        if (!fs.existsSync(caleImagine)) {
+            console.error("[EROARE] Imaginea '" + imagine + "' asociata lui '" + sursa + "' nu exista pe disk.");
+        }
+    }
+
+    // (0.2) Verificam pe STRING daca vreo proprietate apare de doua ori intr-un obiect
+    // Resetam lista la fiecare { nou gasit, si adaugam cheile rand cu rand
+    let lista_dubluri = [];
+    for (let linie of stringJson.split("\n")) {
+        linie = linie.trim();
+        if (linie.startsWith("{")) {
+            lista_dubluri = [];
+        }
+        if (linie.startsWith('"')) {
+            let cheie = linie.split('"')[1];
+            if (lista_dubluri.includes(cheie)) {
+                console.error("[EROARE] Proprietatea '" + cheie + "' apare de mai multe ori in acelasi obiect din erori.json.");
+            }
+            lista_dubluri.push(cheie);
+        }
+    }
+
+    // (0.15) Verificam daca exista erori cu acelasi identificator
+    // In mesaj afisam toate proprietatile in afara de identificator
+    let lista_identificatori = [];
+    for (let { identificator, status, titlu, text, imagine } of erori.info_erori) {
+        if (lista_identificatori.includes(identificator)) {
+            console.error("[EROARE] Exista mai multe erori cu identificatorul " + identificator + ":" +
+                " titlu: " + titlu + ", text: " + text + ", imagine: " + imagine
+            );
+        }
+        lista_identificatori.push(identificator);
     }
 }
-initErori()
+
+function initErori() {
+    let continut = fs.readFileSync(path.join(__dirname, "resurse/json/erori.json")).toString("utf-8");
+    let erori = obGlobal.obErori = JSON.parse(continut);
+
+    // Prefixam caile imaginilor cu cale_baza pentru a le folosi direct in render
+    let err_default = erori.eroare_default;
+    err_default.imagine = path.join(erori.cale_baza, err_default.imagine);
+
+    for (let eroare of erori.info_erori) {
+        eroare.imagine = path.join(erori.cale_baza, eroare.imagine);
+    }
+}
+
+verificaErori();
+initErori();
 
 
 function afisareEroare(res, identificator, titlu, text, imagine) {

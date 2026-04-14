@@ -142,6 +142,23 @@ a:hover {
     color: var(--culoare-hover-link);
 }
 
+/* bonus linkuri: culoare diferita pentru linkurile vizitate */
+a:visited {
+    color: var(--culoare-primara);
+}
+
+/* bonus linkuri: icon mic inainte de linkurile externe (http/https) */
+main a[href^="http"]::before {
+    content: "\2BB3 ";
+    font-size: 120%;
+    color: var(--culoare-highlight);
+}
+
+/* la hover pe icon-ul extern */
+main a[href^="http"]:hover::before {
+    color: var(--culoare-contrast);
+}
+
 ul,
 ol {
     color: var(--culoare-text-secundar);
