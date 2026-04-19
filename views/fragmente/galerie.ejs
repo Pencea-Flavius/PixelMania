@@ -1,0 +1,33 @@
+<%
+// imagini = array of image objects (already filtered by season, max 10)
+// Each has: fisier, fisier_mediu, fisier_mic, titlu, text_descriere, cale_fisier, alt, atribuire?
+%>
+<div id="grid-galerie">
+    <% if (locals.imagini && imagini.length > 0) { %>
+        <% imagini.forEach(function(imag, idx) { %>
+        <figure>
+            <picture>
+                <source srcset="<%= imag.fisier_mic %>" media="(max-width: 700px)" />
+                <source srcset="<%= imag.fisier_mediu %>" media="(max-width: 1000px)" />
+                <img
+                    src="<%= imag.fisier %>"
+                    alt="<%= imag.alt || imag.cale_fisier %>"
+                    title="<%= imag.text_descriere %>"
+                    loading="lazy"
+                />
+            </picture>
+            <figcaption>
+                <%= imag.titlu %>
+                <% if (imag.atribuire) { %>
+                <small class="atribuire">
+                    Foto: <a href="#" title="<%= imag.atribuire.licenta %>"><%= imag.atribuire.autor %></a>
+                    (<%= imag.atribuire.sursa %>)
+                </small>
+                <% } %>
+            </figcaption>
+        </figure>
+        <% }) %>
+    <% } else { %>
+        <p class="galerie-gol">Nu există imagini disponibile pentru sezonul curent.</p>
+    <% } %>
+</div>

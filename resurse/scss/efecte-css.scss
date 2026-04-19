@@ -1,0 +1,172 @@
+/* =============================================
+   efect-css-stilizare-hr (cerinta individuala)
+   Doua linii DREPTE paralele cu capete curbate '(' si ')':
+   - border-top + border-bottom = cele 2 linii orizontale drepte
+   - border-left/right: none = fara laturi verticale vizibile
+   - border-radius = height/2 → capetele de sus si jos se unesc
+     perfect formand arcul '(' la stanga si ')' la dreapta
+   ============================================= */
+
+.wrap {
+    position: relative;
+    width: 100%;
+    margin: 40px auto;
+
+    /* Neon glow effect matching the previous theme */
+    filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.8));
+}
+
+.wrap hr,
+.flared-horizontal-rule-effect,
+.flared-no-lines {
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+}
+
+.flared-horizontal-rule-effect {
+    margin: 0 3px;
+    /* ← cât intră liniile înăuntru față de capete */
+    width: auto;
+}
+
+.flared-horizontal-rule-effect hr {
+    border: 0;
+    border-bottom: 2px solid #00e5ff;
+    border-left: 2px solid #00e5ff;
+    border-right: 2px solid #00e5ff;
+    height: 20px;
+    /* ← adâncimea curbei interioare */
+    border-radius: 9px;
+    /* ← rotunjimea interioară */
+    margin: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.flared-horizontal-rule-effect hr:nth-of-type(2) {
+    transform: rotate(180deg);
+    margin-top: 1px;
+    /* ← distanța dintre cele 2 linii paralele */
+}
+
+.flared-no-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.flared-no-lines hr {
+    border: 0;
+    border-left: 2px solid #00e5ff;
+    border-right: 2px solid #00e5ff;
+    height: 21px;
+    /* ← lungimea capetelor exterioare */
+    border-radius: 60px;
+    /* ← rotunjimea exterioară */
+    margin: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.flared-no-lines hr:nth-of-type(2) {
+    transform: rotate(180deg);
+    margin-top: 0px;
+    /* ← 0 = capetele se ating perfect */
+}
+
+/* =============================================
+   efect-css: text selectat cu ::selection
+   ============================================= */
+
+::selection {
+    background-color: #7c3aed;
+    color: #00e5ff;
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+}
+
+::-moz-selection {
+    background-color: #7c3aed;
+    color: #00e5ff;
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+}
+
+/* =============================================
+   efect-css: text defilant orizontal (keyframes)
+   Recurent, responsive (fara scrollbar orizontal)
+   ============================================= */
+
+.text-defilant-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    background: rgba(124, 58, 237, 0.08);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    border-radius: 6px;
+    padding: 6px 0;
+    margin: 12px 0;
+}
+
+.text-defilant {
+    display: inline-block;
+    padding-left: 100%;
+    animation: defilare-text 20s linear infinite;
+    color: #00e5ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+}
+
+.text-defilant-container:hover .text-defilant {
+    animation-play-state: paused;
+}
+
+@keyframes defilare-text {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* =============================================
+   efect-css: titlu site reflexie
+   ============================================= */
+.reflexie {
+    position: absolute;
+    top: 0; /* Suprapunem complet cutia peste titlul original */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: 0 100%; /* Fixam axa de rotatie exact pe "podeaua" literelor */
+    /* Cu podeaua ancorata, doar mutam un pic la dreapta. Rotirea pe axa de jos il agata natural sub text. */
+    transform: translateX(10px) rotateX(180deg) skew(-45deg) scaleY(0.5);
+    opacity: 0.55;
+    transition: all 0.55s linear;
+    white-space: nowrap;
+    color: inherit;
+    font-size: inherit;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+}
+
+.titlu-site {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 90vw;
+    text-align: center;
+    z-index: 10;
+    margin-top: 20px;
+    margin-bottom: 80px;
+    padding-bottom: 0;
+
+    &:hover .reflexie {
+        /* Acelasi ancoraj de jos, dar marim multiplicatorul Y. Acum alungirea se va propaga STRICT IN JOS. */
+        transform: translateX(10px) rotateX(180deg) skew(-45deg) scaleY(0.8);
+    }
+}

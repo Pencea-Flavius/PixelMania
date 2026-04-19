@@ -1,0 +1,110 @@
+/* Galerie animata — generat automat de server: 8 imagini */
+
+$n-imagini: 8;
+$durata-imagine: 3s;
+$durata-totala: calc($n-imagini * $durata-imagine);
+
+$border-img: url('/resurse/border-galerie.png');
+
+.galerie-animata {
+  position: relative;
+  width: 100%;
+  max-width: 630px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  border: 15px solid transparent;
+  border-image: $border-img 30 stretch;
+  background: #0a0a1a;
+  cursor: pointer;
+
+  /* Opreste animatia la hover! */
+  &:hover figure {
+    animation-play-state: paused;
+  }
+}
+
+.galerie-animata figure {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  z-index: -1;
+  opacity: 0;
+  background: #0a0a1a; /* Opreste gaurile din PNG-uri sa afiseze consola de deasupra! */
+  animation: animatieGalerie $durata-totala linear infinite;
+}
+
+.galerie-animata figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.galerie-animata figure:nth-child(1) {
+  animation-delay: calc((0 * $durata-imagine) - $durata-totala);
+}
+
+.galerie-animata figure:nth-child(2) {
+  animation-delay: calc((1 * $durata-imagine) - $durata-totala);
+}
+
+.galerie-animata figure:nth-child(3) {
+  animation-delay: calc((2 * $durata-imagine) - $durata-totala);
+}
+
+.galerie-animata figure:nth-child(4) {
+  animation-delay: calc((3 * $durata-imagine) - $durata-totala);
+}
+
+.galerie-animata figure:nth-child(5) {
+  animation-delay: calc((4 * $durata-imagine) - $durata-totala);
+}
+
+.galerie-animata figure:nth-child(6) {
+  animation-delay: calc((5 * $durata-imagine) - $durata-totala);
+}
+
+.galerie-animata figure:nth-child(7) {
+  animation-delay: calc((6 * $durata-imagine) - $durata-totala);
+}
+
+.galerie-animata figure:nth-child(8) {
+  animation-delay: calc((7 * $durata-imagine) - $durata-totala);
+}
+
+@keyframes animatieGalerie {
+  0% {
+    z-index: 1; /* Pozitie de baza (asteapta dedesubt ca imaginea veche sa dispara) */
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);
+  }
+  12.4990% {
+    z-index: 1;
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);
+  }
+  12.5000% {
+    z-index: 2; /* Timpul ei a venit, ea face un pas in fata ca sa acopere ecranul in timp ce 'se taie' */
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);
+  }
+  16.6667% {
+    z-index: 2;
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);
+  }
+  16.6677% {
+    z-index: -1; /* Complet invizibila */
+    opacity: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);
+  }
+  100% {
+    z-index: -1;
+    opacity: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  #galerie-animata-sec { display: none !important; }
+}

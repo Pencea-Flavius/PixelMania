@@ -9,6 +9,7 @@
         content="console, jocuri video, second-hand, playstation, xbox, Nintendo, Sega,PS4,PS5,Xbox One,Xbox Series S/X,Switch 2,PS2,PS3,PS Vita,Xbox 360">
     <title>Pixel Mania — Magazine de console second-hand</title>
     <%- include('../fragmente/head.ejs') %>
+    <link rel="stylesheet" href="/resurse/css/galerie.css" type="text/css" />
 
 </head>
 
@@ -61,8 +62,6 @@
                             </div>
                         </div>
 
-                        <hr class="separator-sectiune" />
-
                         <blockquote>
                             <p><q>Am achiziționat un PS4 de la Pixel Mania și funcționează impecabil. Calitatea
                                     produselor
@@ -83,6 +82,15 @@
                             <dd>Generația precedentă (PS4, Xbox One, Switch original) — o alegere excelentă
                                 pentru raportul calitate-preț, cu un catalog bogat de titluri disponibile.</dd>
                         </dl>
+
+                        <div class="wrap separator-sectiune">
+                          <div class="flared-horizontal-rule-effect">
+                            <hr><hr>
+                          </div>
+                          <div class="flared-no-lines">
+                            <hr><hr>
+                          </div>
+                        </div>
 
                         <!-- CERINTA video-vtt —— Video cu subtitluri VTT -->
                         <section id="sectiune-video">
@@ -110,7 +118,6 @@
                                 <p>Browser-ul tău nu suportă tagul <code>video</code>.</p>
                             </video>
                         </section>
-
                     </section>
                 </section>
 
@@ -213,6 +220,7 @@
                 <section id="zona5">
                     <h2>Utilizatori Online</h2>
                     <p>IP-ul tău: <strong><%-locals.ip || '::1'%></strong></p>
+                    <button class="btn btn-primary mt-2 mb-3">Buton Bootstrap</button>
                     <p><small>Momentan rulăm local, deci afișează IP-ul de localhost (::1). Pe internet vei vedea IP-ul real.</small></p>
                 </section>
 
@@ -233,7 +241,10 @@
 
                     <!-- Promoții -->
                     <section id="promotii">
-                        <h2>Promoții și oferte</h2>
+                        <div class="reflectie-container">
+                            <h2 class="titlu-galerie">Promoții și oferte</h2>
+                            <div class="reflectie" aria-hidden="true">Promoții și oferte</div>
+                        </div>
                         <article>
                             <h3 class="titlu">Weekendul Gamer-ului</h3>
                             <p>În fiecare weekend beneficiați de <b>reduceri de <s>10%</s> <ins>25%</ins></b> la toate
@@ -511,52 +522,6 @@
                             title="Playlist YouTube Reclame Retro" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </section>
-
-                    <!-- Galerie -->
-                    <section id="galerie-statica">
-                        <h2>Galerie</h2>
-                        <div id="grid-galerie">
-                            <figure>
-                                <div>
-                                    <img src="resurse/imagini630/ps4630.png" alt="PlayStation 4">
-                                </div>
-                                <figcaption>PlayStation 4</figcaption>
-                            </figure>
-                            <figure>
-                                <img src="resurse/imagini630/xboxseriesx630.png" alt="Xbox Series X">
-                                <figcaption>Xbox Series X</figcaption>
-                            </figure>
-                            <figure>
-                                <img src="resurse/imagini630/ps5630.png" alt="PlayStation 5">
-                                <figcaption>PlayStation 5</figcaption>
-                            </figure>
-                            <figure>
-                                <img src="resurse/imagini630/switch2630.png" alt="Nintendo Switch 2">
-                                <figcaption>Nintendo Switch 2</figcaption>
-                            </figure>
-                            <figure>
-                                <img src="resurse/imagini630/xbox360630.png" alt="Xbox 360">
-                                <figcaption>Xbox 360</figcaption>
-                            </figure>
-                            <figure>
-                                <img src="resurse/imagini630/genesis630.png" alt="Sega Genesis">
-                                <figcaption>Sega Genesis</figcaption>
-                            </figure>
-                            <!-- image map -->
-                            <figure>
-                                <img src="resurse/imagini630/switch630.png" alt="Nintendo Switch" usemap="#switchmap">
-                                <map name="switchmap">
-                                    <area shape="rect" coords="0,0,150,630" href="#produse" alt="Joy-Con Stâng"
-                                        title="Vezi produsele Nintendo">
-                                    <area shape="rect" coords="150,0,480,630" href="https://www.nintendo.com"
-                                        target="_blank" alt="Ecran Switch" title="Site oficial Nintendo">
-                                    <area shape="rect" coords="480,0,630,630" href="#index-intrebari"
-                                        alt="Joy-Con Drept" title="Întrebări frecvente">
-                                </map>
-                                <figcaption>Nintendo Switch</figcaption>
-                            </figure>
-                        </div>
                     </section>
 
                 </section><!-- /zona8 -->

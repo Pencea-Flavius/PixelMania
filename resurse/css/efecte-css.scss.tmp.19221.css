@@ -1,0 +1,81 @@
+@charset "UTF-8";
+/* =============================================
+   efect-css-stilizare-hr (cerinta individuala)
+   Doua linii DREPTE paralele cu capete curbate '(' si ')':
+   - border-top + border-bottom = cele 2 linii orizontale drepte
+   - border-left/right: none = fara laturi verticale vizibile
+   - border-radius = height/2 → capetele de sus si jos se unesc
+     perfect formand arcul '(' la stanga si ')' la dreapta
+   ============================================= */
+hr.separator-sectiune,
+hr.hr-decorativ {
+  display: block;
+  box-sizing: border-box;
+  background: transparent;
+  outline: none;
+  /* Dimensiuni — border-radius trebuie sa fie exact height/2 */
+  height: 18px;
+  width: 82%;
+  margin: 28px auto;
+  /* Cele doua linii drepte */
+  border-top: 2px solid #7c3aed;
+  border-bottom: 2px solid #7c3aed;
+  border-left: none;
+  border-right: none;
+  /* = height/2 = 9px → top-left curve + bottom-left curve se unesc
+     exact la mijloc → formeaza '(' perfect la stanga, ')' la dreapta */
+  border-radius: 9px;
+}
+
+/* =============================================
+   efect-css: text selectat cu ::selection
+   ============================================= */
+::selection {
+  background-color: #7c3aed;
+  color: #00e5ff;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+}
+
+::-moz-selection {
+  background-color: #7c3aed;
+  color: #00e5ff;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+}
+
+/* =============================================
+   efect-css: text defilant orizontal (keyframes)
+   Recurent, responsive (fara scrollbar orizontal)
+   ============================================= */
+.text-defilant-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  background: rgba(124, 58, 237, 0.08);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 6px;
+  padding: 6px 0;
+  margin: 12px 0;
+}
+
+.text-defilant {
+  display: inline-block;
+  padding-left: 100%;
+  animation: defilare-text 20s linear infinite;
+  color: #00e5ff;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+}
+
+.text-defilant-container:hover .text-defilant {
+  animation-play-state: paused;
+}
+
+@keyframes defilare-text {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

@@ -1,23 +1,36 @@
 <footer id="subsol">
-    <!-- Banner pentru printare (ascuns pe ecran, vizibil la print) -->
-    <p id="banner-print">Acesta este un proiect școlar!</p>
-    <!-- Watermark pentru printare -->
+    <!-- Watermark ascuns temporar aici, util doar la print -->
     <div id="watermark-print">Pencea<br>Flavius</div>
 
+    <!-- Buton inapoi la top -->
     <a id="link-top" href="#" data-tooltip="Înapoi la începutul paginii">
         <span class="link-top-arrow">&#129081;</span>
     </a>
-    <address>
-        Bulevardul Expoziției 2, Sector 1,<br />
-        București, România<br />
-        <a href="https://maps.google.com/?q=PB+Tower+Bucuresti">Deschide pe Google Maps</a><br />
-        <iframe src="https://maps.google.com/maps?q=PB+Tower+Bucuresti&t=&z=15&ie=UTF8&iwloc=&output=embed" width="300"
-            height="200" style="border:0; margin-top: 10px;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe><br />
-        E-mail: <a href="mailto:contact@consola-sh.ro">contact@consola-sh.ro</a><br />
-        Telefon: <a href="tel:+40721234567">+40 721 234 567</a><br />
-        WhatsApp: <a href="https://wa.me/40721234567">Trimite mesaj pe WhatsApp</a>
-    </address>
-    <p><small>Copyright &copy; <time datetime="2026-02-26">26 februarie 2026</time> Proiect Tehnici Web Pencea
-            Flavius Andrei</small></p>
+
+    <div class="footer-layout">
+        <!-- Partea de contacte asemanatoare cafenelei -->
+        <div class="container-contacte">
+            <!-- Banner-ul proiectului mutat sa fie integrat grafic -->
+            <p id="banner-print" style="margin-top: 0; font-size: 1.2rem;"><strong>Acesta este un proiect școlar!</strong></p><br>
+            <strong>Contact:</strong><br><br>
+            <address>
+                <i class="fa-solid fa-phone"></i> Telefon: <a href="tel:+40721234567">+40 721 234 567</a><br>
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp: <a href="https://wa.me/40721234567">Trimite mesaj pe WhatsApp</a><br>
+                <i class="fa-solid fa-envelope-open"></i> E-mail: <a href="mailto:contact@consola-sh.ro">contact@consola-sh.ro</a><br><br>
+                
+                <i class="fa-solid fa-shop"></i> Adresă fizică:<br>
+                <a href="https://maps.google.com/?q=Bulevardul+Iuliu+Maniu+15,+Bucuresti" target="_blank">
+                    Bulevardul Iuliu Maniu 15, București
+                </a>
+            </address>
+            <br>
+            <p><small>Copyright &copy; <time datetime="2026-02-26">26 februarie 2026</time><br>Proiect Tehnici Web Pencea Flavius Andrei</small></p>
+        </div>
+        
+        <!-- Harta in grid dreapta -->
+        <div class="container-harta">
+            <iframe src="https://maps.google.com/maps?q=Bulevardul+Iuliu+Maniu+15,+Bucuresti&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                class="iframe-harta" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
 </footer>

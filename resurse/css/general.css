@@ -131,6 +131,22 @@ figure.fg-img>img {
     height: auto;
 }
 
+/* Image map Switch — cerinta etapa 1 */
+#grid-galerie-map {
+    margin-top: 12px;
+}
+
+#grid-galerie-map figure {
+    display: inline-block;
+    max-width: 300px;
+}
+
+#grid-galerie-map figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 
 a {
     color: var(--culoare-accent);
@@ -218,8 +234,7 @@ ol {
         "stocuri     stocuri"
         "resurse     intrebari"
         "revista     revista"
-        "reparatii   reparatii"
-        "galerie     galerie";
+        "reparatii   reparatii";
 
     padding: 0;
     border: none;
@@ -275,11 +290,7 @@ ol {
     grid-area: reparatii;
 }
 
-#galerie-statica {
-    grid-area: galerie;
-}
-
-/* stocuri — 2 coloane interne */
+/* Galerie was removed from home page. */
 #stocuri {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -427,11 +438,8 @@ dd {
     color: var(--culoare-fundal);
 }
 
-hr.separator-sectiune {
-    border: none;
-    height: 1px;
-    margin: 20px 0;
-    background: linear-gradient(90deg, transparent, var(--culoare-contur), transparent);
+/* separator-sectiune este stilizat in efecte-css.css (efect-css-stilizare-hr) */
+.separator-sectiune {
     grid-column: 1 / -1;
 }
 
@@ -439,15 +447,18 @@ hr.separator-sectiune {
 .container-iframe {
     display: flex;
     flex-direction: row;
+    align-items: flex-start; /* Asigura fixarea absoluta pe aceeasi muchie de sus */
     height: 315px;
     width: 615px;
     max-width: 100%;
+    margin-bottom: 40px; /* Spatiu mare ca sa respire continutul de jos (Playlist) */
 }
 
 /* Containerul taburilor iframe */
 .taburi-iframe {
     display: flex;
     flex-direction: column;
+    margin-top: 2px; /* Coboram fix 2 pixeli ca sa pice exact pe ochiul tau */
     gap: 10px;
     width: 200px;
 }
@@ -507,6 +518,7 @@ hr.separator-sectiune {
 /* Iframe-ul principal din container-iframe (din taburi) */
 .iframe-tab {
     flex-grow: 1;
+    box-sizing: border-box; /* Elementul respecta cutia vizuala ca sa nu aiba bordura deformata sau mai inalta */
     border: 2px solid var(--culoare-contur);
     display: block;
     margin: 0;
@@ -517,12 +529,11 @@ hr.separator-sectiune {
 
 /* Iframe-uri standalone (playlist, etc.) */
 .iframe-standalone {
-    width: 90%;
-    min-width: 280px;
-    max-width: 560px;
+    width: 100%;
+    max-width: 900px;
     aspect-ratio: 16 / 9;
     display: block;
-    margin-top: 10px;
+    margin: 35px auto; /* Adaugam spatiu sus si jos si il centram ca sa nu para inghesuit */
 }
 
 
@@ -776,8 +787,8 @@ hr.separator-sectiune {
     }
 }
 
-/* ——— RESPONSIVE 700px ——— */
-@media screen and (max-width: 700px) {
+/* ——— RESPONSIVE 800px (adaptare dupa gridul stabil din Cafenea-Sushi) ——— */
+@media screen and (max-width: 800px) {
     body {
         --margine-pagina: 30px;
         --grid-gap: 8px;
@@ -790,24 +801,16 @@ hr.separator-sectiune {
     }
 
 
-    /* pe telefon se pune tot gridul pe o singura coloana */
-    #grid-pixelmania {
-        grid-template-columns: 1fr;
-        grid-template-areas: "zona1" "zona2" "zona3" "zona4" "zona5" "zona6" "zona7" "zona8";
+    /* Flex-coloana este mult mai fluida decat un grid 1fr static de telefon, la fel cum ai facut la sushi. */
+    #grid-pixelmania, #zona8 {
+        display: flex;
+        flex-direction: column;
     }
 
-    #zona8 {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "promotii"
-            "produse"
-            "anunturi"
-            "stocuri"
-            "resurse"
-            "intrebari"
-            "revista"
-            "reparatii"
-            "galerie";
+    /* Redimensionare robusta pentru orar pe ecrane mici, preluat de la cafenea */
+    #tab-orar th, #tab-orar td {
+        padding: 0.25em;
+        font-size: 0.85em; /* 0.8em poate parea putin prea mic, asa ca las un 0.85em */
     }
 
     #zona8>section {
@@ -1025,10 +1028,87 @@ nav a:visited {
     color: var(--culoare-fundal);
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
     #err-coloane {
         flex-direction: column;
         text-align: center;
         gap: 30px;
+    }
+}
+
+/* =============================================
+   FOOTER REDESIGN
+   ============================================= */
+#subsol {
+    margin-top: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: var(--culoare-primara-010);
+    border-top: 3px solid var(--culoare-contur);
+    position: relative;
+    clear: both;
+}
+
+.footer-layout {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr;
+    gap: 5%;
+    align-items: center;
+    width: 95%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#watermark-print {
+    display: none;
+}
+
+.container-contacte {
+    background-color: var(--culoare-card);
+    color: var(--culoare-text-primar);
+    border: 2px dashed var(--culoare-accent);
+    box-shadow: 0px 0px 10px 5px var(--culoare-primara-040);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.container-contacte address {
+    font-style: normal;
+    line-height: 1.8;
+    margin-top: 15px;
+}
+
+.container-contacte a {
+    color: var(--culoare-highlight);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container-contacte a:hover {
+    color: var(--culoare-accent);
+}
+
+.container-harta {
+    width: 100%;
+}
+
+.container-harta .iframe-harta {
+    width: 100%;
+    height: 350px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px 5px var(--culoare-primara-040);
+}
+
+@media screen and (max-width: 800px) {
+    .footer-layout {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .container-harta .iframe-harta {
+        height: 250px;
     }
 }

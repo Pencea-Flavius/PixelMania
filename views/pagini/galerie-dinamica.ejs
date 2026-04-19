@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta name="description" content="Galerie animată de console — Pixel Mania">
+    <meta name="keywords" content="galerie animata, console, jocuri video">
+    <title>Galerie Animată — Pixel Mania</title>
+    <%- include('../fragmente/head.ejs') %>
+    <link rel="stylesheet" href="/resurse/css/galerie.css" type="text/css" />
+    <!-- Includerea obligatorie a CSS-ului generat prin compilator SASS la runtime din folderul serverului -->
+    <link rel="stylesheet" href="/resurse/css/galerie-animata-gen.css" type="text/css" />
+</head>
+
+<body>
+    <%- include('../fragmente/header.ejs') %>
+
+    <main>
+        <!-- Galeria Animata: Ruleaza algoritmii generati SASS si randati in CSS din index.js  -->
+        <section id="galerie-animata-sec">
+             <div class="galerie-hero-header">
+                <h2 class="titlu-galerie">Galerie Animată</h2>
+                <p>Număr aleatoriu imagini la încărcare: <strong><%= n %></strong>.</p>
+            </div>
+
+            <% if (locals.imagini && locals.imagini.length > 0) { %>
+            <div class="galerie-animata">
+                <% for(let i = 0; i < imagini.length; i++){ %>
+                    <figure>
+                        <img src="<%- imagini[i].fisier %>" alt="<%- imagini[i].titlu || 'Imagine Galerie' %>">
+                    </figure>
+                <% } %>
+            </div>
+            <% } else { %>
+                <p style="text-align:center;">Nu există suficiente imagini pentru galerie.</p>
+            <% } %>
+        </section>
+    </main>
+
+    <%- include('../fragmente/footer.ejs') %>
+</body>
+
+</html>

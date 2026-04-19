@@ -1,14 +1,129 @@
 {
-  "cale_galerie": "resurse/imagini",
+  "cale_galerie": "resurse/imagini630",
   "imagini": [
     {
-      "fisier": "ps4.png"
+      "cale_fisier": "ps5630.png",
+      "titlu": "PlayStation 5",
+      "text_descriere": "Consola Sony de ultimă generație cu SSD ultrarapid și grafică 4K HDR nativă",
+      "anotimp": "primavara",
+      "alt": "PlayStation 5 second-hand disponibil"
     },
     {
-      "fisier": "ps5.png"
+      "cale_fisier": "ps4630.png",
+      "titlu": "PlayStation 4",
+      "text_descriere": "Consola Sony last-gen, catalog imens de jocuri, raport calitate-preț excelent",
+      "anotimp": "vara",
+      "alt": "PlayStation 4 second-hand"
     },
     {
-      "fisier": "switch.png"
+      "cale_fisier": "ps4pro630.png",
+      "titlu": "PlayStation 4 Pro",
+      "text_descriere": "Versiunea îmbunătățită a PS4 cu suport pentru rezoluție 4K și HDR",
+      "anotimp": "toamna",
+      "alt": "PlayStation 4 Pro second-hand"
+    },
+    {
+      "cale_fisier": "switch2630.png",
+      "titlu": "Nintendo Switch 2",
+      "text_descriere": "Noua consolă hibridă Nintendo cu ecran OLED mai mare și performanță îmbunătățită",
+      "anotimp": "iarna",
+      "alt": "Nintendo Switch 2"
+    },
+    {
+      "cale_fisier": "switcholed630.png",
+      "titlu": "Nintendo Switch OLED",
+      "text_descriere": "Switch cu ecran OLED vibrant de 7 inci și sunet îmbunătățit",
+      "anotimp": "primavara",
+      "alt": "Nintendo Switch OLED second-hand"
+    },
+    {
+      "cale_fisier": "xboxseriesx630.png",
+      "titlu": "Xbox Series X",
+      "text_descriere": "Cea mai puternică consolă Microsoft, cu 12 teraflops GPU și ray tracing nativ",
+      "anotimp": "vara",
+      "alt": "Xbox Series X second-hand"
+    },
+    {
+      "cale_fisier": "xbox360630.png",
+      "titlu": "Xbox 360",
+      "text_descriere": "Consola retro Microsoft cu un catalog legendar de titluri clasice",
+      "anotimp": "toamna",
+      "alt": "Xbox 360 second-hand",
+      "atribuire": {
+        "autor": "Microsoft Corporation",
+        "sursa": "Wikimedia Commons",
+        "licenta": "CC-BY-SA 3.0"
+      }
+    },
+    {
+      "cale_fisier": "xboxone630.png",
+      "titlu": "Xbox One",
+      "text_descriere": "Consola Microsoft de a opta generație, accesul la Xbox Game Pass și Xbox Live",
+      "anotimp": "iarna",
+      "alt": "Xbox One second-hand"
+    },
+    {
+      "cale_fisier": "xboxones630.png",
+      "titlu": "Xbox One S",
+      "text_descriere": "Versiunea compactă a Xbox One cu suport 4K Blu-ray și HDR",
+      "anotimp": "primavara",
+      "alt": "Xbox One S second-hand"
+    },
+    {
+      "cale_fisier": "genesis630.png",
+      "titlu": "Sega Genesis",
+      "text_descriere": "Legendara consolă Sega din era 16-bit, piesă de colecție autentică din 1989",
+      "anotimp": "vara",
+      "alt": "Sega Genesis — consolă retro de colecție"
+    },
+    {
+      "cale_fisier": "ps3630.png",
+      "titlu": "PlayStation 3",
+      "text_descriere": "Consola Sony cu player Blu-ray integrat și catalog bogat de jocuri exclusive",
+      "anotimp": "toamna",
+      "alt": "PlayStation 3 second-hand"
+    },
+    {
+      "cale_fisier": "switch630.png",
+      "titlu": "Nintendo Switch",
+      "text_descriere": "Consola hibridă originală Nintendo, perfectă atât pentru acasă cât și în deplasare",
+      "anotimp": "iarna",
+      "alt": "Nintendo Switch second-hand"
+    },
+    {
+      "cale_fisier": "ps5pro630.png",
+      "titlu": "PlayStation 5 Pro",
+      "text_descriere": "Versiunea premium a PS5 cu GPU de două ori mai puternic și ray tracing avansat",
+      "anotimp": "primavara",
+      "alt": "PlayStation 5 Pro — ediție limitată"
+    },
+    {
+      "cale_fisier": "ps5630.png",
+      "titlu": "PlayStation 5",
+      "text_descriere": "Consola Sony de ultimă generație cu SSD ultrarapid și grafică 4K HDR nativă",
+      "anotimp": "vara",
+      "alt": "PlayStation 5 second-hand disponibil"
+    },
+    {
+      "cale_fisier": "ps4630.png",
+      "titlu": "PlayStation 4",
+      "text_descriere": "Consola Sony last-gen, catalog imens de jocuri, raport calitate-preț excelent",
+      "anotimp": "toamna",
+      "alt": "PlayStation 4 second-hand"
+    },
+    {
+      "cale_fisier": "ps4pro630.png",
+      "titlu": "PlayStation 4 Pro",
+      "text_descriere": "Versiunea îmbunătățită a PS4 cu suport pentru rezoluție 4K și HDR",
+      "anotimp": "iarna",
+      "alt": "PlayStation 4 Pro second-hand"
+    },
+    {
+      "cale_fisier": "switch2630.png",
+      "titlu": "Nintendo Switch 2",
+      "text_descriere": "Noua consolă hibridă Nintendo cu ecran OLED mai mare și performanță îmbunătățită",
+      "anotimp": "primavara",
+      "alt": "Nintendo Switch 2"
     }
   ]
 }
