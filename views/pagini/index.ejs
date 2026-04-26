@@ -207,7 +207,8 @@
                 <!-- ZONA 3 & 4 — Anunțuri și Evenimente (Comasate) -->
                 <section id="zona3">
                     <h2 id="anunturi">Anunțuri și Evenimente</h2>
-                    <ul style="padding-left: 20px;">
+                    <!-- text-coloane: cerinta column-count - lista anunturi in 2 coloane ca un ziar -->
+                    <ul class="text-coloane" style="padding-left: 20px;">
                         <li><time datetime="2025-07-20T10:30">20 iulie 2025, ora 10:30</time> — Lansare Lot PS5: 15 unități de PS5 în stare impecabilă, disponibile în ordinea sosirii.</li>
                         <li><time datetime="2025-01-05T09:00">5 ianuarie 2025, ora 09:00</time> — Start Reduceri Anuale: reduceri la toate consolele din stoc.</li>
                         <li><time datetime="2024-11-15T14:15">15 noiembrie 2024, ora 14:15</time> — Stoc Nou Switch 2: modele noi de Nintendo Switch 2 disponibile pe raft.</li>
@@ -224,13 +225,22 @@
                     <h2>Utilizatori Online</h2>
                     <p>IP-ul tău: <strong><%-locals.ip || '::1'%></strong></p>
                     <button class="btn btn-primary mt-2 mb-3">Buton Bootstrap</button>
-                    <p><small>Momentan rulăm local, deci afișează IP-ul de localhost (::1). Pe internet vei vedea IP-ul real.</small></p>
+                    <p><small>IP-ul este folosit exclusiv pentru statistici anonime de trafic.</small></p>
                 </section>
 
-                <!-- ZONA 6 — Statistici (placeholder) -->
-                <section id="zona6">
-                    <h2>Statistici Utilizatori</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder pentru statistici.</p>
+                <!-- ZONA 6 — Parallax background-attachment cu animatie -->
+                <!-- cerinta: background fix la scroll + schimbare imagine prin animatie CSS -->
+                <section id="zona6" class="sectiune-parallax">
+                    <div class="parallax-overlay">
+                        <h2>Colecția Noastră</h2>
+                        <p>Peste <strong>500 de console</strong> verificate în stoc, din toate generațiile și brandurile.</p>
+                        <div class="parallax-stats">
+                            <span><i class="fa-solid fa-gamepad"></i> PlayStation</span>
+                            <span><i class="fa-solid fa-gamepad"></i> Xbox</span>
+                            <span><i class="fa-solid fa-gamepad"></i> Nintendo</span>
+                            <span><i class="fa-solid fa-gamepad"></i> Sega</span>
+                        </div>
+                    </div>
                 </section>
 
                 <!-- ZONA 7 — Date Server (placeholder) -->
@@ -339,6 +349,62 @@
                                     <!-- Ecran Principal -->
                                     <area shape="rect" coords="150,0,480,630" href="/galerie-statica" alt="Sari direct la galeria noastră de console!">
                                 </map>
+                            </div>
+                        </section>
+
+                        <!-- Tabel comparativ console — cerinta tabel responsive + tabel transpus -->
+                        <section>
+                            <h3>Comparație rapidă console populare</h3>
+                            <p><small>Pe ecran mic tabelul se transpune: fiecare coloană devine un rând vertical.</small></p>
+                            <div class="tabel-container">
+                                <table id="transpus">
+                                    <thead>
+                                        <tr>
+                                            <th>Consolă</th>
+                                            <th>Generație</th>
+                                            <th>Preț estimat</th>
+                                            <th>Garanție</th>
+                                            <th>Disponibilitate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>PlayStation 4</td>
+                                            <td>Last-gen</td>
+                                            <td>750–950 RON</td>
+                                            <td>3 luni</td>
+                                            <td>Stoc larg</td>
+                                        </tr>
+                                        <tr>
+                                            <td>PlayStation 5</td>
+                                            <td>Current-gen</td>
+                                            <td>1900–2200 RON</td>
+                                            <td>3 luni</td>
+                                            <td>Stoc limitat</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Xbox Series S</td>
+                                            <td>Current-gen</td>
+                                            <td>1200–1400 RON</td>
+                                            <td>3 luni</td>
+                                            <td>Disponibil</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nintendo Switch</td>
+                                            <td>Last-gen</td>
+                                            <td>850–1100 RON</td>
+                                            <td>3 luni</td>
+                                            <td>Stoc larg</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sega Genesis</td>
+                                            <td>Retro</td>
+                                            <td>200–350 RON</td>
+                                            <td>3 luni</td>
+                                            <td>Piesă de colecție</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </section>
                     </section>
@@ -471,6 +537,7 @@
                             </math>
                         </details>
                     </section>
+
 
                     <!-- Revista Retro -->
                     <section id="revista-retro">

@@ -170,10 +170,6 @@ main a[href^="http"]::before {
     color: var(--culoare-highlight);
 }
 
-/* la hover pe icon-ul extern */
-main a[href^="http"]:hover::before {
-    color: var(--culoare-contrast);
-}
 
 ul,
 ol {
@@ -447,18 +443,21 @@ dd {
 .container-iframe {
     display: flex;
     flex-direction: row;
-    align-items: flex-start; /* Asigura fixarea absoluta pe aceeasi muchie de sus */
+    align-items: flex-start;
+    /* Asigura fixarea absoluta pe aceeasi muchie de sus */
     height: 315px;
     width: 615px;
     max-width: 100%;
-    margin-bottom: 40px; /* Spatiu mare ca sa respire continutul de jos (Playlist) */
+    margin-bottom: 40px;
+    /* Spatiu mare ca sa respire continutul de jos (Playlist) */
 }
 
 /* Containerul taburilor iframe */
 .taburi-iframe {
     display: flex;
     flex-direction: column;
-    margin-top: 2px; /* Coboram fix 2 pixeli ca sa pice exact pe ochiul tau */
+    margin-top: 2px;
+    /* Coboram fix 2 pixeli ca sa pice exact pe ochiul tau */
     gap: 10px;
     width: 200px;
 }
@@ -518,7 +517,8 @@ dd {
 /* Iframe-ul principal din container-iframe (din taburi) */
 .iframe-tab {
     flex-grow: 1;
-    box-sizing: border-box; /* Elementul respecta cutia vizuala ca sa nu aiba bordura deformata sau mai inalta */
+    box-sizing: border-box;
+    /* Elementul respecta cutia vizuala ca sa nu aiba bordura deformata sau mai inalta */
     border: 2px solid var(--culoare-contur);
     display: block;
     margin: 0;
@@ -533,7 +533,8 @@ dd {
     max-width: 900px;
     aspect-ratio: 16 / 9;
     display: block;
-    margin: 35px auto; /* Adaugam spatiu sus si jos si il centram ca sa nu para inghesuit */
+    margin: 35px auto;
+    /* Adaugam spatiu sus si jos si il centram ca sa nu para inghesuit */
 }
 
 
@@ -627,6 +628,7 @@ dd {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
@@ -718,10 +720,11 @@ dd {
 
 #link-top:hover .link-top-arrow {
     transform: scale(1.35);
-    color: var(--culoare-text-primar);
+    color: #00ff88;
+    /* Verde neon */
 }
 
-/* ——— MATHML BONUS ——— (Aici este stilizarea pentru formula matematica din cerinta) */
+/* ——— MATHML BONUS ———*/
 .math-decorat {
     background: var(--culoare-primara-008);
     padding: 15px;
@@ -787,7 +790,7 @@ dd {
     }
 }
 
-/* ——— RESPONSIVE 800px (adaptare dupa gridul stabil din Cafenea-Sushi) ——— */
+/* ——— RESPONSIVE 800p ——— */
 @media screen and (max-width: 800px) {
     body {
         --margine-pagina: 30px;
@@ -801,16 +804,17 @@ dd {
     }
 
 
-    /* Flex-coloana este mult mai fluida decat un grid 1fr static de telefon, la fel cum ai facut la sushi. */
-    #grid-pixelmania, #zona8 {
+    #grid-pixelmania,
+    #zona8 {
         display: flex;
         flex-direction: column;
     }
 
-    /* Redimensionare robusta pentru orar pe ecrane mici, preluat de la cafenea */
-    #tab-orar th, #tab-orar td {
+
+    #tab-orar td {
         padding: 0.25em;
-        font-size: 0.85em; /* 0.8em poate parea putin prea mic, asa ca las un 0.85em */
+        font-size: 0.85em;
+
     }
 
     #zona8>section {
@@ -892,34 +896,35 @@ a:visited {
 /* (2) Linkuri externe (href incepe cu "http") — simbol ⮳ inainte, cu font-size 50% mai mare */
 a[href^="http"]::before {
     content: "⮳ ";
-    font-size: 1.5em;  /* 50% mai mare decat fontul linkului (1em = 100%, deci 1.5em = 150%) */
+    font-size: 1.5em;
+    /* 50% mai mare decat fontul linkului (1em = 100%, deci 1.5em = 150%) */
     display: inline-block;
     color: var(--culoare-accent);
     transition: color 0.2s ease;
 }
 
-/* (3) La hover pe link extern, simbolul ⮳ isi schimba culoarea */
+/* (3) La hover pe link extern, simbolul ⮳ isi schimba culoarea in verde */
 a[href^="http"]:hover::before {
-    color: var(--culoare-highlight);
+    color: #00ff88;
+    /* Verde neon pentru contrast */
 }
 
-/* (4) La hover pe linkuri din main (nu din nav):
+/* (4) La hover pe linkuri din main :
        pata radial-gradient creste din centru */
 main a:not(nav a) {
-    background-image: radial-gradient(
-        ellipse at center,
-        var(--culoare-primara) 0%,
-        var(--culoare-primara) 25%,
-        transparent 70%,
-        transparent 100%
-    );
+    background-image: radial-gradient(ellipse at center,
+            var(--culoare-primara) 0%,
+            var(--culoare-primara) 25%,
+            transparent 70%,
+            transparent 100%);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 0% 0%;
     transition: background-size 0.4s ease, color 0.2s ease;
     border-radius: 4px;
     padding: 2px 6px;
-    margin: -2px -6px; /* ține la loc spațiul și previne schimbarea structurii */
+    margin: -2px -6px;
+    /* ține la loc spațiul și previne schimbarea structurii */
 }
 
 main a:not(nav a):hover {
@@ -937,6 +942,7 @@ nav a::before {
     display: none !important;
     content: none !important;
 }
+
 nav a:visited {
     color: inherit;
 }
@@ -948,7 +954,8 @@ nav a:visited {
 /* Subtitluri VTT */
 ::cue {
     background: rgba(0, 50, 80, 0.75);
-    color: #00e5ff;           /* culoare deschisa din schema cromatica */
+    color: #00e5ff;
+    /* culoare deschisa din schema cromatica */
     font-size: 1rem;
     font-family: 'Inter', sans-serif;
 }
@@ -1108,8 +1115,8 @@ nav a:visited {
         flex-direction: column;
         gap: 30px;
     }
-    
+
     .container-harta .iframe-harta {
         height: 250px;
     }
-}
+}

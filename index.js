@@ -6,7 +6,7 @@ const sharp = require("sharp");
 
 app = express();
 app.set("view engine", "ejs")
-
+const pg = require("pg")
 
 
 obGlobal = {
@@ -20,6 +20,17 @@ obGlobal = {
 console.log("Folder index.js", __dirname);
 console.log("Folder curent (de lucru)", process.cwd());
 console.log("Cale fisier", __filename);
+
+client = new pg.Client({
+    database: "cti_2026",
+    user: "flavius",
+    password: "flavius",
+    host: "localhost",
+    port: 5432
+})
+
+client.connect()//transmite datele
+
 
 let vect_foldere = ["temp", "logs", "backup", "fisiere_uploadate"]
 for (let folder of vect_foldere) {
@@ -36,78 +47,118 @@ app.get("/favicon.ico", function (req, res) {
 });
 
 
-function verificaErori() {
-    const caleJson = path.join(__dirname, "resurse/json/erori.json");
-    if (!fs.existsSync(caleJson)) {
-        console.error("[EROARE CRITICA] Fisierul 'resurse/json/erori.json' nu a fost gasit. Aplicatia nu poate porni fara el.");
+const caleEroriJson = path.join(__dirname, "resurse/json/erori.json");
+
+function verificaExistentaFisierErori(cale) {
+    if (!fs.existsSync(cale)) {
+        console.error("Eroare: Fișierul erori.json nu există.");
         process.exit(1);
-    }
-
-    let stringJson;
-    let erori;
-    try {
-        stringJson = fs.readFileSync(caleJson).toString("utf-8");
-        erori = JSON.parse(stringJson);
-    } catch {
-        console.error("[EROARE CRITICA] Fisierul 'erori.json' nu poate fi citit sau este invalid (JSON corupt).");
-        process.exit(1);
-    }
-
-    for (const prop of ["info_erori", "cale_baza", "eroare_default"]) {
-        if (!(prop in erori)) {
-            console.error("[EROARE] Proprietatea '" + prop + "' lipseste din erori.json.");
-        }
-    }
-
-    for (const prop of ["titlu", "text", "imagine"]) {
-        if (!(prop in erori.eroare_default)) {
-            console.error("[EROARE] Proprietatea '" + prop + "' lipseste din obiectul 'eroare_default'.");
-        }
-    }
-
-    const caleBaza = path.join(__dirname, erori.cale_baza);
-    if (!fs.existsSync(caleBaza) || !fs.statSync(caleBaza).isDirectory()) {
-        console.error("[EROARE] Folderul specificat in 'cale_baza' nu exista: " + caleBaza);
-    }
-
-    const toateErorile = [];
-    toateErorile.push({ sursa: "eroare_default", imagine: erori.eroare_default.imagine });
-    for (const e of erori.info_erori) {
-        if (e.imagine) {
-            toateErorile.push({ sursa: "eroare id=" + e.identificator, imagine: e.imagine });
-        }
-    }
-    for (const { sursa, imagine } of toateErorile) {
-        const caleImagine = path.join(caleBaza, imagine);
-        if (!fs.existsSync(caleImagine)) {
-            console.error("[EROARE] Imaginea '" + imagine + "' asociata lui '" + sursa + "' nu exista pe disk.");
-        }
-    }
-
-    let lista_dubluri = [];
-    for (let linie of stringJson.split("\n")) {
-        linie = linie.trim();
-        if (linie.startsWith("{")) {
-            lista_dubluri = [];
-        }
-        if (linie.startsWith('"')) {
-            let cheie = linie.split('"')[1];
-            if (lista_dubluri.includes(cheie)) {
-                console.error("[EROARE] Proprietatea '" + cheie + "' apare de mai multe ori in acelasi obiect din erori.json.");
-            }
-            lista_dubluri.push(cheie);
-        }
-    }
-
-    let lista_identificatori = [];
-    for (let { identificator, status, titlu, text, imagine } of erori.info_erori) {
-        if (lista_identificatori.includes(identificator)) {
-            console.error("[EROARE] Exista mai multe erori cu identificatorul " + identificator +
-                " — status: " + status + ", titlu: " + titlu + ", text: " + text + ", imagine: " + imagine);
-        }
-        lista_identificatori.push(identificator);
     }
 }
+//Nu există fisierul erori.json
+verificaExistentaFisierErori(caleEroriJson);
+
+const textJsonErori = fs.readFileSync(caleEroriJson).toString("utf-8");
+const obiectEroriParsed = JSON.parse(textJsonErori);
+
+function verificaProprietatiPrincipale(obiectJson) {
+    if (!obiectJson.info_erori || !obiectJson.cale_baza || !obiectJson.eroare_default) {
+        console.error("Eroare: Lipsesc una sau mai multe dintre proprietățile: info_erori, cale_baza, eroare_default.");
+    }
+}
+// Nu există una dintre proprietățile: info_erori, cale_baza, eroare_default
+verificaProprietatiPrincipale(obiectEroriParsed);
+
+function verificaProprietatiEroareDefault(eroareDefault) {
+    if (eroareDefault) {
+        if (!eroareDefault.titlu || !eroareDefault.text || !eroareDefault.imagine) {
+            console.error("Eroare: Pentru eroarea default lipsește una dintre proprietățile: titlu, text sau imagine.");
+        }
+    }
+}
+//Pentru eroarea default lipseste una dintre proprietățile: titlu, text sau imagine.
+verificaProprietatiEroareDefault(obiectEroriParsed.eroare_default);
+
+function verificaExistentaFolderCaleBaza(caleBaza) {
+    if (caleBaza) {
+        let caleAbsoluta = path.join(__dirname, caleBaza);
+        if (!fs.existsSync(caleAbsoluta)) {
+            console.error(`Eroare: Folderul specificat în "cale_baza" (${caleBaza}) nu există în sistemul de fișiere.`);
+        }
+    }
+}
+//Folderul specificat în "cale_baza" nu există în sistemul de fișiere
+verificaExistentaFolderCaleBaza(obiectEroriParsed.cale_baza);
+
+function verificaExistentaImagini(caleBaza, eroareDefault, infoErori) {
+    if (caleBaza) {
+        let caleAbsolutaBaza = path.join(__dirname, caleBaza);
+
+        if (eroareDefault && eroareDefault.imagine) {
+            let caleImgDefault = path.join(caleAbsolutaBaza, eroareDefault.imagine);
+            if (!fs.existsSync(caleImgDefault)) {
+                console.error(`Eroare: Fișierul imagine pentru eroarea default (${eroareDefault.imagine}) nu există.`);
+            }
+        }
+
+        if (infoErori) {
+            for (let eroare of infoErori) {
+                if (eroare.imagine) {
+                    let caleImg = path.join(caleAbsolutaBaza, eroare.imagine);
+                    if (!fs.existsSync(caleImg)) {
+                        console.error(`Eroare: Fișierul imagine (${eroare.imagine}) pentru eroarea cu identificatorul ${eroare.identificator} nu există.`);
+                    }
+                }
+            }
+        }
+    }
+}
+//Nu există (în sistemul de fișiere) vreunul dintre fișierele imagine
+verificaExistentaImagini(obiectEroriParsed.cale_baza, obiectEroriParsed.eroare_default, obiectEroriParsed.info_erori);
+
+function verificaProprietatiDuplicateString(textJson) {
+    const regexObiecte = /\{[^{}]*\}/g;
+    const obiecte = textJson.match(regexObiecte);
+
+    if (obiecte) {
+        for (let obiectStr of obiecte) {
+            let chei = [...obiectStr.matchAll(/"([^"]+)"\s*:/g)].map(match => match[1]);
+            let cheiUnice = new Set(chei);
+
+            if (chei.length !== cheiUnice.size) {
+                console.error("Eroare: Există o proprietate specificată de mai multe ori într-un obiect din fișierul JSON.");
+            }
+        }
+    }
+}
+//Pentru un obiect din fișier există o proprietate specificată de mai multe ori
+verificaProprietatiDuplicateString(textJsonErori);
+
+function verificaIdentificatoriDuplicati(infoErori) {
+    if (infoErori) {
+        let dictionarId = {};
+
+        for (let eroare of infoErori) {
+            if (!dictionarId[eroare.identificator]) {
+                dictionarId[eroare.identificator] = [];
+            }
+            dictionarId[eroare.identificator].push(eroare);
+        }
+
+        for (let id in dictionarId) {
+            if (dictionarId[id].length > 1) {
+                let detalii = dictionarId[id].map(e =>
+                    `[status: ${e.status}, titlu: "${e.titlu}", text: "${e.text}", imagine: "${e.imagine}"]`
+                ).join(" vs ");
+                console.error(`Eroare: Există mai multe erori cu identificatorul ${id}: ${detalii}`);
+            }
+        }
+    }
+}
+//Există mai multe erori cu același identificator
+verificaIdentificatoriDuplicati(obiectEroriParsed.info_erori);
+
+
 
 function initErori() {
     let continut = fs.readFileSync(path.join(__dirname, "resurse/json/erori.json")).toString("utf-8");
@@ -121,7 +172,6 @@ function initErori() {
     }
 }
 
-verificaErori();
 initErori();
 
 

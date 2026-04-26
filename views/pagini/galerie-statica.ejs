@@ -6,44 +6,51 @@
     <meta name="keywords" content="galerie, console, jocuri video, playstation, xbox, nintendo">
     <title>Galerie Statică — Pixel Mania</title>
     <%- include('../fragmente/head.ejs') %>
-    <link rel="stylesheet" href="/resurse/css/galerie.css" type="text/css" />
+        <link rel="stylesheet" href="/resurse/css/galerie.css" type="text/css" />
 </head>
 
-<body>
+<body id="pagina-galerie">
     <%- include('../fragmente/header.ejs') %>
+        <video id="bgvid" playsinline autoplay muted loop>
+            <source src="/resurse/video/controller.mp4" type="video/mp4">
+        </video>
+        <div id="bgvid-overlay" aria-hidden="true"></div>
 
-    <main>
-        <section id="sectiune-galerie-statica">
+        <main>
+            <section id="sectiune-galerie-statica">
 
-            <div class="galerie-hero-header">
-                <h2 class="titlu-galerie">Galerie Statică</h2>
-                <p>Console afișate în funcție de sezonul curent — <strong><%= locals.anotimp || 'sezon curent' %></strong></p>
+                <div class="galerie-hero-header">
+                    <h2 class="titlu-galerie">Galerie Statică</h2>
+                    <p>Console afișate în funcție de sezonul curent — <strong>
+                            <%= locals.anotimp || 'sezon curent' %>
+                        </strong></p>
 
-                <!-- DUOTONE demo -->
-                <div class="duotone-img"
-                     style="background-image: url('/resurse/imagini630/ps5630.png')"
-                     title="Efect duotone aplicat imaginii PlayStation 5">
-                    <span class="duotone-label">PlayStation 5 — efectul duotone</span>
+                    <!-- DUOTONE demo -->
+                    <div class="duotone-img" style="background-image: url('/resurse/imagini630/ps5630.png')"
+                        title="Efect duotone aplicat imaginii PlayStation 5">
+                        <span class="duotone-label">PlayStation 5 — efectul duotone</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="wrap separator-sectiune">
-              <div class="flared-horizontal-rule-effect">
-                <hr><hr>
-              </div>
-              <div class="flared-no-lines">
-                <hr><hr>
-              </div>
-            </div>
+                <div class="wrap separator-sectiune">
+                    <div class="flared-horizontal-rule-effect">
+                        <hr>
+                        <hr>
+                    </div>
+                    <div class="flared-no-lines">
+                        <hr>
+                        <hr>
+                    </div>
+                </div>
 
-            <%- include('../fragmente/galerie.ejs') %>
+                <%- include('../fragmente/galerie.ejs') %>
 
-        </section>
+            </section>
 
 
-    </main>
+        </main>
 
-    <%- include('../fragmente/footer.ejs') %>
+        <%- include('../fragmente/footer.ejs') %>
 </body>
 
 </html>

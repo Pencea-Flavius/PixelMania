@@ -94,39 +94,45 @@
 
 /* =============================================
    efect-css: text defilant orizontal (keyframes)
-   Recurent, responsive (fara scrollbar orizontal)
+   Recurent, responsive (fara scrollbar orizontal pe pagina).
    ============================================= */
 
 .text-defilant-container {
     width: 100%;
-    overflow: hidden;
+    overflow: hidden;             // clipuieste textul, fara scrollbar orizontal
     white-space: nowrap;
-    background: rgba(124, 58, 237, 0.08);
-    border: 1px solid rgba(124, 58, 237, 0.3);
-    border-radius: 6px;
+    background: linear-gradient(
+        90deg,
+        rgba(124, 58, 237, 0.18) 0%,
+        rgba(0, 229, 255, 0.10) 50%,
+        rgba(124, 58, 237, 0.18) 100%
+    );
+    border-top: 1px solid rgba(124, 58, 237, 0.4);
+    border-bottom: 1px solid rgba(124, 58, 237, 0.4);
     padding: 6px 0;
-    margin: 12px 0;
+    cursor: default;
 }
 
 .text-defilant {
     display: inline-block;
-    padding-left: 100%;
-    animation: defilare-text 20s linear infinite;
+    padding-left: 100%;           // porneste din dreapta viewport-ului
+    animation: defilare-text 28s linear infinite;
     color: #00e5ff;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 2px;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 6px rgba(0, 229, 255, 0.5);
 }
 
 .text-defilant-container:hover .text-defilant {
-    animation-play-state: paused;
+    animation-play-state: paused; // pauza la hover
 }
 
 @keyframes defilare-text {
     0% {
         transform: translateX(0);
     }
-
     100% {
         transform: translateX(-100%);
     }
@@ -168,5 +174,213 @@
     &:hover .reflexie {
         /* Acelasi ancoraj de jos, dar marim multiplicatorul Y. Acum alungirea se va propaga STRICT IN JOS. */
         transform: translateX(10px) rotateX(180deg) skew(-45deg) scaleY(0.8);
+    }
+}
+
+// =============================================
+// cerinta: column-count
+// Imparte textul dintr-un container pe mai multe coloane,
+// ca un layout de ziar/revista. Browserul distribuie
+// automat continutul in coloanele definite.
+// =============================================
+
+.text-coloane {
+    // Imparte continutul in 2 coloane egale
+    column-count: 2;
+
+    // Spatiu dintre coloane (gap)
+    column-gap: 2rem;
+
+    // Linie despartitoare intre coloane: grosime, stil, culoare
+    column-rule: 1px solid rgba(124, 58, 237, 0.4);
+}
+
+// Pe ecran mediu si mic: o singura coloana
+// (cerinta: ecran mic si mediu = 1 coloana)
+@media screen and (max-width: 1200px) {
+    .text-coloane {
+        column-count: 1; // revenim la layout normal
+        column-rule: none;
+    }
+}
+
+// =============================================
+// cerinta: tabel transpus + tabel responsive
+// Tabelul se afiseaza normal pe ecran mare.
+// Pe ecran mic (max-width: 700px) se transpune:
+// fiecare coloana originala devine un rand vertical.
+// =============================================
+
+// ---- ECRAN MARE: tabel normal ----
+#transpus {
+    width: 100%;
+    border-collapse: collapse;  // functioneaza normal cat timp display-ul e intact (table)
+    margin-top: 16px;
+
+    th, td {
+        padding: 10px 14px;
+        border: 1px solid rgba(124, 58, 237, 0.4);
+        text-align: left;
+        color: var(--culoare-text-secundar);
+        font-size: 0.9rem;
+    }
+
+    th {
+        background-color: rgba(124, 58, 237, 0.2);
+        color: var(--culoare-accent);
+        font-family: 'Exo 2', sans-serif;
+        font-weight: 700;
+    }
+
+    tbody tr:hover td {
+        background-color: rgba(124, 58, 237, 0.1);
+        color: var(--culoare-text-primar);
+    }
+}
+
+// ---- ECRAN MIC: tabel TRANSPUS ----
+@media screen and (max-width: 700px) {
+
+    // thead, tbody si fiecare tr devin blocuri care floateaza unul langa altul.
+    // Fiecare <tr> devine vizual o "coloana" verticala.
+    #transpus thead,
+    #transpus tbody,
+    #transpus tr {
+        display: block;
+        float: left;
+    }
+
+    // Fiecare <th> si <td> devine un rand in coloana lui.
+    #transpus th,
+    #transpus td {
+        display: block;
+        border: 1px solid rgba(124, 58, 237, 0.4);
+        padding: 8px 10px;
+        min-width: 110px;
+        white-space: nowrap;
+    }
+
+    // Elimina bordul de sus duplicat: cand 2 celule adiacente vertical
+    // au fiecare border-bottom/border-top => apare o linie dubla.
+    #transpus td + td,
+    #transpus th + th {
+        border-top: none;  // pastram doar bordul de jos al celulei precedente
+    }
+
+    // Fix bord dublu VERTICAL intre coloane (tr-uri flotante):
+    // tr-ul urmator are border-left => se suprapune peste border-right-ul precedentului.
+    // Solutie: eliminam border-left de la toate tr-urile cu frate anterior.
+    #transpus thead + tbody,
+    #transpus tr + tr {
+        > th, > td {
+            border-left: none;  // scapam de dublura verticala
+        }
+    }
+
+    // De ce border-collapse: collapse NU merge dupa transpunere?
+    // border-collapse functioneaza DOAR pe elemente cu display: table/table-row/table-cell.
+    // Odata ce am setat display: block pe thead/tbody/tr,
+    // browserul nu mai stie ca e un tabel => ignora complet border-collapse.
+    // Bordurile devin simple borders CSS pe block-uri, nu table-borders.
+    // De aceea trebuie sa le controlam manual cu border-top/border-left: none.
+
+    // clearfix - curatam float-urile ca elementele de dupa tabel sa nu se strice
+    #transpus::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+}
+// =============================================
+// cerinta: background-attachment + animatie schimbare imagine
+// background-attachment: fixed = imaginea de fundal NU se misca la scroll
+// (efect parallax: continutul defileaza, fundalul ramane pe loc).
+// Imaginea se schimba automat la fiecare 4s prin @keyframes.
+// =============================================
+
+// Animatia cicleza prin 3 imagini de console (schimbare instant cu step-start)
+@keyframes schimba-bg-console {
+    0%,  32% { background-image:
+        linear-gradient(rgba(10,10,26,0.50), rgba(10,10,26,0.50)),
+        url('/resurse/imagini/ps5.png'); }
+    33%, 65% { background-image:
+        linear-gradient(rgba(10,10,26,0.50), rgba(10,10,26,0.50)),
+        url('/resurse/imagini/xboxones.png'); }
+    66%, 99% { background-image:
+        linear-gradient(rgba(10,10,26,0.50), rgba(10,10,26,0.50)),
+        url('/resurse/imagini/switch.png'); }
+}
+
+.sectiune-parallax {
+    background-image:
+        linear-gradient(rgba(10,10,26,0.50), rgba(10,10,26,0.50)),
+        url('/resurse/imagini/ps5.png');
+
+    // fixed = fundalul ramane fix la scroll (nu se misca cu pagina)
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    // Schimba imaginea la fiecare 4s (12s total / 3 imagini), salt instant
+    animation: schimba-bg-console 12s step-start infinite;
+
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: transparent !important;
+    border-color: rgba(124, 58, 237, 0.3) !important;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.parallax-overlay {
+    text-align: center;
+    padding: 30px 20px;
+    width: 100%;
+
+    h2 {
+        color: #00e5ff;
+        font-family: 'Exo 2', sans-serif;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        text-shadow: 0 0 20px rgba(0,229,255,0.5);
+    }
+
+    p {
+        color: rgba(240,240,255,0.85);
+        font-size: 1rem;
+        margin-bottom: 16px;
+    }
+}
+
+.parallax-stats {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    span {
+        background: rgba(124,58,237,0.25);
+        border: 1px solid rgba(124,58,237,0.5);
+        border-radius: 20px;
+        padding: 6px 16px;
+        color: #f0f0ff;
+        font-family: 'Exo 2', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
+// Pe mobil: background-attachment: fixed nu functioneaza pe iOS Safari
+// (limitare browser), deci il dezactivam pe ecran mic
+@media screen and (max-width: 700px) {
+    .sectiune-parallax {
+        background-attachment: scroll;
     }
 }

@@ -302,3 +302,36 @@
   filter: blur(4px);
   opacity: 0.25;
 }
+
+#pagina-galerie {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+#bgvid {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -2;
+}
+
+#bgvid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background: linear-gradient(135deg, rgba(10, 10, 26, 0.72) 0%, rgba(124, 58, 237, 0.22) 50%, rgba(10, 10, 26, 0.68) 100%);
+  pointer-events: none;
+}
+
+@media print {
+  #bgvid,
+  #bgvid-overlay {
+    display: none !important;
+  }
+}

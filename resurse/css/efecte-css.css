@@ -92,27 +92,29 @@
 
 /* =============================================
    efect-css: text defilant orizontal (keyframes)
-   Recurent, responsive (fara scrollbar orizontal)
+   Recurent, responsive (fara scrollbar orizontal pe pagina).
    ============================================= */
 .text-defilant-container {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  background: rgba(124, 58, 237, 0.08);
-  border: 1px solid rgba(124, 58, 237, 0.3);
-  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(124, 58, 237, 0.18) 0%, rgba(0, 229, 255, 0.1) 50%, rgba(124, 58, 237, 0.18) 100%);
+  border-top: 1px solid rgba(124, 58, 237, 0.4);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.4);
   padding: 6px 0;
-  margin: 12px 0;
+  cursor: default;
 }
 
 .text-defilant {
   display: inline-block;
   padding-left: 100%;
-  animation: defilare-text 20s linear infinite;
+  animation: defilare-text 28s linear infinite;
   color: #00e5ff;
-  font-family: "Orbitron", sans-serif;
-  font-size: 0.85rem;
-  letter-spacing: 2px;
+  font-family: "Exo 2", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 6px rgba(0, 229, 255, 0.5);
 }
 
 .text-defilant-container:hover .text-defilant {
@@ -163,4 +165,141 @@
 .titlu-site:hover .reflexie {
   /* Acelasi ancoraj de jos, dar marim multiplicatorul Y. Acum alungirea se va propaga STRICT IN JOS. */
   transform: translateX(10px) rotateX(180deg) skew(-45deg) scaleY(0.8);
+}
+
+.text-coloane {
+  column-count: 2;
+  column-gap: 2rem;
+  column-rule: 1px solid rgba(124, 58, 237, 0.4);
+}
+
+@media screen and (max-width: 1200px) {
+  .text-coloane {
+    column-count: 1;
+    column-rule: none;
+  }
+}
+#transpus {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+#transpus th, #transpus td {
+  padding: 10px 14px;
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  text-align: left;
+  color: var(--culoare-text-secundar);
+  font-size: 0.9rem;
+}
+#transpus th {
+  background-color: rgba(124, 58, 237, 0.2);
+  color: var(--culoare-accent);
+  font-family: "Exo 2", sans-serif;
+  font-weight: 700;
+}
+#transpus tbody tr:hover td {
+  background-color: rgba(124, 58, 237, 0.1);
+  color: var(--culoare-text-primar);
+}
+
+@media screen and (max-width: 700px) {
+  #transpus thead,
+  #transpus tbody,
+  #transpus tr {
+    display: block;
+    float: left;
+  }
+  #transpus th,
+  #transpus td {
+    display: block;
+    border: 1px solid rgba(124, 58, 237, 0.4);
+    padding: 8px 10px;
+    min-width: 110px;
+    white-space: nowrap;
+  }
+  #transpus td + td,
+  #transpus th + th {
+    border-top: none;
+  }
+  #transpus thead + tbody > th, #transpus thead + tbody > td,
+  #transpus tr + tr > th,
+  #transpus tr + tr > td {
+    border-left: none;
+  }
+  #transpus::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+@keyframes schimba-bg-console {
+  0%, 32% {
+    background-image: linear-gradient(rgba(10, 10, 26, 0.5), rgba(10, 10, 26, 0.5)), url("/resurse/imagini/ps5.png");
+  }
+  33%, 65% {
+    background-image: linear-gradient(rgba(10, 10, 26, 0.5), rgba(10, 10, 26, 0.5)), url("/resurse/imagini/xboxones.png");
+  }
+  66%, 99% {
+    background-image: linear-gradient(rgba(10, 10, 26, 0.5), rgba(10, 10, 26, 0.5)), url("/resurse/imagini/switch.png");
+  }
+}
+.sectiune-parallax {
+  background-image: linear-gradient(rgba(10, 10, 26, 0.5), rgba(10, 10, 26, 0.5)), url("/resurse/imagini/ps5.png");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: schimba-bg-console 12s step-start infinite;
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent !important;
+  border-color: rgba(124, 58, 237, 0.3) !important;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.parallax-overlay {
+  text-align: center;
+  padding: 30px 20px;
+  width: 100%;
+}
+.parallax-overlay h2 {
+  color: #00e5ff;
+  font-family: "Exo 2", sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+}
+.parallax-overlay p {
+  color: rgba(240, 240, 255, 0.85);
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+.parallax-stats {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.parallax-stats span {
+  background: rgba(124, 58, 237, 0.25);
+  border: 1px solid rgba(124, 58, 237, 0.5);
+  border-radius: 20px;
+  padding: 6px 16px;
+  color: #f0f0ff;
+  font-family: "Exo 2", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media screen and (max-width: 700px) {
+  .sectiune-parallax {
+    background-attachment: scroll;
+  }
 }
