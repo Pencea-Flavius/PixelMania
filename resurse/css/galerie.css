@@ -36,7 +36,8 @@
   display: block;
   /* tranzitie: 1/8 secunda = 0.125s */
   transition: transform 0.125s ease, opacity 0.125s ease, border-radius 0.125s ease;
-  transform-origin: center top; /* centrul laturii de sus */
+  transform-origin: center top;
+  /* centrul laturii de sus */
 }
 #grid-galerie figure figcaption {
   padding: 6px 10px;
@@ -97,7 +98,9 @@
   grid-row: 2;
   grid-column: 3;
 }
-#grid-galerie { /* sare col 2 */ }
+#grid-galerie {
+  /* sare col 2 */
+}
 #grid-galerie figure:nth-child(6) {
   grid-row: 3;
   grid-column: 1;
@@ -118,7 +121,8 @@
   grid-row: 4;
   grid-column: 3;
 }
-#grid-galerie { /* sare col 2 */
+#grid-galerie {
+  /* sare col 2 */
   /* Randul 5 — 3 imagini pline (figurile 11-13, daca exista) */
 }
 #grid-galerie figure:nth-child(11) {
@@ -205,7 +209,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #7c3aed; /* c1 */
+  background: #7c3aed;
+  /* c1 */
   mix-blend-mode: multiply;
   transition: background 0.5s ease;
   z-index: 1;
@@ -217,7 +222,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #00e5ff; /* c2 */
+  background: #00e5ff;
+  /* c2 */
   mix-blend-mode: screen;
   transition: background 0.5s ease;
   z-index: 2;
@@ -226,10 +232,12 @@
   /* la hover: trece la c3, c4 */
 }
 .duotone-img:hover::before {
-  background: #ed3a7c; /* c3 */
+  background: #ed3a7c;
+  /* c3 */
 }
 .duotone-img:hover::after {
-  background: #ffd700; /* c4 */
+  background: #ffd700;
+  /* c4 */
 }
 .duotone-img .duotone-label {
   position: absolute;
