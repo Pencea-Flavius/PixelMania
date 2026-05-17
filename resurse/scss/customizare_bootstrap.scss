@@ -1,4 +1,5 @@
 /* =============================================
+   CERINTA ETAPA 5 (0.25p): Customizare Bootstrap cu schema cromatica aleasa si cu dimensiuni de ecran diferite.
    CUSTOMIZARE BOOTSTRAP cu schema cromatica Pixel Mania
    Toate variabilele bootstrap sunt suprascrise inainte de import
    ============================================= */
@@ -63,5 +64,13 @@
     $btn-padding-x: 1.2rem,
     $btn-font-family: 'Orbitron' #{','} sans-serif,
     $btn-font-size: 0.85rem,
-    $btn-border-radius: 8px
+    $btn-border-radius: 8px,
+
+    // CERINTA ETAPA 6: customizare input range (bulinei +50% font-size html, culori)
+    $form-range-thumb-width: 1.5rem,            // 1rem * 1.5 = +50% fata de font-size html
+    $form-range-thumb-height: 1.5rem,
+    $form-range-thumb-bg: #ed3a7c,              // culoarea bulinei (contrast)
+    $form-range-thumb-active-bg: #00e5ff,
+    $form-range-track-bg: #7c3aed,              // culoarea sliderului (primary)
+    $form-range-track-height: 0.6rem
 );

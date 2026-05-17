@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta name="description" content="Pixel Mania - Setul <%- locals.set.nume_set %>.">
+    <title>Pixel Mania - <%- locals.set.nume_set %></title>
+    <%- include("../fragmente/head.ejs") %>
+    <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css"/>
+    <style>
+        #art-set { background: var(--culoare-card); border: 1px solid var(--culoare-contur-subtil); border-radius: 16px; padding: 2rem; max-width: 900px; margin: 2rem auto; }
+        #art-set h3 { color: var(--culoare-accent); font-family: 'Exo 2', sans-serif; }
+        #art-set .preturi { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin: 1rem 0; }
+        #art-set .pret-vechi { text-decoration: line-through; color: var(--culoare-text-secundar); font-size: 1.1rem; }
+        #art-set .pret-nou { color: var(--culoare-highlight); font-weight: 700; font-size: 1.6rem; }
+        #art-set .reducere { background: var(--culoare-contrast); color: #fff; padding: 0.3rem 0.8rem; border-radius: 6px; }
+        .grila-prod-set { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .mini-card { background: rgba(10,10,26,0.6); border: 1px solid var(--culoare-contur-subtil); border-radius: 10px; padding: 0.8rem; text-align: center; }
+        .mini-card img { width: 100%; max-height: 120px; object-fit: contain; border-radius: 6px; }
+        .mini-card a { color: var(--culoare-text-primar); text-decoration: none; display: block; margin-top: 0.5rem; font-weight: 600; }
+        .mini-card a:hover { color: var(--culoare-accent); }
+        .mini-card .p-marca { color: var(--culoare-primara); font-size: 0.8rem; margin: 0.2rem 0; }
+        .mini-card .p-pret { color: var(--culoare-highlight); font-weight: 700; }
+    </style>
+</head>
+<body>
+    <%- include("../fragmente/header.ejs") %>
+    <main>
+        <article id="art-set">
+            <h3><%- locals.set.nume_set %></h3>
+            <p style="color: var(--culoare-text-secundar);"><%- locals.set.descriere_set %></p>
+            <div class="preturi">
+                <span class="pret-vechi"><%- locals.set.suma_initiala %> lei</span>
+                <span class="pret-nou"><%- locals.set.pret_final %> lei</span>
+                <span class="reducere">-<%- locals.set.reducere_procent %>% (<%- locals.set.produse.length %> produse)</span>
+            </div>
+            <p style="color: var(--culoare-text-secundar); font-size: 0.85rem;">
+                Reducere = min(5, <%- locals.set.produse.length %>) * 5% = <%- locals.set.reducere_procent %>%
+            </p>
+
+            <h4 style="color: var(--culoare-text-primar); margin-top: 2rem;">Continut set</h4>
+            <div class="grila-prod-set">
+                <% for (let p of locals.set.produse) { %>
+                    <div class="mini-card">
+                        <a href="/produs/<%- p.id %>"><img src="/resurse/imagini630/<%- p.imagine %>" alt="<%- p.nume %>"/></a>
+                        <a href="/produs/<%- p.id %>"><%- p.nume %></a>
+                        <% if (p.marca) { %><p class="p-marca"><%- p.marca %></p><% } %>
+                        <p class="p-pret"><%- p.pret %> lei</p>
+                    </div>
+                <% } %>
+            </div>
+
+            <p style="text-align:center; margin-top:1.5rem;">
+                <a href="/seturi" style="color:var(--culoare-accent);">&larr; Inapoi la toate seturile</a>
+            </p>
+        </article>
+    </main>
+    <%- include("../fragmente/footer.ejs") %>
+</body>
+</html>

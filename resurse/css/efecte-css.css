@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* =============================================
-   efect-css-stilizare-hr (cerinta individuala)
+   CERINTA ETAPA 5 (0.1p): Stilizare hr (cerinta individuala)
    Doua linii DREPTE paralele cu capete curbate '(' si ')':
    - border-top + border-bottom = cele 2 linii orizontale drepte
    - border-left/right: none = fara laturi verticale vizibile
@@ -76,7 +76,7 @@
 }
 
 /* =============================================
-   efect-css: text selectat cu ::selection
+   CERINTA ETAPA 5 (0.025p): Text selectat cu ::selection
    ============================================= */
 ::selection {
   background-color: #7c3aed;
@@ -91,7 +91,7 @@
 }
 
 /* =============================================
-   efect-css: text defilant orizontal (keyframes)
+   CERINTA ETAPA 5 (0.05p): Text care se plimba orizontal (Marquee / keyframes)
    Recurent, responsive (fara scrollbar orizontal pe pagina).
    ============================================= */
 .text-defilant-container {
@@ -130,7 +130,7 @@
   }
 }
 /* =============================================
-   efect-css: titlu site reflexie
+   CERINTA ETAPA 5 (0.15p): Reflexie (cerinta individuala) pe titlu site
    ============================================= */
 .reflexie {
   position: absolute;

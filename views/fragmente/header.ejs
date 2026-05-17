@@ -1,3 +1,32 @@
+<%# CERINTA ETAPA 6: buton schimbare tema (soare/luna) - localStorage memoreaza alegerea %>
+<script>
+    (function () {
+        var t = localStorage.getItem('tema-pixelmania') || 'dark';
+        document.documentElement.setAttribute('data-tema', t);
+    })();
+</script>
+<button id="btn-tema" type="button" title="Schimba tema" aria-label="Schimba tema"
+    style="position:fixed; top:1rem; right:1rem; z-index:9000; background:transparent; border:1px solid currentColor; border-radius:50%; width:2.5rem; height:2.5rem; cursor:pointer; color:#ffd700; font-size:1.1rem;">
+    <i class="fa-solid fa-moon"></i>
+</button>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var btn = document.getElementById('btn-tema');
+        function aplicaIcon() {
+            var t = document.documentElement.getAttribute('data-tema');
+            btn.innerHTML = t === 'light' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+        }
+        aplicaIcon();
+        btn.addEventListener('click', function () {
+            var t = document.documentElement.getAttribute('data-tema');
+            var nou = t === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-tema', nou);
+            localStorage.setItem('tema-pixelmania', nou);
+            aplicaIcon();
+        });
+    });
+</script>
+
 <header style="text-align: center;">
     <p id="banner-print" style="display: none;"><strong>Acesta este un proiect școlar!</strong></p>
     <h1 class="titlu-site">
@@ -52,6 +81,17 @@
                     <i class="fa-solid fa-box-open icon-nav"></i>
                     <span class="text-nav">Produse</span>
                 </a>
+                <%# CERINTA ETAPA 6: subopt generate din enum (locals.marciMeniu vine din middleware) %>
+                <ul>
+                    <li><a href="/produse"><i class="fa-solid fa-list"></i>&nbsp; toate</a></li>
+                    <% if (locals.marciMeniu) { %>
+                        <% for (let m of locals.marciMeniu) { %>
+                            <li><a href="/produse?marca=<%- encodeURIComponent(m) %>"><i class="fa-solid fa-gamepad"></i>&nbsp; <%- m %></a></li>
+                        <% } %>
+                    <% } %>
+                    <%# BONUS 17 ETAPA 6: opt seturi in meniu produse %>
+                    <li><a href="/seturi"><i class="fa-solid fa-boxes-stacked"></i>&nbsp; seturi</a></li>
+                </ul>
             </li>
             <li>
                 <a href="/inregistrare" class="item-label" title="Înregistrare">

@@ -1,6 +1,7 @@
-/* Galerie animata — generat automat de server: 4 imagini */
-$n-imagini: 4;
-$durata-imagine: 3s;
+// CERINTA ETAPA 5: BONUS 1 (0.5p) - Galeria animata (sablon SASS)
+@use "sass:math";
+
+$durata-imagine: 3s !default;
 $durata-totala: calc($n-imagini * $durata-imagine);
 $border-img: url("/resurse/border-galerie.png");
 
@@ -51,51 +52,64 @@ $border-img: url("/resurse/border-galerie.png");
   border-top: 1px solid #ccc;
 }
 
-.galerie-animata figure:nth-child(1) {
-  animation-delay: calc((0 * $durata-imagine) - $durata-totala);
+@for $i from 0 to $n-imagini {
+  .galerie-animata figure:nth-child(#{$i + 1}) {
+    // Delay negativ pentru a plasa imaginile direct la momentul corect in timeline
+    animation-delay: calc((#{$i} * #{$durata-imagine}) - #{$durata-totala});
+  }
 }
 
-.galerie-animata figure:nth-child(2) {
-  animation-delay: calc((1 * $durata-imagine) - $durata-totala);
-}
+// Durata imaginii e impartita in:
+// 2s = vizibilitate statica
+// 1s = tranzitie (micsorare)
+$timp-tranzitie: 1;
+$timp-static: 2;
 
-.galerie-animata figure:nth-child(3) {
-  animation-delay: calc((2 * $durata-imagine) - $durata-totala);
-}
-
-.galerie-animata figure:nth-child(4) {
-  animation-delay: calc((3 * $durata-imagine) - $durata-totala);
-}
+$p-shrink-start: math.percentage(math.div($timp-static, $n-imagini * 3));
+$p-shrink-end: math.percentage(math.div($timp-static + $timp-tranzitie, $n-imagini * 3));
+$p-start-wait: math.percentage(math.div($n-imagini * 3 - $timp-tranzitie, $n-imagini * 3));
 
 @keyframes animatieGalerie {
   0% {
     z-index: 1;
     opacity: 1;
     clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);
+    filter: brightness(1) saturate(1);
   }
-  16.6667% {
+  #{$p-shrink-start} {
+    z-index: 2;
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);
+    filter: brightness(1) saturate(1);
+  }
+  #{$p-shrink-end} {
+    z-index: 2;
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);
+    filter: brightness(1) saturate(1);
+  }
+  #{$p-shrink-end + 0.001%} {
+    z-index: -1;
+    opacity: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);
+    filter: brightness(1) saturate(1);
+  }
+  #{$p-start-wait - 0.001%} {
+    z-index: -1;
+    opacity: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);
+    filter: brightness(5) saturate(0);
+  }
+  #{$p-start-wait} {
     z-index: 1;
     opacity: 1;
     clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);
-  }
-  16.6668% {
-    z-index: 2;
-    opacity: 1;
-    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);
-  }
-  25.0000% {
-    z-index: 2;
-    opacity: 1;
-    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);
-  }
-  25.0001% {
-    z-index: -1;
-    opacity: 0;
-    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);
+    filter: brightness(5) saturate(0);
   }
   100% {
-    z-index: -1;
-    opacity: 0;
-    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);
+    z-index: 1;
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);
+    filter: brightness(1) saturate(1);
   }
 }

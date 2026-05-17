@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta name="description" content="Pixel Mania - <%- locals.prod.nume %> second-hand. <%- locals.prod.descriere %>">
+    <meta name="keywords" content="console second-hand, <%- locals.prod.marca %>, <%- locals.prod.nume %>, Pixel Mania">
+    <title>Pixel Mania - <%- locals.prod.nume %></title>
+    <%- include("../fragmente/head.ejs") %>
+    <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css"/>
+</head>
+<body>
+    <%- include("../fragmente/header.ejs") %>
+
+    <main>
+        <section>
+            <h2>Pagina produs</h2>
+            <%
+                const zileSapt = ['Duminica','Luni','Marti','Miercuri','Joi','Vineri','Sambata'];
+                const numeLuniRo = ['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'];
+                let d = new Date(locals.prod.data_adaugare);
+                let dataFmt = d.getDate() + '-' + numeLuniRo[d.getMonth()] + '-' + d.getFullYear() + ' (' + zileSapt[d.getDay()] + ')';
+                let accLista = locals.prod.accesorii ? locals.prod.accesorii.split(',').map(s => s.trim()).filter(Boolean) : [];
+            %>
+            <article id="art-produs">
+                <h3><span class="nume"><%- locals.prod.nume %></span></h3>
+                <figure class="imag-produs">
+                    <img src="/resurse/imagini630/<%- locals.prod.imagine %>" alt="[imagine <%- locals.prod.nume %>]"/>
+                </figure>
+                <p>Pret: <span class="pret"><%- locals.prod.pret %></span> lei</p>
+                <p>Marca: <span class="marca"><%- locals.prod.marca %></span></p>
+                <p>Stare: <span class="stare"><%- locals.prod.stare %></span></p>
+                <p>An lansare: <span class="an_lansare"><%- locals.prod.an_lansare %></span></p>
+                <p>Mod livrare: <span><%- locals.prod.livrare %></span></p>
+                <p>Garantie inclusa: <span><%- locals.prod.garantie_inclusa ? 'da' : 'nu' %></span></p>
+                <p>Accesorii incluse: <span><%- accLista.join(', ') || '-' %></span></p>
+                <p>Data adaugare: <time datetime="<%- d.toISOString().slice(0,10) %>"><%- dataFmt %></time></p>
+                <p>Descriere: <span class="descriere"><%- locals.prod.descriere %></span></p>
+            </article>
+
+            <%# BONUS 17 ETAPA 6: seturi din care face parte produsul curent %>
+            <% if (locals.seturi && locals.seturi.length > 0) { %>
+                <section style="max-width: 900px; margin: 2rem auto; padding: 0 1rem;">
+                    <h3 style="color: var(--culoare-accent);">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        Acest produs face parte din urmatoarele seturi:
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <% for (let s of locals.seturi) { %>
+                            <article style="background: var(--culoare-card); border: 1px solid var(--culoare-contur-subtil); border-radius: 10px; padding: 1rem;">
+                                <h4 style="margin-top:0;">
+                                    <a href="/set/<%- s.id %>" style="color: var(--culoare-text-primar); text-decoration:none;"><%- s.nume_set %></a>
+                                </h4>
+                                <p style="font-size: 0.85rem; color: var(--culoare-text-secundar);"><%- s.descriere_set %></p>
+                                <p>
+                                    <span style="text-decoration: line-through; color: var(--culoare-text-secundar); margin-right: 0.5rem;"><%- s.suma_initiala %> lei</span>
+                                    <strong style="color: var(--culoare-highlight); font-size: 1.1rem;"><%- s.pret_final %> lei</strong>
+                                    <span style="background: var(--culoare-contrast); color:#fff; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.75rem; margin-left: 0.3rem;">-<%- s.reducere_procent %>%</span>
+                                </p>
+                                <ul style="list-style: none; padding: 0; margin: 0.5rem 0 0;">
+                                    <% for (let p of s.produse) { %>
+                                        <li style="font-size: 0.8rem; padding: 0.2rem 0;">
+                                            <a href="/produs/<%- p.id %>" style="color: var(--culoare-text-primar); text-decoration: none;">
+                                                <i class="fa-solid fa-gamepad" style="color: var(--culoare-primara);"></i>
+                                                <%- p.nume %>
+                                            </a>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </article>
+                        <% } %>
+                    </div>
+                </section>
+            <% } %>
+
+            <p style="text-align:center; margin-top:1.5rem;">
+                <a href="/produse" style="color:var(--culoare-accent); text-decoration:none; font-family:'Exo 2',sans-serif; font-size:0.9rem;">&larr; Inapoi la catalog</a>
+            </p>
+        </section>
+    </main>
+
+    <%- include("../fragmente/footer.ejs") %>
+</body>
+</html>

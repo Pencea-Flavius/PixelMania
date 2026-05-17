@@ -352,10 +352,66 @@
                             </div>
                         </section>
 
-                        <!-- Tabel comparativ console — cerinta tabel responsive + tabel transpus -->
+                        <!-- Tabele responsive (cerinte tehnice) adaptate sa para parte dintr-un site comercial -->
                         <section>
-                            <h3>Comparație rapidă console populare</h3>
-                            <p><small>Pe ecran mic tabelul se transpune: fiecare coloană devine un rând vertical.</small></p>
+                            <h3>Informații Tehnice și Oferte</h3>
+                            
+                            <h4>Jocuri și Accesorii Disponibile</h4>
+                            <div class="tabel-container" style="overflow-x: auto; margin-bottom: 30px;">
+                                <table id="tabelescu" style="width: 100%; border-collapse: collapse; text-align: left; min-width: 600px;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Joc / Accesoriu</th>
+                                            <th style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Platformă</th>
+                                            <th style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Stare</th>
+                                            <th style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">An Lansare</th>
+                                            <th style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Gen</th>
+                                            <th style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Preț</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Controller DualShock 4</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">PS4</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Refurbished</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">2013</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Accesoriu</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">150 RON</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">The Last of Us Part II</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">PS4</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Sigilat</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">2020</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Action-Adventure</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">80 RON</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Kinect Sensor</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Xbox One</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Second-Hand</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">2013</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Accesoriu</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">120 RON</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Super Mario Odyssey</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Switch</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Second-Hand</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">2017</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Platformer</td>
+                                            <td style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">160 RON</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot style="counter-reset: nrProduse 4;"><!-- pus tfoot la finalul tabelului, ca sa mearga counterul -->
+                                        <tr>
+                                            <td colspan="6" style="border: 1px solid rgba(124, 58, 237, 0.4); padding: 8px;">Numar produse listate: 4</td><!--calculat cu ajutorul counterelor -->
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <h4>Comparație Rapidă Console</h4>
                             <div class="tabel-container">
                                 <table id="transpus">
                                     <thead>

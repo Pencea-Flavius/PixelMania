@@ -9,6 +9,7 @@ app.set("view engine", "ejs")
 const pg = require("pg")
 
 
+// CERINTA ETAPA 5: Pregatire cadru de lucru (folderScss, folderCss, folderBackup)
 obGlobal = {
     obErori: null,
     obImagini: null,
@@ -39,7 +40,7 @@ for (let folder of vect_foldere) {
         fs.mkdirSync(path.join(caleFolder), { recursive: true });
     }
 }
-
+//folderul static de resurse 
 app.use("/resurse", express.static(path.join(__dirname, "resurse")));
 
 app.get("/favicon.ico", function (req, res) {
@@ -193,9 +194,10 @@ function afisareEroare(res, identificator, titlu, text, imagine) {
 app.get("/eroare", function (req, res) {
     afisareEroare(res, 404, "Titlu!!!")
 });
-
+//Etapa 5
 
 // --- BONUS 4: fix pentru fisiere cu puncte in nume ---
+// CERINTA ETAPA 5: Funcția de compilare a scss-urilor
 function compileazaScss(caleScss, caleCss) {
     if (!caleCss) {
         let numeFisExt = path.basename(caleScss);
@@ -209,6 +211,7 @@ function compileazaScss(caleScss, caleCss) {
     if (!path.isAbsolute(caleCss))
         caleCss = path.join(obGlobal.folderCss, caleCss)
 
+    // CERINTA ETAPA 5: Salvare în backup (înainte de compilarea și suprascrierea css-ului asociat)
     let caleBackup = path.join(obGlobal.folderBackup, "resurse/css");
     if (!fs.existsSync(caleBackup)) {
         fs.mkdirSync(caleBackup, { recursive: true })
@@ -242,20 +245,24 @@ function compileazaScss(caleScss, caleCss) {
 }
 
 
+// CERINTA ETAPA 5: Compilare inițială. La pornirea serverului, toate fisierele scss sunt compilate.
 // Compilare initiala la pornirea serverului
 vFisiere = fs.readdirSync(obGlobal.folderScss);
 for (let numeFis of vFisiere) {
-    if (path.extname(numeFis) == ".scss") {
+    if (path.extname(numeFis) == ".scss" && !path.basename(numeFis).startsWith("_")) {
         compileazaScss(numeFis);
     }
 }
 
+// CERINTA ETAPA 5: Compilare pe parcurs. Se urmăresc modificările din folderul de fișiere scss cu fs.watch()
 // Compilare automata la modificare fisiere scss
 fs.watch(obGlobal.folderScss, function (eveniment, numeFis) {
     if (eveniment == "change" || eveniment == "rename") {
-        let caleCompleta = path.join(obGlobal.folderScss, numeFis);
-        if (fs.existsSync(caleCompleta)) {
-            compileazaScss(caleCompleta);
+        if (numeFis && !path.basename(numeFis).startsWith("_")) {
+            let caleCompleta = path.join(obGlobal.folderScss, numeFis);
+            if (fs.existsSync(caleCompleta)) {
+                compileazaScss(caleCompleta);
+            }
         }
     }
 })
@@ -354,136 +361,198 @@ app.get("/galerie-statica", function (req, res) {
 });
 
 
+
+// BONUS 1 (ETAPA 5): Galeria animată (Generarea CSS-ului prin node pe baza SASS-ului)
 // --- GALERIE ANIMATA ---
-
-function genereazaScssGalerieAnimata(imagini, n) {
-    // Generam CSS pur animat prin interpolare de math-uri
-
-    let scss = `/* Galerie animata — generat automat de server: ${n} imagini */\n\n`;
-    scss += `$n-imagini: ${n};\n`;
-    scss += `$durata-imagine: 3s;\n`;
-    scss += `$durata-totala: calc($n-imagini * $durata-imagine);\n\n`;
-    scss += `$border-img: url('/resurse/border-galerie.png');\n\n`;
-
-    // Containerul galeriei animate
-    scss += `.galerie-animata {\n`;
-    scss += `  position: relative;\n`;
-    scss += `  width: 100%;\n`;
-    scss += `  max-width: 630px;\n`;
-    scss += `  aspect-ratio: 1 / 1;\n`;
-    scss += `  margin: 0 auto;\n`;
-    scss += `  border: 15px solid transparent;\n`;
-    scss += `  border-image: $border-img 30 stretch;\n`;
-    scss += `  background: #0a0a1a;\n`;
-    scss += `  cursor: pointer;\n`;
-    scss += `\n`;
-    scss += `  /* Opreste animatia la hover! */\n`;
-    scss += `  &:hover figure {\n`;
-    scss += `    animation-play-state: paused;\n`;
-    scss += `  }\n`;
-    scss += `}\n\n`;
-
-    scss += `.galerie-animata figure {\n`;
-    scss += `  position: absolute;\n`;
-    scss += `  inset: 0;\n`;
-    scss += `  margin: 0;\n`;
-    scss += `  z-index: -1;\n`;
-    scss += `  opacity: 0;\n`;
-    scss += `  background: #0a0a1a; /* Opreste gaurile din PNG-uri sa afiseze consola de deasupra! */\n`;
-    scss += `  animation: animatieGalerie $durata-totala linear infinite;\n`;
-    scss += `}\n\n`;
-
-    scss += `.galerie-animata figure img {\n`;
-    scss += `  width: 100%;\n`;
-    scss += `  height: 100%;\n`;
-    scss += `  object-fit: cover;\n`;
-    scss += `  display: block;\n`;
-    scss += `}\n\n`;
-
-    // Injectam delay-ul descrescător ca la Cafenea
-    for (let i = 0; i < n; i++) {
-        scss += `.galerie-animata figure:nth-child(${i + 1}) {\n`;
-        scss += `  animation-delay: calc((${i} * $durata-imagine) - $durata-totala);\n`;
-        scss += `}\n\n`;
+function genCssKeyframes(n) {
+    let caleScss = path.join(obGlobal.folderScss, "_galerie_animata_sabloane.scss");
+    let caleCss = path.join(obGlobal.folderCss, "galerie-animata-gen.css");
+    
+    try {
+        let continutScss = fs.readFileSync(caleScss, "utf8");
+        let variabilaSass = `$n-imagini: ${n};\n`;
+        
+        let rezultat = sass.compileString(variabilaSass + continutScss, {
+            style: "expanded",
+            quietDeps: true
+        });
+        fs.writeFileSync(caleCss, rezultat.css);
+        console.log(`[SASS-DINAMIC] Compilare galerie animata pentru n=${n} reusita.`);
+    } catch (err) {
+        console.error("[EROARE SASS-DINAMIC] Eroare la compilarea galeriei animate:", err.message);
     }
-
-    // Matematica duratei (timpul real alocat in portiunea loop-ului pt 'fade in / base / clip')
-    let p_start = (100 / n).toFixed(4); // Ex pt N=4: 25% (T=3s)
-    let p_start_minus = (Math.max(0, (100 / n) - 0.001)).toFixed(4);
-    let p_end = ((100 * 4) / (n * 3)).toFixed(4); // Fades out at t=4s
-    let p_end_plus = (((100 * 4) / (n * 3)) + 0.001).toFixed(4);
-
-    scss += `@keyframes animatieGalerie {\n`;
-    scss += `  0% {\n`;
-    scss += `    z-index: 1; /* Pozitie de baza (asteapta dedesubt ca imaginea veche sa dispara) */\n`;
-    scss += `    opacity: 1;\n`;
-    scss += `    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);\n`;
-    scss += `  }\n`;
-
-    scss += `  ${p_start_minus}% {\n`;
-    scss += `    z-index: 1;\n`;
-    scss += `    opacity: 1;\n`;
-    scss += `    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);\n`;
-    scss += `  }\n`;
-
-    scss += `  ${p_start}% {\n`;
-    scss += `    z-index: 2; /* Timpul ei a venit, ea face un pas in fata ca sa acopere ecranul in timp ce 'se taie' */\n`;
-    scss += `    opacity: 1;\n`;
-    scss += `    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);\n`;
-    scss += `  }\n`;
-
-    scss += `  ${p_end}% {\n`;
-    scss += `    z-index: 2;\n`;
-    scss += `    opacity: 1;\n`;
-    scss += `    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);\n`;
-    scss += `  }\n`;
-
-    scss += `  ${p_end_plus}% {\n`;
-    scss += `    z-index: -1; /* Complet invizibila */\n`;
-    scss += `    opacity: 0;\n`;
-    scss += `    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);\n`;
-    scss += `  }\n`;
-
-    scss += `  100% {\n`;
-    scss += `    z-index: -1;\n`;
-    scss += `    opacity: 0;\n`;
-    scss += `    clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);\n`;
-    scss += `  }\n`;
-    scss += `}\n\n`;
-
-    scss += `@media screen and (max-width: 1000px) {\n`;
-    scss += `  #galerie-animata-sec { display: none !important; }\n`;
-    scss += `}\n`;
-
-    return scss;
 }
 
 app.get("/galerie-dinamica", function (req, res) {
     let toateImagini = obGlobal.obImagini.imagini;
-    // ia primele imagini cu index par din JSON
     let imaginiPare = toateImagini.filter((_, idx) => idx % 2 === 0);
 
-    // putere a lui 2: mai mare strict decat 1 si mai mic strict decat 17
-    // filtrare la cele disponibile
     let puteri = [2, 4, 8, 16].filter(p => p <= imaginiPare.length);
     if (puteri.length === 0) puteri = [2];
     let n = puteri[Math.floor(Math.random() * puteri.length)];
 
-    let imaginiAnimate = imaginiPare.slice(0, n);
-
-    // generare SCSS si compilare
-    let scssContent = genereazaScssGalerieAnimata(imaginiAnimate, n);
-    let caleScssGen = path.join(obGlobal.folderScss, "galerie-animata-gen.scss");
-    let caleCssGen = path.join(obGlobal.folderCss, "galerie-animata-gen.css");
-    fs.writeFileSync(caleScssGen, scssContent);
-    compileazaScss(caleScssGen, caleCssGen);
+    // Generam CSS-ul cu SCSS dinamic bazat pe N
+    genCssKeyframes(n);
 
     res.render("pagini/galerie-dinamica", {
-        imagini: imaginiAnimate,
+        imagini: imaginiPare.slice(0, n),
         n
     });
 });
 
+
+
+
+// CERINTA ETAPA 6: middleware care preia marcile (categoria mare) din enumeratia
+// din BD si le ataseaza la res.locals pentru a fi disponibile in meniu pe orice pagina
+app.use(function (req, res, next) {
+    client.query("select unnest(enum_range(null::marca_consola)) as marca", function (err, rez) {
+        if (err) {
+            res.locals.marciMeniu = [];
+        } else {
+            res.locals.marciMeniu = rez.rows.map(r => r.marca);
+        }
+        next();
+    });
+});
+
+// CERINTA ETAPA 6: pagina de produse - filtrare server-side dupa categoria mare (din meniu)
+// + furnizare date pentru toate cele 8 tipuri de input
+app.get("/produse", function (req, res) {
+    let clauzaWhere = ""
+    let marcaSelectata = null;
+    if (req.query.marca && req.query.marca !== "toate") {
+        marcaSelectata = req.query.marca;
+        clauzaWhere = `where marca='${req.query.marca}'`
+    }
+
+    client.query(`select * from console ${clauzaWhere} order by id`, function (err, rez) {
+        if (err) {
+            console.log("Eroare BD", err);
+            afisareEroare(res, 2);
+            return;
+        }
+        client.query("select unnest(enum_range(null::marca_consola)) as val", function (err, rezMarci) {
+            if (err) { afisareEroare(res, 2); return; }
+            client.query("select unnest(enum_range(null::stare_consola)) as val", function (err, rezStari) {
+                if (err) { afisareEroare(res, 2); return; }
+                client.query("select unnest(enum_range(null::tip_livrare)) as val", function (err, rezLivrare) {
+                    if (err) { afisareEroare(res, 2); return; }
+                    client.query("select min(pret) as minp, max(pret) as maxp, min(an_lansare) as mina, max(an_lansare) as maxa, max(length(nume)) as maxlennume from console", function (err, rezLimite) {
+                        if (err) { afisareEroare(res, 2); return; }
+                        // BONUS 1 ETAPA 6: pentru text input -> sugestii cu numele tuturor produselor
+                        client.query("select nume from console order by nume", function (err, rezNume) {
+                            if (err) { afisareEroare(res, 2); return; }
+                            let lim = rezLimite.rows[0];
+                            res.render("pagini/produse", {
+                                produse: rez.rows,
+                                marci: rezMarci.rows.map(r => r.val),
+                                stari: rezStari.rows.map(r => r.val),
+                                tipuriLivrare: rezLivrare.rows.map(r => r.val),
+                                numeProduse: rezNume.rows.map(r => r.nume),
+                                minPret: Math.floor(parseFloat(lim.minp) || 0),
+                                maxPret: Math.ceil(parseFloat(lim.maxp) || 1000),
+                                minAn: parseInt(lim.mina) || 1970,
+                                maxAn: parseInt(lim.maxa) || 2025,
+                                maxLenNume: parseInt(lim.maxlennume) || 100,
+                                marcaSelectata: marcaSelectata
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+})
+
+// BONUS 17 ETAPA 6: helper pentru calcul pret set cu reducere min(5,n)*5%
+function calcPretSet(produseInSet) {
+    let n = produseInSet.length;
+    let reducere = Math.min(5, n) * 5;
+    let suma = produseInSet.reduce((s, p) => s + parseFloat(p.pret), 0);
+    let final = suma - (suma * reducere / 100);
+    return {
+        suma_initiala: suma.toFixed(2),
+        reducere_procent: reducere,
+        pret_final: final.toFixed(2)
+    };
+}
+
+app.get("/produs/:id", function (req, res) {
+    let id = parseInt(req.params.id);
+    if (isNaN(id)) {
+        afisareEroare(res, 404, "Produs inexistent");
+        return;
+    }
+    client.query(`select * from console where id=${id}`, function (err, rez) {
+        if (err) {
+            console.log("Eroare BD", err);
+            afisareEroare(res, 2);
+            return;
+        }
+        if (rez.rowCount == 0) {
+            afisareEroare(res, 404, "Produs inexistent");
+            return;
+        }
+        // BONUS 17: seturi din care face parte produsul curent
+        let qSeturi = `
+            SELECT s.id, s.nume_set, s.descriere_set,
+                   json_agg(json_build_object('id', p.id, 'nume', p.nume, 'pret', p.pret, 'imagine', p.imagine)) as produse
+            FROM seturi s
+            JOIN asociere_set as1 ON s.id = as1.id_set
+            JOIN asociere_set as2 ON s.id = as2.id_set
+            JOIN console p ON as2.id_produs = p.id
+            WHERE as1.id_produs = ${id}
+            GROUP BY s.id, s.nume_set, s.descriere_set
+        `;
+        client.query(qSeturi, function (errS, rezS) {
+            let seturi = [];
+            if (!errS) {
+                seturi = rezS.rows.map(set => Object.assign(set, calcPretSet(set.produse)));
+            }
+            res.render("pagini/produs", { prod: rez.rows[0], seturi });
+        });
+    });
+})
+
+// BONUS 17: pagina cu lista seturi
+app.get("/seturi", function (req, res) {
+    let q = `
+        SELECT s.id, s.nume_set, s.descriere_set,
+               json_agg(json_build_object('id', p.id, 'nume', p.nume, 'pret', p.pret, 'imagine', p.imagine)) as produse
+        FROM seturi s
+        JOIN asociere_set asoc ON s.id = asoc.id_set
+        JOIN console p ON asoc.id_produs = p.id
+        GROUP BY s.id, s.nume_set, s.descriere_set
+        ORDER BY s.id
+    `;
+    client.query(q, function (err, rez) {
+        if (err) { console.log(err); afisareEroare(res, 2); return; }
+        let seturi = rez.rows.map(set => Object.assign(set, calcPretSet(set.produse)));
+        res.render("pagini/seturi", { seturi });
+    });
+})
+
+// BONUS 17: pagina set individual
+app.get("/set/:id", function (req, res) {
+    let id = parseInt(req.params.id);
+    if (isNaN(id)) { afisareEroare(res, 404, "Set inexistent"); return; }
+    let q = `
+        SELECT s.id, s.nume_set, s.descriere_set,
+               json_agg(json_build_object('id', p.id, 'nume', p.nume, 'pret', p.pret, 'imagine', p.imagine, 'marca', p.marca)) as produse
+        FROM seturi s
+        JOIN asociere_set asoc ON s.id = asoc.id_set
+        JOIN console p ON asoc.id_produs = p.id
+        WHERE s.id = ${id}
+        GROUP BY s.id, s.nume_set, s.descriere_set
+    `;
+    client.query(q, function (err, rez) {
+        if (err) { console.log(err); afisareEroare(res, 2); return; }
+        if (rez.rowCount == 0) { afisareEroare(res, 404, "Set inexistent"); return; }
+        let set = Object.assign(rez.rows[0], calcPretSet(rez.rows[0].produse));
+        res.render("pagini/set", { set });
+    });
+})
 
 app.get("/*pagina", function (req, res) {
     console.log("Cale pagina", req.url);

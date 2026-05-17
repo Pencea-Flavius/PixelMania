@@ -1,0 +1,367 @@
+// ——— PIXEL MANIA — Pagina Produse (ETAPA 6) ———
+
+// CERINTA ETAPA 6: container 2 coloane in card produs
+.produs .container-coloane {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 1rem;
+    padding: 0.8rem;
+    @media (max-width: 700px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.produs .coloana-1 {
+    figure { margin: 0; text-align: center; }
+    figure img {
+        width: 100%;
+        max-height: 160px;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+    .categorie, .pret {
+        margin: 0.3rem 0;
+        font-size: 0.85rem;
+        text-align: center;
+        color: var(--culoare-text-secundar, #a0a0c0);
+    }
+    .val-categorie { color: var(--culoare-primara, #7c3aed); font-weight: 600; }
+    .val-pret { color: var(--culoare-highlight, #ffd700); font-weight: 700; }
+}
+
+.produs .coloana-2 {
+    details {
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 8px;
+        padding: 0.5rem 0.8rem;
+        margin-bottom: 0.6rem;
+        summary {
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--culoare-accent, #00e5ff);
+        }
+        ul.lista-caracteristici {
+            list-style: none;
+            padding: 0.4rem 0 0 0;
+            margin: 0;
+            li {
+                font-size: 0.8rem;
+                margin: 0.2rem 0;
+                color: var(--culoare-text-secundar, #a0a0c0);
+                b { color: var(--culoare-text-primar, #f0f0ff); }
+                i { color: var(--culoare-text-primar, #f0f0ff); }
+            }
+        }
+    }
+    .descriere {
+        font-size: 0.82rem;
+        color: var(--culoare-text-secundar, #a0a0c0);
+        line-height: 1.4;
+    }
+}
+
+// ——— FILTRE ———
+#filtre {
+    background: var(--culoare-card);
+    border: 1px solid var(--culoare-contur-subtil);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin: 1.5rem auto;
+    max-width: 1200px;
+    backdrop-filter: blur(12px);
+}
+
+// Stilizare uniforma toate inputurile Bootstrap din filtre
+#filtre .form-control,
+#filtre .form-select {
+    background-color: rgba(10, 10, 26, 0.85) !important;
+    border: 1px solid var(--culoare-contur-subtil) !important;
+    border-radius: 8px !important;
+    color: var(--culoare-text-primar) !important;
+    font-family: 'Inter', sans-serif;
+
+    &::placeholder { color: rgba(160, 160, 192, 0.5); }
+
+    &:focus {
+        border-color: var(--culoare-primara) !important;
+        box-shadow: 0 0 0 2px var(--culoare-primara-020) !important;
+        color: var(--culoare-text-primar) !important;
+        background-color: rgba(10, 10, 26, 0.95) !important;
+    }
+
+    option {
+        background: #0f0f23;
+        color: var(--culoare-text-primar);
+    }
+}
+
+// Select multiplu - luni: fix inaltime + scrollbar dark
+#inp-luni {
+    height: 130px !important;
+    scrollbar-color: var(--culoare-primara) rgba(10, 10, 26, 0.6);
+    scrollbar-width: thin;
+
+    option {
+        padding: 4px 8px;
+        border-radius: 4px;
+        &:checked {
+            background: var(--culoare-primara) !important;
+            color: #fff !important;
+        }
+    }
+}
+
+// Textarea floating label dark
+#filtre .form-floating > label {
+    color: rgba(160, 160, 192, 0.7);
+}
+#filtre .form-floating > .form-control:focus ~ label,
+#filtre .form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: var(--culoare-primara);
+}
+
+// Label-uri sectiuni
+#filtre .form-label {
+    color: var(--culoare-text-primar);
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+}
+
+// Toggle buttons radio/checkbox dark
+#filtre .btn-outline-primary {
+    border-color: var(--culoare-primara);
+    color: var(--culoare-primara);
+    font-size: 0.8rem;
+
+    &:hover { background: var(--culoare-primara-015); }
+}
+#filtre .btn-check:checked + .btn-outline-primary {
+    background: var(--culoare-primara) !important;
+    color: #fff !important;
+    border-color: var(--culoare-primara) !important;
+}
+
+// Checkbox discount - linie pe 1 rand
+#inp-discount + label.btn {
+    font-size: 0.75rem;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.3;
+    padding: 0.5rem 0.75rem;
+    border-color: var(--culoare-highlight);
+    color: var(--culoare-highlight);
+
+    &:hover { background: rgba(255, 215, 0, 0.08); }
+}
+#filtre .btn-check:checked + .btn-outline-warning {
+    background: var(--culoare-highlight) !important;
+    color: #0a0a1a !important;
+    border-color: var(--culoare-highlight) !important;
+}
+
+// Butoane actiune filtrare
+.butoane-filtrare {
+    padding: 0 1.5rem;
+    button { font-family: 'Exo 2', sans-serif; font-size: 0.8rem; }
+}
+
+#p-suma {
+    margin-top: 0.5rem;
+    color: var(--culoare-highlight);
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+// ——— GRID PRODUSE ———
+#produse {
+    padding: 0 1rem 2rem;
+
+    h2 {
+        color: var(--culoare-accent);
+        font-family: 'Exo 2', sans-serif;
+        font-size: 1.6rem;
+        letter-spacing: 2px;
+        margin-bottom: 1.2rem;
+        text-shadow: 0 0 16px var(--culoare-accent-040);
+    }
+}
+
+.grid-produse {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 700px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// ——— CARD PRODUS ———
+.produs {
+    position: relative;
+    background: var(--culoare-card);
+    border: 1px solid var(--culoare-contur-subtil);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+
+    &:hover {
+        transform: translateY(-6px);
+        border-color: var(--culoare-primara);
+        box-shadow: 0 8px 32px var(--culoare-primara-025),
+                    0 0 0 1px var(--culoare-primara-025);
+    }
+
+    // titlu produs
+    h3.nume {
+        margin: 0;
+        padding: 0.7rem 1rem;
+        background: linear-gradient(135deg, var(--culoare-primara-025), var(--culoare-accent-010));
+        border-bottom: 1px solid var(--culoare-contur-subtil);
+        font-family: 'Exo 2', sans-serif;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+        text-align: center;
+
+        a {
+            color: var(--culoare-text-primar);
+            text-decoration: none;
+            transition: color 0.2s ease;
+
+            &:hover { color: var(--culoare-accent); }
+        }
+    }
+
+    // imagine
+    figure {
+        margin: 0;
+        background: rgba(5, 5, 15, 0.6);
+        text-align: center;
+        padding: 0.8rem;
+
+        img {
+            width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+            border-radius: 8px;
+            filter: drop-shadow(0 4px 12px rgba(0, 229, 255, 0.15));
+            transition: filter 0.25s ease, transform 0.25s ease;
+        }
+    }
+
+    &:hover figure img {
+        filter: drop-shadow(0 4px 20px var(--culoare-accent-040));
+        transform: scale(1.03);
+    }
+
+    // info-prod (pret, an, stare) — bara orizontala
+    .info-prod {
+        display: flex;
+        justify-content: space-around;
+        background: var(--culoare-primara-008);
+        border-top: 1px solid var(--culoare-contur-subtil);
+        border-bottom: 1px solid var(--culoare-contur-subtil);
+        padding: 0.5rem 0;
+
+        p {
+            margin: 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--culoare-text-secundar);
+            font-weight: 500;
+
+            .val-pret {
+                color: var(--culoare-highlight);
+                font-weight: 700;
+                font-size: 0.95rem;
+            }
+
+            .val-an {
+                color: var(--culoare-accent);
+                font-weight: 600;
+            }
+
+            .val-stare {
+                color: var(--culoare-text-primar);
+                font-size: 0.8rem;
+            }
+        }
+    }
+
+    // marca
+    p.marca {
+        margin: 0;
+        padding: 0.5rem 1rem;
+        font-size: 0.82rem;
+        color: var(--culoare-text-secundar);
+        text-align: center;
+
+        .val-marca {
+            color: var(--culoare-primara);
+            font-weight: 600;
+        }
+    }
+}
+
+// ——— PAGINA PRODUS INDIVIDUAL ———
+#art-produs {
+    background: var(--culoare-card);
+    border: 1px solid var(--culoare-contur-subtil);
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 700px;
+    margin: 2rem auto;
+    backdrop-filter: blur(12px);
+
+    h3 {
+        font-family: 'Exo 2', sans-serif;
+        color: var(--culoare-accent);
+        font-size: 1.6rem;
+        text-shadow: 0 0 12px var(--culoare-accent-040);
+        margin-bottom: 1.2rem;
+    }
+
+    p {
+        color: var(--culoare-text-secundar);
+        margin: 0.5rem 0;
+        font-size: 0.95rem;
+
+        span {
+            color: var(--culoare-text-primar);
+            font-weight: 500;
+        }
+
+        .pret {
+            color: var(--culoare-highlight);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .marca {
+            color: var(--culoare-primara);
+            font-weight: 600;
+        }
+
+        .stare {
+            color: var(--culoare-accent);
+        }
+    }
+
+    .imag-produs {
+        margin: 1.5rem 0 0;
+        text-align: center;
+
+        img {
+            max-width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            border-radius: 12px;
+            filter: drop-shadow(0 8px 24px var(--culoare-accent-040));
+        }
+    }
+}

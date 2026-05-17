@@ -1,5 +1,5 @@
 /* =============================================
-   efect-css-stilizare-hr (cerinta individuala)
+   CERINTA ETAPA 5 (0.1p): Stilizare hr (cerinta individuala)
    Doua linii DREPTE paralele cu capete curbate '(' si ')':
    - border-top + border-bottom = cele 2 linii orizontale drepte
    - border-left/right: none = fara laturi verticale vizibile
@@ -77,7 +77,7 @@
 }
 
 /* =============================================
-   efect-css: text selectat cu ::selection
+   CERINTA ETAPA 5 (0.025p): Text selectat cu ::selection
    ============================================= */
 
 ::selection {
@@ -93,7 +93,7 @@
 }
 
 /* =============================================
-   efect-css: text defilant orizontal (keyframes)
+   CERINTA ETAPA 5 (0.05p): Text care se plimba orizontal (Marquee / keyframes)
    Recurent, responsive (fara scrollbar orizontal pe pagina).
    ============================================= */
 
@@ -139,7 +139,7 @@
 }
 
 /* =============================================
-   efect-css: titlu site reflexie
+   CERINTA ETAPA 5 (0.15p): Reflexie (cerinta individuala) pe titlu site
    ============================================= */
 .reflexie {
     position: absolute;
@@ -178,7 +178,7 @@
 }
 
 // =============================================
-// cerinta: column-count
+// CERINTA ETAPA 5 (0.025p): Scrierea textului pe coloane (column-count)
 // Imparte textul dintr-un container pe mai multe coloane,
 // ca un layout de ziar/revista. Browserul distribuie
 // automat continutul in coloanele definite.
@@ -205,7 +205,7 @@
 }
 
 // =============================================
-// cerinta: tabel transpus + tabel responsive
+// CERINTA ETAPA 5 (0.05p + 0.025p): Tabel Responsive + Tabel Transpus
 // Tabelul se afiseaza normal pe ecran mare.
 // Pe ecran mic (max-width: 700px) se transpune:
 // fiecare coloana originala devine un rand vertical.
@@ -292,7 +292,7 @@
     }
 }
 // =============================================
-// cerinta: background-attachment + animatie schimbare imagine
+// CERINTA ETAPA 5 (0.05p): Background fix la scroll (background-attachment) + animatie imagine
 // background-attachment: fixed = imaginea de fundal NU se misca la scroll
 // (efect parallax: continutul defileaza, fundalul ramane pe loc).
 // Imaginea se schimba automat la fiecare 4s prin @keyframes.

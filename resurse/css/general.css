@@ -1,3 +1,194 @@
+/* CERINTA ETAPA 6: tema light - overrides aplicate cand html are data-tema="light" */
+html[data-tema="light"] {
+    background: linear-gradient(180deg, #faf8ff 0%, #eef2ff 100%);
+}
+html[data-tema="light"] body {
+    --culoare-fundal: #faf8ff;
+    --culoare-card: rgba(255, 255, 255, 0.96);
+    --culoare-text-primar: #1a1a2e;
+    --culoare-text-secundar: #4a4a6a;
+    --culoare-contur-subtil: rgba(124, 58, 237, 0.18);
+    --culoare-primara-015: rgba(124, 58, 237, 0.08);
+    --culoare-primara-020: rgba(124, 58, 237, 0.10);
+    --culoare-primara-025: rgba(124, 58, 237, 0.10);
+    --culoare-primara-008: rgba(124, 58, 237, 0.05);
+    --culoare-accent-010: rgba(0, 180, 200, 0.08);
+    --culoare-accent-040: rgba(0, 180, 200, 0.25);
+    --culoare-accent: #0891a8;
+    --culoare-highlight: #b8860b;
+    --culoare-alb-004: rgba(124, 58, 237, 0.03);
+    background: linear-gradient(180deg, #faf8ff 0%, #eef2ff 100%) !important;
+    color: var(--culoare-text-primar) !important;
+}
+
+/* Header navbar light */
+html[data-tema="light"] nav {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-bottom: 1px solid rgba(124, 58, 237, 0.15);
+    backdrop-filter: blur(10px);
+}
+html[data-tema="light"] nav a,
+html[data-tema="light"] nav .item-label,
+html[data-tema="light"] nav .text-nav {
+    color: #1a1a2e !important;
+}
+html[data-tema="light"] nav a:hover {
+    color: #7c3aed !important;
+}
+html[data-tema="light"] nav ul ul {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+/* Titlu site light - reflexie devine mai discreta */
+html[data-tema="light"] .titlu-site {
+    color: #7c3aed;
+    text-shadow: 0 2px 8px rgba(124, 58, 237, 0.2);
+}
+html[data-tema="light"] .reflexie {
+    opacity: 0.15 !important;
+    color: #7c3aed !important;
+}
+
+/* Text defilant light */
+html[data-tema="light"] .text-defilant-container {
+    background: linear-gradient(90deg, rgba(124, 58, 237, 0.06) 0%, rgba(0, 180, 200, 0.04) 50%, rgba(124, 58, 237, 0.06) 100%) !important;
+    border-top: 1px solid rgba(124, 58, 237, 0.2) !important;
+    border-bottom: 1px solid rgba(124, 58, 237, 0.2) !important;
+}
+html[data-tema="light"] .text-defilant {
+    color: #0891a8 !important;
+    text-shadow: none !important;
+}
+
+/* Inputuri light - background alb + text dark */
+html[data-tema="light"] #filtre .form-control,
+html[data-tema="light"] #filtre .form-select {
+    background-color: #fff !important;
+    color: #1a1a2e !important;
+    border: 1px solid rgba(124, 58, 237, 0.3) !important;
+}
+html[data-tema="light"] #filtre .form-control::placeholder {
+    color: rgba(74, 74, 106, 0.5) !important;
+}
+html[data-tema="light"] #filtre .form-control:focus,
+html[data-tema="light"] #filtre .form-select:focus {
+    background-color: #fff !important;
+    border-color: #7c3aed !important;
+    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.15) !important;
+}
+html[data-tema="light"] #filtre .form-control option,
+html[data-tema="light"] #filtre .form-select option {
+    background: #fff !important;
+    color: #1a1a2e !important;
+}
+
+/* Select multiplu luni light - optiunile selectate raman mov, dar fundalul e alb */
+html[data-tema="light"] #inp-luni {
+    background-color: #fff !important;
+    scrollbar-color: #7c3aed #f0eef7;
+}
+html[data-tema="light"] #inp-luni option {
+    color: #1a1a2e;
+    background: #fff;
+}
+html[data-tema="light"] #inp-luni option:checked {
+    background: linear-gradient(0deg, #7c3aed, #7c3aed) !important;
+    color: #fff !important;
+}
+
+/* Floating label light */
+html[data-tema="light"] #filtre .form-floating > label {
+    color: rgba(74, 74, 106, 0.7) !important;
+}
+
+/* Toggle buttons radio light */
+html[data-tema="light"] #filtre .btn-outline-primary {
+    background: #fff;
+    border-color: #7c3aed !important;
+    color: #7c3aed !important;
+}
+html[data-tema="light"] #filtre .btn-check:checked + .btn-outline-primary {
+    background: #7c3aed !important;
+    color: #fff !important;
+}
+
+/* Checkbox discount light */
+html[data-tema="light"] #inp-discount + label.btn {
+    background: #fff;
+    border-color: #b8860b !important;
+    color: #b8860b !important;
+}
+html[data-tema="light"] #filtre .btn-check:checked + .btn-outline-warning {
+    background: #b8860b !important;
+    color: #fff !important;
+    border-color: #b8860b !important;
+}
+
+/* Card produs light */
+html[data-tema="light"] .produs {
+    background: #fff !important;
+    border-color: rgba(124, 58, 237, 0.2) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+html[data-tema="light"] .produs:hover {
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.15) !important;
+    border-color: #7c3aed !important;
+}
+html[data-tema="light"] .produs h3.nume {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(0, 180, 200, 0.05)) !important;
+    color: #1a1a2e !important;
+}
+html[data-tema="light"] .produs h3.nume a {
+    color: #1a1a2e !important;
+}
+html[data-tema="light"] .produs h3.nume a:hover {
+    color: #7c3aed !important;
+}
+html[data-tema="light"] .produs figure {
+    background: #fafafa !important;
+}
+html[data-tema="light"] .produs details {
+    background: rgba(124, 58, 237, 0.04) !important;
+}
+html[data-tema="light"] .produs details summary {
+    color: #0891a8 !important;
+}
+
+/* Footer light */
+html[data-tema="light"] footer {
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #1a1a2e !important;
+    border-top: 1px solid rgba(124, 58, 237, 0.15);
+}
+html[data-tema="light"] footer * {
+    color: #1a1a2e !important;
+}
+
+/* Buton tema in light mode */
+html[data-tema="light"] #btn-tema {
+    background: #fff !important;
+    color: #b8860b !important;
+    border: 1px solid #b8860b !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Headers / h2 light */
+html[data-tema="light"] h2,
+html[data-tema="light"] #filtre h2,
+html[data-tema="light"] #produse h2 {
+    color: #7c3aed !important;
+    text-shadow: none !important;
+}
+
+/* Contor + mesaj */
+html[data-tema="light"] #contor-produse {
+    color: #0891a8 !important;
+}
+html[data-tema="light"] #mesaj-fara-produse {
+    color: #b8860b !important;
+}
+
 body {
     font-size: 1rem;
     font-family: 'Inter', 'Segoe UI', sans-serif;

@@ -7,42 +7,42 @@
     <title>Galerie Animată — Pixel Mania</title>
     <%- include('../fragmente/head.ejs') %>
         <link rel="stylesheet" href="/resurse/css/galerie.css" type="text/css" />
-        <!-- Includerea obligatorie a CSS-ului generat prin compilator SASS la runtime din folderul serverului -->
         <link rel="stylesheet" href="/resurse/css/galerie-animata-gen.css" type="text/css" />
 </head>
 
 <body id="pagina-galerie">
     <%- include('../fragmente/header.ejs') %>
+        <!-- CERINTA ETAPA 5 (0.05p): videoclip care se comporta ca un background -->
         <video id="bgvid" playsinline autoplay muted loop>
             <source src="/resurse/video/controller.mp4" type="video/mp4">
         </video>
         <div id="bgvid-overlay" aria-hidden="true"></div>
 
         <main>
-            <!-- Galeria Animata: Ruleaza algoritmii generati SASS si randati in CSS din index.js  -->
             <section id="galerie-animata-sec">
                 <div class="galerie-hero-header">
                     <h2 class="titlu-galerie">Galerie Animată</h2>
-                    <p>Număr aleatoriu imagini la încărcare: <strong>
-                            <%= n %>
-                        </strong>.</p>
+                    <p>Număr aleatoriu imagini la încărcare: <strong><%= n %></strong>.</p>
                 </div>
 
-                <% if (locals.imagini && locals.imagini.length> 0) { %>
-                    <div class="galerie-animata">
-                        <% for(let i=0; i < imagini.length; i++){ %>
+                <% if (locals.imagini && locals.imagini.length > 0) { %>
+                    <div class="galerie-animata" id="galerie-animata-js">
+                        <% for(let i = 0; i < imagini.length; i++) { %>
                             <figure>
                                 <img src="<%- imagini[i].fisier %>" alt="<%- imagini[i].titlu || 'Imagine Galerie' %>">
+                                <figcaption><%- imagini[i].titlu || 'Console' %></figcaption>
                             </figure>
-                            <% } %>
-                    </div>
-                    <% } else { %>
-                        <p style="text-align:center;">Nu există suficiente imagini pentru galerie.</p>
                         <% } %>
+                    </div>
+                <% } else { %>
+                    <p style="text-align:center;">Nu există suficiente imagini pentru galerie.</p>
+                <% } %>
             </section>
         </main>
 
         <%- include('../fragmente/footer.ejs') %>
+
+
 </body>
 
 </html>

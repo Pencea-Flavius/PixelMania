@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta name="description" content="Pixel Mania - Seturi de console second-hand cu reducere pe pachet.">
+    <title>Pixel Mania - Seturi</title>
+    <%- include("../fragmente/head.ejs") %>
+    <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css"/>
+    <style>
+        .lista-seturi { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1.2rem; padding: 1rem; }
+        .card-set { background: var(--culoare-card); border: 1px solid var(--culoare-contur-subtil); border-radius: 12px; padding: 1.2rem; }
+        .card-set h3 { color: var(--culoare-accent); margin-top: 0; }
+        .card-set .pret-vechi { text-decoration: line-through; color: var(--culoare-text-secundar); margin-right: 0.5rem; }
+        .card-set .pret-nou { color: var(--culoare-highlight); font-weight: 700; font-size: 1.2rem; }
+        .card-set .reducere { background: var(--culoare-contrast); color: #fff; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.8rem; margin-left: 0.5rem; }
+        .card-set ul { list-style: none; padding: 0; margin: 0.8rem 0; }
+        .card-set ul li { padding: 0.4rem 0; border-bottom: 1px solid var(--culoare-contur-subtil); display: flex; align-items: center; gap: 0.6rem; }
+        .card-set ul li img { width: 50px; height: 50px; object-fit: contain; border-radius: 4px; background: rgba(0,0,0,0.3); }
+        .card-set ul li a { color: var(--culoare-text-primar); text-decoration: none; font-weight: 500; }
+        .card-set ul li a:hover { color: var(--culoare-accent); }
+        .card-set ul li .mini-pret { margin-left: auto; color: var(--culoare-highlight); font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <%- include("../fragmente/header.ejs") %>
+    <main>
+        <section class="px-3">
+            <h2>Seturi de Console</h2>
+            <p class="text-info" style="padding: 0 1rem;">Pretul setului = suma preturilor produselor - <strong>min(5, n) * 5%</strong>, unde n e numarul de produse din set.</p>
+            <div class="lista-seturi">
+                <% for (let set of locals.seturi) { %>
+                    <article class="card-set">
+                        <h3><a href="/set/<%- set.id %>" style="color:inherit; text-decoration:none;"><%- set.nume_set %></a></h3>
+                        <p style="color: var(--culoare-text-secundar); font-size: 0.9rem;"><%- set.descriere_set %></p>
+                        <p>
+                            <span class="pret-vechi"><%- set.suma_initiala %> lei</span>
+                            <span class="pret-nou"><%- set.pret_final %> lei</span>
+                            <span class="reducere">-<%- set.reducere_procent %>%</span>
+                        </p>
+                        <ul>
+                            <% for (let p of set.produse) { %>
+                                <li>
+                                    <img src="/resurse/imagini630/<%- p.imagine %>" alt="<%- p.nume %>"/>
+                                    <a href="/produs/<%- p.id %>"><%- p.nume %></a>
+                                    <span class="mini-pret"><%- p.pret %> lei</span>
+                                </li>
+                            <% } %>
+                        </ul>
+                    </article>
+                <% } %>
+            </div>
+        </section>
+    </main>
+    <%- include("../fragmente/footer.ejs") %>
+</body>
+</html>

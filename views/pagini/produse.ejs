@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta name="description" content="Pixel Mania - catalog console second-hand: PlayStation, Xbox, Nintendo, Sega. Filtrare, sortare si calcul.">
+    <meta name="keywords" content="console second-hand, PlayStation, Xbox, Nintendo, Sega, gaming, Pixel Mania">
+    <title>Pixel Mania - Produse<% if (locals.marcaSelectata) { %> - <%- locals.marcaSelectata %><% } %></title>
+    <%- include("../fragmente/head.ejs") %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css"/>
+    <script type="text/javascript" src="/resurse/js/produse.js"></script>
+</head>
+<body>
+    <%- include("../fragmente/header.ejs") %>
+
+    <main>
+
+        <%# CERINTA ETAPA 6: sectiune cu inputuri (NU form), deasupra zonei de afisare produse %>
+        <section id="filtre" class="container-fluid p-4 mb-4">
+            <h2 class="h5 mb-3">Filtre<% if (locals.marcaSelectata) { %> - categoria: <em><%- locals.marcaSelectata %></em><% } %></h2>
+
+            <div class="row g-3">
+                <%# 1. INPUT TEXT - cautare dupa nume. BONUS 1: maxlength din BD + datalist cu numele produselor %>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <label for="inp-nume" class="form-label fw-bold">Nume consola:</label>
+                    <input type="text" id="inp-nume" class="form-control" placeholder="ex: PlayStation"
+                           maxlength="<%- locals.maxLenNume %>" list="lista-nume">
+                    <datalist id="lista-nume">
+                        <% for (let n of locals.numeProduse) { %>
+                            <option value="<%- n %>"></option>
+                        <% } %>
+                    </datalist>
+                </div>
+
+                <%# 6. TEXTAREA cu floating label - cautare cuvinte cheie in descriere %>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-floating">
+                        <textarea id="inp-descriere" class="form-control" placeholder=" " style="height: 60px"></textarea>
+                        <label for="inp-descriere">Cuvinte cheie descriere</label>
+                    </div>
+                </div>
+
+                <%# 7. SELECT SIMPLU - categoria mare (marca). Prima optiune = "oricare" %>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <label for="inp-marca" class="form-label fw-bold">Marca:</label>
+                    <select id="inp-marca" class="form-select">
+                        <option selected value="toate">oricare</option>
+                        <% for (let m of locals.marci) { %>
+                            <option value="<%- m %>"><%- m %></option>
+                        <% } %>
+                    </select>
+                </div>
+
+                <%# 3. DATALIST - tip livrare (a doua enumeratie) %>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <label for="inp-livrare" class="form-label fw-bold">Mod livrare:</label>
+                    <input list="lista-livrare" id="inp-livrare" class="form-control" placeholder="orice mod">
+                    <datalist id="lista-livrare">
+                        <% for (let l of locals.tipuriLivrare) { %>
+                            <option value="<%- l %>"></option>
+                        <% } %>
+                    </datalist>
+                </div>
+
+                <%# 2. RANGE - pret max. Cu min/max stanga/dreapta + valoare selectata %>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <label for="inp-pret" class="form-label fw-bold">Pret maxim: <span id="infoRange">(<%- locals.maxPret %> lei)</span></label>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="fw-bold"><%- locals.minPret %></span>
+                        <input type="range" id="inp-pret" class="form-range flex-grow-1" min="<%- locals.minPret %>" max="<%- locals.maxPret %>" value="<%- locals.maxPret %>" step="10">
+                        <span class="fw-bold"><%- locals.maxPret %></span>
+                    </div>
+                </div>
+
+                <%# 8. SELECT MULTIPLU - lunile data_adaugare. Initial toate selectate. %>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <label for="inp-luni" class="form-label fw-bold">Luna adaugarii:</label>
+                    <select id="inp-luni" class="form-select" multiple>
+                        <% const numeLuni = ['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie']; %>
+                        <% for (let i = 0; i < 12; i++) { %>
+                            <option value="<%- i %>" selected><%- numeLuni[i] %></option>
+                        <% } %>
+                    </select>
+                </div>
+
+                <%# 4. RADIO GROUP - caracteristica single-value (stare). Toggle buttons bootstrap. %>
+                <div class="col-12 col-lg-8">
+                    <p class="fw-bold mb-2">Stare consola:</p>
+                    <div class="btn-group flex-wrap" role="group">
+                        <input type="radio" class="btn-check" name="gr_stare" id="rad-toate" value="toate" checked autocomplete="off">
+                        <label class="btn btn-outline-primary" for="rad-toate">toate</label>
+                        <% let radI = 0; for (let s of locals.stari) { radI++; %>
+                            <input type="radio" class="btn-check" name="gr_stare" id="rad-<%- radI %>" value="<%- s %>" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="rad-<%- radI %>"><%- s %></label>
+                        <% } %>
+                    </div>
+                </div>
+
+                <%# 5. CHECKBOX - discount pe baza criteriului (console retro: an_lansare < 2010). Toggle button. %>
+                <div class="col-12 col-lg-4 d-flex align-items-end">
+                    <div class="w-100">
+                        <input type="checkbox" class="btn-check" id="inp-discount" autocomplete="off">
+                        <label class="btn btn-outline-warning w-100" for="inp-discount">
+                            <i class="bi bi-tag-fill"></i> Doar cu discount &mdash; retro (an &lt; 2010)
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <%# CERINTA ETAPA 6: butoane filtreaza/sortare/calcul/resetare cu iconuri + text ascuns pe ecran mic %>
+        <section class="butoane-filtrare d-flex flex-wrap gap-2 mb-3 px-3">
+            <button class="btn btn-primary" id="filtrare">
+                <i class="bi bi-funnel-fill"></i>
+                <span class="d-none d-md-inline">Filtreaza</span>
+            </button>
+            <button class="btn btn-secondary" id="sortCresc">
+                <i class="bi bi-sort-up"></i>
+                <span class="d-none d-md-inline">Sorteaza crescator (pret, nr accesorii)</span>
+            </button>
+            <button class="btn btn-secondary" id="sortDescresc">
+                <i class="bi bi-sort-down"></i>
+                <span class="d-none d-md-inline">Sorteaza descrescator (pret, nr accesorii)</span>
+            </button>
+            <button class="btn btn-info" id="calcul">
+                <i class="bi bi-calculator-fill"></i>
+                <span class="d-none d-md-inline">Calculeaza suma preturilor</span>
+            </button>
+            <button class="btn btn-outline-danger" id="resetare">
+                <i class="bi bi-eraser-fill"></i>
+                <span class="d-none d-md-inline">Reseteaza</span>
+            </button>
+        </section>
+
+        <section id="produse" class="px-3">
+            <h2>Catalog Console</h2>
+            <%# BONUS 15 ETAPA 6: numar total produse afisate %>
+            <p id="contor-produse" class="text-info">Produse afisate: <span id="nr-afisate"><%- locals.produse.length %></span> / <%- locals.produse.length %></p>
+            <%# BONUS 3 ETAPA 6: mesaj cand filtrarea nu intoarce nimic %>
+            <p id="mesaj-fara-produse" class="text-warning" style="display:none; font-style:italic; font-size:1rem;">
+                Nu exista produse conform filtrarii curente.
+            </p>
+            <div class="grid-produse">
+                <%
+                    const zileSapt = ['Duminica','Luni','Marti','Miercuri','Joi','Vineri','Sambata'];
+                    const numeLuniRo = ['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'];
+                %>
+                <% for (let prod of locals.produse) { %>
+                    <%
+                        let d = new Date(prod.data_adaugare);
+                        let dataFmt = d.getDate() + '-' + numeLuniRo[d.getMonth()] + '-' + d.getFullYear() + ' (' + zileSapt[d.getDay()] + ')';
+                        let accLista = prod.accesorii ? prod.accesorii.split(',').map(s => s.trim()).filter(Boolean) : [];
+                        let clasaCateg = prod.marca.replace(/\s+/g, '');
+                    %>
+                    <%# CERINTA: article cu id="produs_X", clasa = numele categoriei %>
+                    <article id="produs_<%- prod.id %>" class="produs <%- clasaCateg %>" data-luna="<%- d.getMonth() %>" data-nr-accesorii="<%- accLista.length %>">
+                        <h3 class="nume">
+                            <a href="/produs/<%- prod.id %>"><span class="val-nume"><%- prod.nume %></span></a>
+                        </h3>
+
+                        <%# CERINTA: 2 coloane %>
+                        <div class="container-coloane">
+                            <%# COLOANA 1: imagine + dedesubt categoria si pretul %>
+                            <div class="coloana-1">
+                                <figure>
+                                    <a href="/produs/<%- prod.id %>">
+                                        <img src="/resurse/imagini630/<%- prod.imagine %>" alt="[imagine <%- prod.nume %>]"/>
+                                    </a>
+                                </figure>
+                                <p class="categorie">Categorie: <span class="val-categorie"><%- prod.marca %></span></p>
+                                <p class="pret">Pret: <span class="val-pret"><%- prod.pret %></span> lei</p>
+                            </div>
+
+                            <%# COLOANA 2: details "Specificatii" cu lista neordonata + descriere %>
+                            <div class="coloana-2">
+                                <details>
+                                    <summary>Specificatii</summary>
+                                    <ul class="lista-caracteristici">
+                                        <li><b>Stare:</b> <i class="val-stare"><%- prod.stare %></i></li>
+                                        <li><b>Accesorii:</b> <i class="val-accesorii"><%- accLista.join(', ') %></i></li>
+                                        <li><b>An lansare:</b> <i class="val-an"><%- prod.an_lansare %></i></li>
+                                        <li><b>Mod livrare:</b> <i class="val-livrare"><%- prod.livrare %></i></li>
+                                        <li><b>Data adaugare:</b> <i><time class="val-data" datetime="<%- d.toISOString().slice(0,10) %>"><%- dataFmt %></time></i></li>
+                                        <li><b>Garantie inclusa:</b> <i class="val-garantie"><%- prod.garantie_inclusa ? 'da' : 'nu' %></i></li>
+                                    </ul>
+                                </details>
+                                <p class="descriere"><%- prod.descriere %></p>
+                            </div>
+                        </div>
+                    </article>
+                <% } %>
+            </div>
+        </section>
+    </main>
+
+    <%- include("../fragmente/footer.ejs") %>
+</body>
+</html>
