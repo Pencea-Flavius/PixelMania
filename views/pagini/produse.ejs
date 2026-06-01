@@ -14,6 +14,7 @@
 
     <main>
 
+        <%# PROF: Aici este Sectiunea 2 (cerinta inputurilor). Toate cele 8 inputuri sunt generate dinamic pe baza BD (Bonus 1) %>
         <%# CERINTA ETAPA 6: sectiune cu inputuri (NU form), deasupra zonei de afisare produse %>
         <section id="filtre" class="container-fluid p-4 mb-4">
             <h2 class="h5 mb-3">Filtre<% if (locals.marcaSelectata) { %> - categoria: <em><%- locals.marcaSelectata %></em><% } %></h2>
@@ -34,8 +35,8 @@
                 <%# 6. TEXTAREA cu floating label - cautare cuvinte cheie in descriere %>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="form-floating">
-                        <textarea id="inp-descriere" class="form-control" placeholder=" " style="height: 60px"></textarea>
-                        <label for="inp-descriere">Cuvinte cheie descriere</label>
+                        <textarea id="inp-descriere" class="form-control" placeholder=" " maxlength="<%- locals.maxLenDescriere %>" style="height: 60px"></textarea>
+                        <label for="inp-descriere">Cuvinte cheie descriere (max <%- locals.maxLenDescriere %>)</label>
                     </div>
                 </div>
 
@@ -76,7 +77,7 @@
                     <label for="inp-luni" class="form-label fw-bold">Luna adaugarii:</label>
                     <select id="inp-luni" class="form-select" multiple>
                         <% const numeLuni = ['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie']; %>
-                        <% for (let i = 0; i < 12; i++) { %>
+                        <% for (let i of locals.luniExistente) { %>
                             <option value="<%- i %>" selected><%- numeLuni[i] %></option>
                         <% } %>
                     </select>
@@ -98,9 +99,9 @@
                 <%# 5. CHECKBOX - discount pe baza criteriului (console retro: an_lansare < 2010). Toggle button. %>
                 <div class="col-12 col-lg-4 d-flex align-items-end">
                     <div class="w-100">
-                        <input type="checkbox" class="btn-check" id="inp-discount" autocomplete="off">
+                        <input type="checkbox" class="btn-check" id="inp-discount" value="<%- locals.anMediu %>" autocomplete="off">
                         <label class="btn btn-outline-warning w-100" for="inp-discount">
-                            <i class="bi bi-tag-fill"></i> Doar cu discount &mdash; retro (an &lt; 2010)
+                            <i class="bi bi-tag-fill"></i> Doar cu discount &mdash; retro (an &lt; <%- locals.anMediu %>)
                         </label>
                     </div>
                 </div>
@@ -133,17 +134,21 @@
 
         <section id="produse" class="px-3">
             <h2>Catalog Console</h2>
+            <%# PROF: Bonus 15 - Contorul cu numarul de produse afisate in timp real %>
             <%# BONUS 15 ETAPA 6: numar total produse afisate %>
             <p id="contor-produse" class="text-info">Produse afisate: <span id="nr-afisate"><%- locals.produse.length %></span> / <%- locals.produse.length %></p>
+            <%# PROF: Bonus 3 - Mesajul ascuns care apare daca niciun produs nu trece de filtrare %>
             <%# BONUS 3 ETAPA 6: mesaj cand filtrarea nu intoarce nimic %>
             <p id="mesaj-fara-produse" class="text-warning" style="display:none; font-style:italic; font-size:1rem;">
                 Nu exista produse conform filtrarii curente.
             </p>
             <div class="grid-produse">
                 <%
+                    // PROF: Sectiunea 1 - Data tradusa curat in limba romana!
                     const zileSapt = ['Duminica','Luni','Marti','Miercuri','Joi','Vineri','Sambata'];
                     const numeLuniRo = ['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'];
                     
+                    // PROF: Bonus 14 - Aflam in avans cel mai ieftin produs (calcul matematic simplu)
                     // BONUS 14: Calculam cel mai ieftin produs per categorie
                     let pretMinimMarca = {};
                     for (let p of locals.produse) {
@@ -166,6 +171,7 @@
                             <a href="/produs/<%- prod.id %>"><span class="val-nume"><%- prod.nume %></span></a>
                         </h3>
 
+                        <%# PROF: Bonus 14 - Verificare in timp real. Daca e cel mai ieftin, aplicam un sticker rosu dinamic! %>
                         <%# BONUS 14: Afisare badge daca este cel mai ieftin %>
                         <% if (parseFloat(prod.pret) === pretMinimMarca[prod.marca]) { %>
                             <div style="position: absolute; top: -10px; right: -10px; background: #ff0055; color: white; padding: 5px 10px; border-radius: 10px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 4px 8px rgba(0,0,0,0.5); transform: rotate(10deg); z-index: 10;">
@@ -213,6 +219,7 @@
                                 <p class="descriere"><%- prod.descriere %></p>
                             </div>
                         </div>
+                        <%# PROF: Bonus 20 (Sistem Comparare) - Buton pe fiecare produs, ce va salva in localStorage %>
                         <%# BONUS 20: buton compara pe fiecare card %>
                         <button class="btn btn-outline-info btn-sm btn-compara mt-2"
                                 data-id="<%- prod.id %>"

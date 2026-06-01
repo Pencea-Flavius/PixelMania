@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Aplica tema in pagina
         document.documentElement.setAttribute('data-tema', nou);
         
+        // PROF: Sectiunea 10 - Aici salvam tema in localStorage pentru a ramane "tinuta minte" la refresh/navigare
         // Salveaza in local storage
         localStorage.setItem('tema-pixelmania', nou);
         

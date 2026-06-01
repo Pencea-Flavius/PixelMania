@@ -494,24 +494,31 @@ app.get("/produse", function (req, res) {
                 if (err) { afisareEroare(res, 2); return; }
                 client.query("select unnest(enum_range(null::tip_livrare)) as val", function (err, rezLivrare) {
                     if (err) { afisareEroare(res, 2); return; }
-                    client.query("select min(pret) as minp, max(pret) as maxp, min(an_lansare) as mina, max(an_lansare) as maxa, max(length(nume)) as maxlennume from console", function (err, rezLimite) {
+                    // PROF: Bonus 1 - Extragerea limitelor si atributelor din BD pentru generarea dinamica a celor 8 filtre
+                    client.query("select min(pret) as minp, max(pret) as maxp, min(an_lansare) as mina, max(an_lansare) as maxa, max(length(nume)) as maxlennume, max(length(descriere)) as maxlendesc from console", function (err, rezLimite) {
                         if (err) { afisareEroare(res, 2); return; }
                         // BONUS 1 ETAPA 6: pentru text input -> sugestii cu numele tuturor produselor
                         client.query("select nume from console order by nume", function (err, rezNume) {
                             if (err) { afisareEroare(res, 2); return; }
-                            let lim = rezLimite.rows[0];
-                            res.render("pagini/produse", {
-                                produse: rez.rows,
-                                marci: rezMarci.rows.map(r => r.val),
-                                stari: rezStari.rows.map(r => r.val),
-                                tipuriLivrare: rezLivrare.rows.map(r => r.val),
-                                numeProduse: rezNume.rows.map(r => r.nume),
-                                minPret: Math.floor(parseFloat(lim.minp) || 0),
-                                maxPret: Math.ceil(parseFloat(lim.maxp) || 1000),
-                                minAn: parseInt(lim.mina) || 1970,
-                                maxAn: parseInt(lim.maxa) || 2025,
-                                maxLenNume: parseInt(lim.maxlennume) || 100,
-                                marcaSelectata: marcaSelectata
+                            client.query("select distinct extract(month from data_adaugare) as luna from console order by luna", function (err, rezLuni) {
+                                if (err) { afisareEroare(res, 2); return; }
+                                let lim = rezLimite.rows[0];
+                                res.render("pagini/produse", {
+                                    produse: rez.rows,
+                                    marci: rezMarci.rows.map(r => r.val),
+                                    stari: rezStari.rows.map(r => r.val),
+                                    tipuriLivrare: rezLivrare.rows.map(r => r.val),
+                                    numeProduse: rezNume.rows.map(r => r.nume),
+                                    minPret: Math.floor(parseFloat(lim.minp) || 0),
+                                    maxPret: Math.ceil(parseFloat(lim.maxp) || 1000),
+                                    minAn: parseInt(lim.mina) || 1970,
+                                    maxAn: parseInt(lim.maxa) || 2025,
+                                    maxLenNume: parseInt(lim.maxlennume) || 100,
+                                    maxLenDescriere: parseInt(lim.maxlendesc) || 1000,
+                                    anMediu: Math.round((parseInt(lim.mina) + parseInt(lim.maxa)) / 2) || 2010,
+                                    luniExistente: rezLuni.rows.map(r => parseInt(r.luna) - 1),
+                                    marcaSelectata: marcaSelectata
+                                });
                             });
                         });
                     });
@@ -522,6 +529,7 @@ app.get("/produse", function (req, res) {
 })
 
 // BONUS 17 ETAPA 6: helper pentru calcul pret set cu reducere min(5,n)*5%
+// PROF: Bonus 17 - Functia care calculeaza matematic reducerea pentru Seturi pe baza produselor componente
 function calcPretSet(produseInSet) {
     let n = produseInSet.length;
     let reducere = Math.min(5, n) * 5;
@@ -616,6 +624,7 @@ app.get("/set/:id", function (req, res) {
 })
 
 // BONUS 20: pagina de comparare produse
+// PROF: Bonus 20 - Endpointul server-side unde browser-ul trimite ambele ID-uri de comparat
 app.get("/comparare", function (req, res) {
     let ids = [].concat(req.query.id || []).map(x => parseInt(x)).filter(x => !isNaN(x));
     if (ids.length < 2) {

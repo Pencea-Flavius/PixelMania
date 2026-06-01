@@ -2,6 +2,7 @@
 
 window.addEventListener("DOMContentLoaded", function () {
 
+    // PROF: Sectiunea 3 - Aici preluam initial referintele catre elementele HTML (inputurile de filtrare)
     const inpNume = document.getElementById("inp-nume");
     const inpDescriere = document.getElementById("inp-descriere");
     const inpMarca = document.getElementById("inp-marca");
@@ -83,6 +84,7 @@ window.addEventListener("DOMContentLoaded", function () {
     function aplicaFiltre(silentMode) {
         if (!validareInputuri(silentMode)) return;
 
+        // PROF: Sectiunea 3 - Aici extragem valoarea din inputuri dupa ce userul a introdus date
         let vNume = inpNume.value.trim().toLowerCase();
         let vDesc = inpDescriere.value.trim().toLowerCase();
         let vMarca = inpMarca.value;
@@ -114,6 +116,7 @@ window.addEventListener("DOMContentLoaded", function () {
             let livrare = prod.querySelector(".val-livrare").textContent.trim().toLowerCase();
             let luna = parseInt(prod.dataset.luna);
 
+            // PROF: Sectiunea 4 - Testam pe rand fiecare din cele 8 conditii cerute in enunt
             let cond1 = nume.includes(vNume);
             let cond2 = vDesc === "" || descriere.includes(vDesc);
             let cond3 = vMarca === "toate" || categ === vMarca;
@@ -121,9 +124,11 @@ window.addEventListener("DOMContentLoaded", function () {
             let cond5 = pret <= vPretMax;
             let cond6 = starea === "toate" || prod.querySelector(".val-stare").textContent.trim() === starea;
             let cond7 = luniSelectate.includes(luna);
-            // CERINTA checkbox: discount pe baza criteriului console retro (an < 2010)
-            let cond8 = !doarDiscount || an < 2010;
+            // CERINTA checkbox: discount pe baza criteriului console retro
+            let anLimitaDiscount = parseInt(inpDiscount.value) || 2010;
+            let cond8 = !doarDiscount || an < anLimitaDiscount;
 
+            // PROF: Sectiunea 8 - Aici hotaram ce afisam. Daca TRECE toate filtrele, display="", altfel, display="none" (ascuns).
             if (cond1 && cond2 && cond3 && cond4 && cond5 && cond6 && cond7 && cond8) {
                 prod.style.display = "";
             } else {
@@ -136,6 +141,7 @@ window.addEventListener("DOMContentLoaded", function () {
     // Click pe buton -> alert daca invalid
     document.getElementById("filtrare").addEventListener("click", function () { aplicaFiltre(false); });
 
+    // PROF: Bonus 4 - Atasam functia "silentFiltre" pe evenimentele "input" si "change" pentru TOATE cele 8 filtre!
     // BONUS 4 ETAPA 6: filtrare la onchange/oninput pe toate cele 8 inputuri (silent - fara alert agresiv)
     let silentFiltre = function () { aplicaFiltre(true); };
     inpNume.addEventListener("input", silentFiltre);
@@ -162,16 +168,19 @@ window.addEventListener("DOMContentLoaded", function () {
             let nrB = parseInt(b.dataset.nrAccesorii);
             return semn * (nrA - nrB);
         });
+        // PROF: Sectiunea 5 - Aici se aseaza efectiv in HTML, reasezand la finalul div-ului parinte, folosind appendChild
         for (let p of vp) grid.appendChild(p);
     }
     document.getElementById("sortCresc").addEventListener("click", function () { sorteaza(1); });
     document.getElementById("sortDescresc").addEventListener("click", function () { sorteaza(-1); });
 
+    // PROF: Sectiunea 6 - Functia pentru calculul sumei care adauga un div plutitor
     // ——— CALCUL: suma preturilor produselor vizibile. Div pozitie fixa, creat dinamic, dispare in 2s ———
     function calculSuma() {
         if (!validareInputuri(false)) return;
         let suma = 0;
         for (let prod of document.getElementsByClassName("produs")) {
+            // PROF: Sectiunea 7 - CONDITIA VITALA: Adunam la suma DOAR daca produsul NU a fost ascuns de filtre!
             if (prod.style.display !== "none") {
                 suma += parseFloat(prod.querySelector(".val-pret").textContent.trim());
             }
