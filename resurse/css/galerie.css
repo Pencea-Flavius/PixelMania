@@ -202,7 +202,6 @@
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
-  /* Filtrul cerut in exemplul profei */
   filter: brightness(200%) grayscale(0);
   transition: all 2s linear;
 }
@@ -216,12 +215,14 @@
   pointer-events: none;
 }
 .duotone-img::before {
-  background-color: rgb(205, 0, 255); /* Mov (c1) */
+  background-color: rgb(205, 0, 255);
+  /* Mov (c1) */
   mix-blend-mode: darken;
   z-index: 1;
 }
 .duotone-img::after {
-  background-color: rgb(0, 0, 255); /* Albastru (c2) */
+  background-color: rgb(0, 0, 255);
+  /* Albastru (c2) */
   mix-blend-mode: lighten;
   z-index: 2;
 }
@@ -229,10 +230,12 @@
   /* la hover: trece la alte culori (c3, c4) */
 }
 .duotone-img:hover::before {
-  background-color: rgb(0, 255, 0); /* c3 */
+  background-color: rgb(0, 255, 0);
+  /* c3 */
 }
 .duotone-img:hover::after {
-  background-color: rgb(255, 0, 0); /* c4 */
+  background-color: rgb(255, 0, 0);
+  /* c4 */
 }
 .duotone-img .duotone-label {
   position: absolute;
@@ -298,7 +301,7 @@
   transition: height 0.5s ease, filter 0.5s ease, opacity 0.5s ease;
 }
 .reflectie-container {
-  /* la hover: reflexia se alungeste si devine mai blura */
+  /* la hover: reflexia se alungeste */
 }
 .reflectie-container:hover .reflectie {
   height: 2.2em;

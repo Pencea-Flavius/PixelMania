@@ -607,7 +607,9 @@ dd {
     margin-bottom: 5px;
 }
 
-.intro-oferte div {
+.intro-oferte div,
+.intro-oferte a,
+.btn-oferta {
     display: inline-block;
     padding: 4px 12px;
     border-radius: 20px;
@@ -616,10 +618,14 @@ dd {
     background-color: var(--culoare-contur);
     color: var(--culoare-text-primar);
     letter-spacing: 0.5px;
-    transition: transform 0.2s;
+    transition: transform 0.2s, background-color 0.2s, color 0.2s;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.intro-oferte div:hover {
+.intro-oferte div:hover,
+.intro-oferte a:hover,
+.btn-oferta:hover {
     transform: scale(1.05);
     background-color: var(--culoare-accent);
     color: var(--culoare-fundal);

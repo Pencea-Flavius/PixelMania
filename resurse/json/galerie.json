@@ -124,6 +124,41 @@
       "text_descriere": "Noua consolă hibridă Nintendo cu ecran OLED mai mare și performanță îmbunătățită",
       "anotimp": "primavara",
       "alt": "Nintendo Switch 2"
+    },
+    {
+      "cale_fisier": "atari630.png",
+      "titlu": "Atari 2600",
+      "text_descriere": "Consolă clasică ce a definit o generație întreagă de jucători",
+      "anotimp": "primavara",
+      "alt": "Atari 2600"
+    },
+    {
+      "cale_fisier": "dreamcast630.png",
+      "titlu": "Sega Dreamcast",
+      "text_descriere": "Ultima consolă Sega cu un catalog uimitor de jocuri inovatoare",
+      "anotimp": "primavara",
+      "alt": "Sega Dreamcast"
+    },
+    {
+      "cale_fisier": "ps2630.png",
+      "titlu": "PlayStation 2",
+      "text_descriere": "Cea mai bine vândută consolă din istorie, un clasic atemporal",
+      "anotimp": "primavara",
+      "alt": "PlayStation 2"
+    },
+    {
+      "cale_fisier": "saturn630.png",
+      "titlu": "Sega Saturn",
+      "text_descriere": "O perlă ascunsă a anilor 90, apreciată pentru jocurile de lupte 2D",
+      "anotimp": "primavara",
+      "alt": "Sega Saturn"
+    },
+    {
+      "cale_fisier": "steamdeck630.png",
+      "titlu": "Steam Deck",
+      "text_descriere": "PC portabil de gaming care îți aduce biblioteca de jocuri oriunde",
+      "anotimp": "primavara",
+      "alt": "Steam Deck"
     }
   ]
 }

@@ -224,12 +224,13 @@
     border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
-    
-    /* Filtrul cerut in exemplul profei */
+
+
     filter: brightness(200%) grayscale(0);
     transition: all 2s linear;
 
-    &::before, &::after {
+    &::before,
+    &::after {
         content: '';
         position: absolute;
         inset: 0;
@@ -240,24 +241,28 @@
     }
 
     &::before {
-        background-color: rgb(205,0,255); /* Mov (c1) */
+        background-color: rgb(205, 0, 255);
+        /* Mov (c1) */
         mix-blend-mode: darken;
         z-index: 1;
     }
 
     &::after {
-        background-color: rgb(0,0,255); /* Albastru (c2) */
+        background-color: rgb(0, 0, 255);
+        /* Albastru (c2) */
         mix-blend-mode: lighten;
         z-index: 2;
     }
 
     /* la hover: trece la alte culori (c3, c4) */
     &:hover::before {
-        background-color: rgb(0,255,0); /* c3 */
+        background-color: rgb(0, 255, 0);
+        /* c3 */
     }
 
     &:hover::after {
-        background-color: rgb(255,0,0); /* c4 */
+        background-color: rgb(255, 0, 0);
+        /* c4 */
     }
 
     .duotone-label {
@@ -332,7 +337,7 @@
         transition: height 0.5s ease, filter 0.5s ease, opacity 0.5s ease;
     }
 
-    /* la hover: reflexia se alungeste si devine mai blura */
+    /* la hover: reflexia se alungeste */
     &:hover .reflectie {
         height: 2.2em;
         filter: blur(4px);

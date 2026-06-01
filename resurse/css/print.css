@@ -27,6 +27,55 @@
 
 @media print {
 
+    /* =====================================================
+       SUPRASCRIERE VARIABILE CSS (Bootstrap + tema proprie)
+       Fara asta, var(--bs-primary) etc. raman colorate!
+       ===================================================== */
+    :root,
+    [data-tema],
+    [data-tema="dark"],
+    [data-tema="light"] {
+        /* Variabile tema proprie */
+        --culoare-primara: black !important;
+        --culoare-primara-015: transparent !important;
+        --culoare-primara-020: transparent !important;
+        --culoare-primara-025: transparent !important;
+        --culoare-primara-008: transparent !important;
+        --culoare-accent: black !important;
+        --culoare-accent-010: transparent !important;
+        --culoare-accent-040: transparent !important;
+        --culoare-highlight: black !important;
+        --culoare-text-primar: black !important;
+        --culoare-text-secundar: black !important;
+        --culoare-card: transparent !important;
+        --culoare-contur-subtil: black !important;
+        --culoare-contur: black !important;
+
+        /* Variabile Bootstrap */
+        --bs-primary: black !important;
+        --bs-primary-rgb: 0, 0, 0 !important;
+        --bs-secondary: black !important;
+        --bs-success: black !important;
+        --bs-danger: black !important;
+        --bs-warning: black !important;
+        --bs-info: black !important;
+        --bs-link-color: black !important;
+        --bs-link-color-rgb: 0, 0, 0 !important;
+        --bs-border-color: black !important;
+        --bs-body-color: black !important;
+        --bs-body-bg: white !important;
+        --bs-emphasis-color: black !important;
+        --bs-btn-color: black !important;
+        --bs-btn-bg: transparent !important;
+        --bs-btn-border-color: black !important;
+        --bs-btn-hover-bg: transparent !important;
+        --bs-btn-active-bg: transparent !important;
+        --bs-btn-disabled-color: black !important;
+        --bs-form-check-bg: transparent !important;
+        --bs-component-active-bg: transparent !important;
+        --bs-component-active-color: black !important;
+    }
+
     /*  RESETARE GENERALA*/
     * {
         background: transparent !important;
@@ -35,6 +84,8 @@
         box-shadow: none !important;
         text-shadow: none !important;
         border-color: black !important;
+        outline: none !important;
+        -webkit-text-fill-color: black !important;
     }
 
     html,
@@ -68,13 +119,10 @@
     }
 
     /* ASCUNDERE ELEMENTE MEDIA SI NAV*/
-    img,
     video,
     iframe,
     object,
     embed,
-    figure,
-    figcaption,
     #link-top,
     nav,
     hr,
@@ -89,6 +137,91 @@
     .fa-brands,
     .fa-regular {
         display: none !important;
+    }
+
+    /* ASCUNDERE IMAGINI - toate, inclusiv pozele produselor */
+    img {
+        display: none !important;
+    }
+
+    .produs figure {
+        display: none !important;
+    }
+
+    /* BUTOANE NEGRE LA PRINT */
+    .btn,
+    button,
+    .btn-primary,
+    .btn-secondary,
+    .btn-outline-primary,
+    .btn-outline-secondary,
+    .btn-outline-danger,
+    .btn-outline-warning,
+    .btn-sm,
+    .butoane-filtrare button {
+        background: transparent !important;
+        background-color: transparent !important;
+        color: black !important;
+        border: 1px solid black !important;
+        box-shadow: none !important;
+    }
+
+    /* clase cu culori din tema (cyan, galben, mov, verde) */
+    .val-pret,
+    .val-an,
+    .val-stare,
+    .val-categorie,
+    .val-marca,
+    .val-livrare,
+    .val-nume,
+    .mai-bun,
+    [class*="culoare-"],
+    [style*="color"],
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    li,
+    td,
+    th,
+    span,
+    label,
+    strong,
+    b,
+    small,
+    time,
+    .info-prod p,
+    .marca,
+    .pret,
+    #produse h2,
+    #p-suma,
+    .nr-afisate,
+    #nr-afisate,
+    .btn-check+.btn,
+    .btn-check:checked+.btn {
+        color: black !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        border-color: black !important;
+        text-shadow: none !important;
+        -webkit-text-fill-color: black !important;
+    }
+
+    /* PRODUSE: nu se taie intre pagini */
+    .produs {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        border: 1px solid black !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* GRIDUL PRODUSELOR: 3 produse pe rand la print */
+    .grid-produse {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 0.5rem !important;
     }
 
     /* GRIDUL PAGINII AS BLOCK */

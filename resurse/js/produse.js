@@ -21,7 +21,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
     // ——— VALIDARE INPUTURI ———
     // text (nume): nu trebuie sa contina cifre. textarea (descriere): minim 3 caractere daca nu e gol, fara simboluri <>
-    // BONUS 4: silentMode=true cand vine din onchange/oninput (fara alert agresiv)
+    // BONUS 4: silentMode=true cand vine din onchange/oninput 
     function validareInputuri(silentMode) {
         let valid = true;
         let mesaje = [];

@@ -167,7 +167,18 @@
                                     </a>
                                 </figure>
                                 <p class="categorie">Categorie: <span class="val-categorie"><%- prod.marca %></span></p>
+                                <% if (parseInt(prod.an_lansare) < 2010) {
+                                    let pretRedus = (parseFloat(prod.pret) * 0.85).toFixed(2);
+                                %>
+                                <p class="pret">
+                                    Pret: <s style="color:var(--culoare-text-secundar); font-size:0.8em;"><span class="val-pret-original"><%- prod.pret %></span> lei</s>
+                                    <br>
+                                    <span class="val-pret" style="color:var(--culoare-highlight); font-weight:700;"><%- pretRedus %></span> lei
+                                    <span style="font-size:0.75em; color:#39d353; font-weight:bold;">−15% retro</span>
+                                </p>
+                                <% } else { %>
                                 <p class="pret">Pret: <span class="val-pret"><%- prod.pret %></span> lei</p>
+                                <% } %>
                             </div>
 
                             <%# COLOANA 2: details "Specificatii" cu lista neordonata + descriere %>
@@ -186,7 +197,16 @@
                                 <p class="descriere"><%- prod.descriere %></p>
                             </div>
                         </div>
+                        <%# BONUS 20: buton compara pe fiecare card %>
+                        <button class="btn btn-outline-info btn-sm btn-compara mt-2"
+                                data-id="<%- prod.id %>"
+                                data-nume="<%- prod.nume %>"
+                                title="Adauga la comparare">
+                            <i class="bi bi-scale"></i>
+                            <span class="d-none d-md-inline">Compara</span>
+                        </button>
                     </article>
+
                 <% } %>
             </div>
         </section>

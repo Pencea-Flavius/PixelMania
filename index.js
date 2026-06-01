@@ -4,9 +4,21 @@ const fs = require("fs");
 const sass = require("sass");
 const sharp = require("sharp");
 
+const formidable = require("formidable");
+const session = require("express-session");
+
+const AccesBD = require("./module_proprii/accesbd.js");
+const { Utilizator } = require("./module_proprii/utilizator.js");
+
 app = express();
 app.set("view engine", "ejs")
 const pg = require("pg")
+
+app.use(session({
+    secret: 'pixelmania-secret',
+    resave: true,
+    saveUninitialized: false
+}));
 
 
 // CERINTA ETAPA 5: Pregatire cadru de lucru (folderScss, folderCss, folderBackup)
@@ -33,7 +45,7 @@ client = new pg.Client({
 client.connect()//transmite datele
 
 
-let vect_foldere = ["temp", "logs", "backup", "fisiere_uploadate"]
+let vect_foldere = ["temp", "logs", "backup", "fisiere_uploadate", "poze_uploadate"]
 for (let folder of vect_foldere) {
     let caleFolder = path.join(__dirname, folder);
     if (!fs.existsSync(caleFolder)) {
@@ -343,12 +355,56 @@ function getImaginiSezon() {
 }
 
 
+// CERINTA ETAPA 7: helper pentru citirea cookie-urilor din headerul HTTP
+function citesteCookie(req, nume) {
+    let raw = req.headers.cookie;
+    if (!raw) return null;
+    let m = raw.match(new RegExp(`(?:^|; )${nume}=([^;]*)`));
+    return m ? decodeURIComponent(m[1]) : null;
+}
+
+// CERINTA ETAPA 7 (bootstrap_js_): selecteaza 5 produse aleatoare din BD
+function getProduseCarusel(callback) {
+    client.query("select count(*) as total from console", function (err, rezTotal) {
+        if (err) { callback(err, null); return; }
+        let total = parseInt(rezTotal.rows[0].total);
+        let limit = Math.min(5, total);
+        if (limit === 0) { callback(null, []); return; }
+        // luam ids aleatoare in domeniul [1, total]; ne bazam pe ORDER BY random() ca alternativa robusta
+        client.query("select * from console order by random() limit $1", [limit], function (err2, rez2) {
+            if (err2) { callback(err2, null); return; }
+            callback(null, rez2.rows);
+        });
+    });
+}
+
 app.get(["/", "/index", "/home"], function (req, res) {
     let { imagini, anotimp } = getImaginiSezon();
-    res.render("pagini/index", {
-        ip: req.ip,
-        imagini,
-        anotimp
+    // ETAPA 7 (animatie-banner): cititul cookie-ului "ultim_produs" si afisarea lui pe prima pagina
+    let ultimulProdusAccesat = citesteCookie(req, "ultim_produs");
+    getProduseCarusel(function (err, produseCarousel) {
+        if (err) {
+            console.log("Eroare BD carusel:", err);
+            produseCarousel = [];
+        }
+        res.render("pagini/index", {
+            ip: req.ip,
+            imagini,
+            anotimp,
+            produseCarousel,
+            ultimulProdusAccesat
+        });
+    });
+});
+
+// CERINTA ETAPA 7 (bootstrap_js_): endpoint JSON pentru refresh-ul caruselului la 15s
+app.get("/api/produse-carusel", function (req, res) {
+    getProduseCarusel(function (err, produse) {
+        if (err) {
+            res.status(500).json({ err: "Eroare BD" });
+            return;
+        }
+        res.json(produse);
     });
 });
 
@@ -367,11 +423,11 @@ app.get("/galerie-statica", function (req, res) {
 function genCssKeyframes(n) {
     let caleScss = path.join(obGlobal.folderScss, "_galerie_animata_sabloane.scss");
     let caleCss = path.join(obGlobal.folderCss, "galerie-animata-gen.css");
-    
+
     try {
         let continutScss = fs.readFileSync(caleScss, "utf8");
         let variabilaSass = `$n-imagini: ${n};\n`;
-        
+
         let rezultat = sass.compileString(variabilaSass + continutScss, {
             style: "expanded",
             quietDeps: true
@@ -510,6 +566,11 @@ app.get("/produs/:id", function (req, res) {
             if (!errS) {
                 seturi = rezS.rows.map(set => Object.assign(set, calcPretSet(set.produse)));
             }
+            // CERINTA ETAPA 7 (animatie-banner): cookie ultim_produs setat server-side; 12h (43200s)
+            res.setHeader(
+                "Set-Cookie",
+                `ultim_produs=${encodeURIComponent(rez.rows[0].nume)}; Max-Age=43200; Path=/`
+            );
             res.render("pagini/produs", { prod: rez.rows[0], seturi });
         });
     });
@@ -553,6 +614,98 @@ app.get("/set/:id", function (req, res) {
         res.render("pagini/set", { set });
     });
 })
+
+// BONUS 20: pagina de comparare produse
+app.get("/comparare", function (req, res) {
+    let ids = [].concat(req.query.id || []).map(x => parseInt(x)).filter(x => !isNaN(x));
+    if (ids.length < 2) {
+        afisareEroare(res, 404, "Selectati minim 2 produse pentru comparare");
+        return;
+    }
+    // Limitam la 2 produse
+    ids = ids.slice(0, 2);
+    client.query(`select * from console where id in (${ids.join(',')})`, function (err, rez) {
+        if (err) { console.log(err); afisareEroare(res, 2); return; }
+        res.render("pagini/comparare", { produse: rez.rows });
+    });
+});
+
+// ------------------------- Inregistrare utilizatori (lab12) -------------------------
+
+app.get("/inregistrare", function (req, res) {
+    res.render("pagini/inregistrare");
+});
+
+app.post("/inregistrare", function (req, res) {
+    var username, poza;
+    var formular = new formidable.IncomingForm();
+    formular.parse(req, function (err, campuriText, campuriFisier) {
+        var eroare = "";
+        try {
+            var utilizNou = new Utilizator();
+            utilizNou.setareNume = campuriText.nume[0];
+            utilizNou.setareUsername = campuriText.username[0];
+            utilizNou.email = campuriText.email[0];
+            utilizNou.prenume = campuriText.prenume[0];
+            utilizNou.parola = campuriText.parola[0];
+            utilizNou.culoare_chat = campuriText.culoare_chat[0];
+            utilizNou.poza = poza;
+            Utilizator.getUtilizDupaUsername(campuriText.username[0], {}, function (u, parametru, eroareUser) {
+                if (eroareUser == -1) {
+                    utilizNou.salvareUtilizator();
+                } else {
+                    eroare += "Mai exista username-ul";
+                }
+                if (!eroare) {
+                    res.render("pagini/inregistrare", { raspuns: "Inregistrare cu succes! Verifica mailul pentru confirmare." });
+                } else {
+                    res.render("pagini/inregistrare", { err: "Eroare: " + eroare });
+                }
+            });
+        }
+        catch (e) {
+            console.log(e);
+            eroare += "Eroare site; reveniti mai tarziu";
+            res.render("pagini/inregistrare", { err: "Eroare: " + eroare });
+        }
+    });
+    formular.on("field", function (nume, val) {
+        if (nume == "username") username = val;
+    });
+    formular.on("fileBegin", function (nume, fisier) {
+        if (!fisier.originalFilename) return;
+        var folderUser = path.join(__dirname, "poze_uploadate", username);
+        if (!fs.existsSync(folderUser))
+            fs.mkdirSync(folderUser, { recursive: true });
+        fisier.filepath = path.join(folderUser, fisier.originalFilename);
+        poza = fisier.originalFilename;
+    });
+});
+
+app.get("/cod/:username/:token", function (req, res) {
+    try {
+        var parametriCallback = { req: req, token: req.params.token };
+        Utilizator.getUtilizDupaUsername(req.params.username, parametriCallback, function (u, obparam) {
+            if (!u) { afisareEroare(res, 3); return; }
+            AccesBD.getInstanta().update({
+                tabel: "utilizatori",
+                campuri: { confirmat_mail: true },
+                conditiiAnd: [`id=${u.id}`, `cod='${obparam.token}'`]
+            }, function (err, rezUpdate) {
+                if (err || rezUpdate.rowCount == 0) {
+                    console.log("Cod:", err);
+                    afisareEroare(res, 3);
+                } else {
+                    res.render("pagini/confirmare");
+                }
+            });
+        });
+    }
+    catch (e) {
+        console.log(e);
+        afisareEroare(res, 2);
+    }
+});
 
 app.get("/*pagina", function (req, res) {
     console.log("Cale pagina", req.url);

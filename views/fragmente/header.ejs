@@ -102,15 +102,25 @@
         </ul>
     </nav>
 
-    <!-- efect-css: text defilant orizontal (keyframes) recurent, responsive -->
-    <div class="text-defilant-container" aria-label="Anunțuri și promoții în desfășurare">
-        <span class="text-defilant">
-            <i class="fa-solid fa-tags"></i> Weekend Gamer — 25% reducere la toate consolele &nbsp;&bull;&nbsp;
-            <i class="fa-solid fa-box-open"></i> Pachet Ready to Play: consolă + controller + 2 jocuri &nbsp;&bull;&nbsp;
-            <i class="fa-solid fa-rotate"></i> Trade-In activ — predai consola veche, primești reducere pe loc &nbsp;&bull;&nbsp;
-            <i class="fa-solid fa-truck-fast"></i> Transport gratuit la comenzi peste 500 lei &nbsp;&bull;&nbsp;
-            <i class="fa-solid fa-gamepad"></i> Stoc nou PS5 · Xbox Series X · Nintendo Switch 2 &nbsp;&bull;&nbsp;
-            <i class="fa-solid fa-shield-halved"></i> Toate consolele verificate cu minim 3 jocuri înainte de vânzare &nbsp;&bull;&nbsp;
-        </span>
-    </div>
 </header>
+
+<%# BONUS 20: Container fix comparare - apare pe orice pagina de produse %>
+<div id="container-comparare" style="display:none; position:fixed; bottom:1rem; left:50%; transform:translateX(-50%); z-index:8000; background:var(--culoare-card,#1a1a2e); border:1px solid var(--culoare-primara,#7c3aed); border-radius:12px; padding:0.75rem 1.25rem; box-shadow:0 8px 32px rgba(0,0,0,0.5); flex-direction:column; align-items:center; gap:0.5rem; min-width:280px;">
+    <p style="margin:0; font-size:0.85rem; color:var(--culoare-accent,#00e5ff); font-weight:bold;">
+        <i class="fa-solid fa-scale-balanced"></i> Comparare produse
+    </p>
+    <ul id="lista-comparare" style="list-style:none; padding:0; margin:0; width:100%;"></ul>
+    <button id="btn-afiseaza-comparare" class="btn btn-primary btn-sm" style="display:none; width:100%;">
+        <i class="fa-solid fa-table-columns"></i> Afiseaza comparare
+    </button>
+</div>
+
+<%# Template pentru un item din lista de comparare %>
+<template id="tpl-item-comparare">
+    <li class="item-cmp" style="display:flex; justify-content:space-between; align-items:center; padding:0.25rem 0; border-bottom:1px solid rgba(255,255,255,0.08);">
+        <span class="cmp-nume" style="font-size:0.85rem; flex:1;"></span>
+        <button class="comparare-remove btn btn-sm btn-outline-danger" style="padding:0.1rem 0.4rem; margin-left:0.5rem;" title="Sterge din comparare">✕</button>
+    </li>
+</template>
+
+<script src="/resurse/js/comparare.js"></script>

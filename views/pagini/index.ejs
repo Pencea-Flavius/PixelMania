@@ -19,6 +19,59 @@
     <%- include('../fragmente/header.ejs') %>
 
         <main>
+            <!-- CERINTA ETAPA 7 (animatie-banner): cookie "ultim_produs" -->
+            <% if (typeof ultimulProdusAccesat !== 'undefined' && ultimulProdusAccesat) { %>
+                <p class="alert-cookie">Ultimul produs accesat (din cookie): <strong><%= ultimulProdusAccesat %></strong></p>
+            <% } %>
+
+            <!-- CERINTA ETAPA 7 (bootstrap_js_): Carusel cu 5 produse aleatoare din BD -->
+            <% if (typeof produseCarousel !== 'undefined' && produseCarousel.length > 0) { %>
+            <div id="caruselProduse" class="carousel slide carusel-custom"
+                 data-bs-ride="carousel" data-bs-interval="3000">
+                <!-- indicatori -->
+                <div class="carousel-indicators">
+                    <% for (let i = 0; i < produseCarousel.length; i++) { %>
+                        <button type="button" data-bs-target="#caruselProduse"
+                                data-bs-slide-to="<%= i %>"
+                                class="<%= i === 0 ? 'active' : '' %>"
+                                aria-label="Slide <%= i+1 %>"
+                                <%= i === 0 ? 'aria-current="true"' : '' %>></button>
+                    <% } %>
+                </div>
+                <!-- slide-urile -->
+                <div class="carousel-inner">
+                    <% for (let i = 0; i < produseCarousel.length; i++) { %>
+                        <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                            <img src="/resurse/imagini630/<%= produseCarousel[i].imagine %>"
+                                 class="d-block w-100 carusel-img"
+                                 alt="<%= produseCarousel[i].nume %>">
+                            <!-- captiune cu nume + detalii -->
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5><%= produseCarousel[i].nume %></h5>
+                                <p>
+                                    <%= produseCarousel[i].marca %> &middot;
+                                    <%= produseCarousel[i].an_lansare %> &middot;
+                                    <strong><%= produseCarousel[i].pret %> lei</strong>
+                                </p>
+                                <a href="/produs/<%= produseCarousel[i].id %>" class="btn btn-sm btn-light">Detalii</a>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+                <!-- controale -->
+                <button class="carousel-control-prev" type="button"
+                        data-bs-target="#caruselProduse" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button"
+                        data-bs-target="#caruselProduse" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Urmator</span>
+                </button>
+            </div>
+            <% } %>
+
             <div id="grid-pixelmania">
 
                 <!-- ZONA 1 — Prezentare (Z-pattern) -->
@@ -35,11 +88,11 @@
                         </p>
 
                         <div class="intro-oferte z-4">
-                            <div>PlayStation</div>
-                            <div>Xbox</div>
-                            <div>Nintendo</div>
-                            <div>Sega</div>
-                            <div>Retro</div>
+                            <a href="/produse?marca=PlayStation" class="btn-oferta">PlayStation</a>
+                            <a href="/produse?marca=Xbox" class="btn-oferta">Xbox</a>
+                            <a href="/produse?marca=Nintendo" class="btn-oferta">Nintendo</a>
+                            <a href="/produse?marca=Sega" class="btn-oferta">Sega</a>
+                            <a href="/produse?marca=Altele" class="btn-oferta">Altele</a>
                         </div>
 
                         <p class="anunt intro">Comandă online și primești <b>consola</b> acasă, testată și pregătită
@@ -641,6 +694,14 @@
         </main>
 
         <%- include('../fragmente/footer.ejs') %>
+
+        <!-- CERINTA ETAPA 7 (animatie-banner): banner cu animatie + cookies -->
+        <p id="banner">Acesta este un proiect scolar.
+            <span id="mesaj-cookies">Acceptati cookie-urile de pe site?
+                <button id="ok_cookies">Ok</button>
+            </span>
+        </p>
+        <script src="/resurse/js/banner.js" defer></script>
 </body>
 
 </html>

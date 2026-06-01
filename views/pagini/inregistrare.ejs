@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <title>Pixel Mania - inregistrare</title>
+    <%- include('../fragmente/head.ejs') %>
+</head>
+<body>
+    <%- include('../fragmente/header.ejs') %>
+    <main>
+        <div class="afisaj">
+            <h1>Inregistrare utilizator</h1>
+            <% if(!locals.raspuns) { %>
+                <%- include('../fragmente/formular.ejs', {action: "/inregistrare"}) %>
+            <% } %>
+
+            <% if(locals.raspuns) { %>
+                <%- locals.raspuns + "<br/>" %>
+            <% } %>
+            <% if(locals.err) { %>
+                <%- locals.err %>
+            <% } %>
+        </div>
+    </main>
+    <%- include('../fragmente/footer.ejs') %>
+</body>
+</html>

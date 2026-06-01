@@ -34,7 +34,15 @@
                 <p>Accesorii incluse: <span><%- accLista.join(', ') || '-' %></span></p>
                 <p>Data adaugare: <time datetime="<%- d.toISOString().slice(0,10) %>"><%- dataFmt %></time></p>
                 <p>Descriere: <span class="descriere"><%- locals.prod.descriere %></span></p>
+                <%# BONUS 20: buton compara pe pagina proprie a produsului %>
+                <button class="btn btn-outline-info btn-compara mt-3"
+                        data-id="<%- locals.prod.id %>"
+                        data-nume="<%- locals.prod.nume %>"
+                        title="Adauga la comparare">
+                    <i class="bi bi-scale"></i> Compara
+                </button>
             </article>
+
 
             <%# BONUS 17 ETAPA 6: seturi din care face parte produsul curent %>
             <% if (locals.seturi && locals.seturi.length > 0) { %>

@@ -15,7 +15,8 @@ $border-img: url("/resurse/border-galerie.png");
   background: #0a0a1a;
   cursor: pointer;
 
-  &:hover figure, &:hover figure figcaption {
+  &:hover figure,
+  &:hover figure figcaption {
     animation-play-state: paused;
   }
 }
@@ -73,26 +74,31 @@ $border-img: url("/resurse/border-galerie.png");
     opacity: 1;
     clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);
   }
+
   16.6667% {
     z-index: 1;
     opacity: 1;
     clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);
   }
+
   16.6668% {
     z-index: 2;
     opacity: 1;
     clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 50%, 100% 50%, 100% 100%, 0 100%);
   }
+
   25.0000% {
     z-index: 2;
     opacity: 1;
     clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);
   }
+
   25.0001% {
     z-index: -1;
     opacity: 0;
     clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%, 0 100%, 100% 100%, 100% 100%, 0 100%);
   }
+
   100% {
     z-index: -1;
     opacity: 0;

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta name="description" content="Pixel Mania - comparare produse">
+    <title>Pixel Mania - Comparare produse</title>
+    <%- include("../fragmente/head.ejs") %>
+    <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css"/>
+    <style>
+        .tabel-comparare {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        .tabel-comparare th, .tabel-comparare td {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--culoare-contur-subtil, #333);
+            text-align: center;
+        }
+        .tabel-comparare thead th {
+            background: var(--culoare-primara, #7c3aed);
+            color: #fff;
+            font-size: 1.1rem;
+        }
+        .tabel-comparare tbody tr:nth-child(even) {
+            background: rgba(255,255,255,0.04);
+        }
+        .tabel-comparare tbody td:first-child {
+            text-align: left;
+            font-weight: bold;
+            color: var(--culoare-accent, #00e5ff);
+        }
+        .mai-bun {
+            background: rgba(57, 211, 83, 0.2) !important;
+            color: #39d353;
+            font-weight: bold;
+        }
+        .img-comparare {
+            width: 120px;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <%- include("../fragmente/header.ejs") %>
+
+    <main class="container py-4">
+        <h2>Comparare produse</h2>
+
+        <%
+            // Gasim pretul minim si an lansare maxim pentru a marca castigatorul
+            let pretMin = Math.min(...locals.produse.map(p => parseFloat(p.pret)));
+            let anMax   = Math.max(...locals.produse.map(p => parseInt(p.an_lansare)));
+        %>
+
+        <div class="table-responsive">
+            <table class="tabel-comparare">
+                <thead>
+                    <tr>
+                        <th>Caracteristica</th>
+                        <% for (let p of locals.produse) { %>
+                            <th><%- p.nume %></th>
+                        <% } %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%# Imagine %>
+                    <tr>
+                        <td>Imagine</td>
+                        <% for (let p of locals.produse) { %>
+                            <td>
+                                <a href="/produs/<%- p.id %>">
+                                    <img class="img-comparare" src="/resurse/imagini630/<%- p.imagine %>" alt="<%- p.nume %>">
+                                </a>
+                            </td>
+                        <% } %>
+                    </tr>
+                    <%# Pret - cel mai mic e castigatorul %>
+                    <tr>
+                        <td>Pret (lei)</td>
+                        <% for (let p of locals.produse) { %>
+                            <td class="<%= parseFloat(p.pret) === pretMin ? 'mai-bun' : '' %>">
+                                <%- p.pret %> lei
+                                <% if (parseFloat(p.pret) === pretMin) { %> 🏆 <% } %>
+                            </td>
+                        <% } %>
+                    </tr>
+                    <%# Marca %>
+                    <tr>
+                        <td>Marca</td>
+                        <% for (let p of locals.produse) { %>
+                            <td><%- p.marca %></td>
+                        <% } %>
+                    </tr>
+                    <%# Stare %>
+                    <tr>
+                        <td>Stare</td>
+                        <% for (let p of locals.produse) { %>
+                            <td><%- p.stare %></td>
+                        <% } %>
+                    </tr>
+                    <%# An lansare - cel mai nou e castigatorul %>
+                    <tr>
+                        <td>An lansare</td>
+                        <% for (let p of locals.produse) { %>
+                            <td class="<%= parseInt(p.an_lansare) === anMax ? 'mai-bun' : '' %>">
+                                <%- p.an_lansare %>
+                                <% if (parseInt(p.an_lansare) === anMax) { %> 🏆 <% } %>
+                            </td>
+                        <% } %>
+                    </tr>
+                    <%# Mod livrare %>
+                    <tr>
+                        <td>Mod livrare</td>
+                        <% for (let p of locals.produse) { %>
+                            <td><%- p.livrare %></td>
+                        <% } %>
+                    </tr>
+                    <%# Garantie %>
+                    <tr>
+                        <td>Garantie inclusa</td>
+                        <% for (let p of locals.produse) { %>
+                            <td><%- p.garantie_inclusa ? 'da' : 'nu' %></td>
+                        <% } %>
+                    </tr>
+                    <%# Accesorii %>
+                    <tr>
+                        <td>Accesorii</td>
+                        <% for (let p of locals.produse) { %>
+                            <%
+                                let acc = p.accesorii ? p.accesorii.split(',').map(s => s.trim()).filter(Boolean) : [];
+                            %>
+                            <td><%- acc.join(', ') || '-' %></td>
+                        <% } %>
+                    </tr>
+                    <%# Descriere %>
+                    <tr>
+                        <td>Descriere</td>
+                        <% for (let p of locals.produse) { %>
+                            <td style="text-align:left; font-size:0.85rem;"><%- p.descriere %></td>
+                        <% } %>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p style="text-align:center; margin-top: 1rem;">
+            <a href="/produse" style="color:var(--culoare-accent); text-decoration:none;">&larr; Inapoi la catalog</a>
+        </p>
+    </main>
+
+    <%- include("../fragmente/footer.ejs") %>
+</body>
+</html>

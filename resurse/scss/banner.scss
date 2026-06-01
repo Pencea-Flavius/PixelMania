@@ -1,0 +1,115 @@
+// CERINTA ETAPA 7 (animatie-banner): bannerul cu disclaimer + animatie
+// Schema cromatica Pixel Mania: violet (#7c3aed) + roz neon (#ed3a7c).
+
+$banner-bg: #7c3aed;       // primary
+$banner-bg2: #ed3a7c;      // accent
+$banner-color1: #ffffff;   // text final
+$banner-color2: #ffe066;   // text de start (galben neon)
+
+#banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 14px 24px;
+    background: linear-gradient(90deg, $banner-bg 0%, $banner-bg2 100%);
+    color: $banner-color1;
+    font-family: "Exo 2", sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.35);
+    z-index: 9999;
+
+    // Animatia: pleaca de sub ecran, urca la -20px, coboara la 0
+    animation: animBanner 3s linear forwards;
+
+    #mesaj-cookies {
+        margin-left: 18px;
+        font-weight: 400;
+    }
+
+    #ok_cookies {
+        margin-left: 10px;
+        padding: 4px 14px;
+        background: #fff;
+        color: $banner-bg;
+        border: none;
+        border-radius: 4px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.15s;
+
+        &:hover {
+            transform: scale(1.06);
+        }
+    }
+}
+
+@keyframes animBanner {
+    0% {
+        transform: translateY(100%);
+        color: $banner-color2;
+    }
+    50% {
+        transform: translateY(-20px);
+        color: lighten($banner-color2, 5%);
+    }
+    100% {
+        transform: translateY(0);
+        color: $banner-color1;
+    }
+}
+
+// CERINTA: pe ecran mediu si mic bannerul este static (fara animatie)
+@media screen and (max-width: 992px) {
+    #banner {
+        animation: none;
+        transform: translateY(0);
+        color: $banner-color1;
+        font-size: 0.85rem;
+        padding: 10px 14px;
+    }
+}
+
+// Carusel - stilizare proprie pentru caruselul Bootstrap
+.carusel-custom {
+    max-width: 900px;
+    margin: 20px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(124, 58, 237, 0.25);
+
+    .carusel-img {
+        height: 400px;
+        object-fit: contain;
+        background: #1a1a2e;
+        padding: 20px;
+    }
+
+    .carousel-caption {
+        background: rgba(0, 0, 0, 0.55);
+        border-radius: 10px;
+        padding: 10px 18px;
+
+        h5 {
+            color: #ffe066;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        p {
+            margin-bottom: 6px;
+        }
+    }
+}
+
+.alert-cookie {
+    background: rgba(124, 58, 237, 0.12);
+    border-left: 4px solid #7c3aed;
+    color: #4c1d95;
+    padding: 10px 16px;
+    margin: 10px 16px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
