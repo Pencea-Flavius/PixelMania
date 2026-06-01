@@ -143,6 +143,15 @@
                 <%
                     const zileSapt = ['Duminica','Luni','Marti','Miercuri','Joi','Vineri','Sambata'];
                     const numeLuniRo = ['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'];
+                    
+                    // BONUS 14: Calculam cel mai ieftin produs per categorie
+                    let pretMinimMarca = {};
+                    for (let p of locals.produse) {
+                        let pretVal = parseFloat(p.pret);
+                        if (!pretMinimMarca[p.marca] || pretVal < pretMinimMarca[p.marca]) {
+                            pretMinimMarca[p.marca] = pretVal;
+                        }
+                    }
                 %>
                 <% for (let prod of locals.produse) { %>
                     <%
@@ -156,6 +165,13 @@
                         <h3 class="nume">
                             <a href="/produs/<%- prod.id %>"><span class="val-nume"><%- prod.nume %></span></a>
                         </h3>
+
+                        <%# BONUS 14: Afisare badge daca este cel mai ieftin %>
+                        <% if (parseFloat(prod.pret) === pretMinimMarca[prod.marca]) { %>
+                            <div style="position: absolute; top: -10px; right: -10px; background: #ff0055; color: white; padding: 5px 10px; border-radius: 10px; font-weight: bold; font-size: 0.9rem; box-shadow: 0 4px 8px rgba(0,0,0,0.5); transform: rotate(10deg); z-index: 10;">
+                                <i class="bi bi-star-fill" style="color: yellow;"></i> Cel mai ieftin din <%- prod.marca %>!
+                            </div>
+                        <% } %>
 
                         <%# CERINTA: 2 coloane %>
                         <div class="container-coloane">
