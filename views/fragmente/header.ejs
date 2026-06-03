@@ -1,112 +1,125 @@
 <%# CERINTA ETAPA 6: buton schimbare tema (soare/luna) - localStorage memoreaza alegerea %>
-<%# PROF: Sectiunea 10 - Script inline (inainte de randarea continutului) care extrage tema si previne PÂLPÂIREA (FOUC) %>
-<script>
-    (function () {
-        var t = localStorage.getItem('tema-pixelmania') || 'dark';
-        document.documentElement.setAttribute('data-tema', t);
-    })();
-</script>
-<button id="btn-tema" type="button" title="Schimba tema" aria-label="Schimba tema"
-    style="position:fixed; top:1rem; right:1rem; z-index:9000; background:transparent; border:1px solid currentColor; border-radius:50%; width:2.5rem; height:2.5rem; cursor:pointer; color:#ffd700; font-size:1.1rem;">
-    <i class="fa-solid fa-moon"></i>
-</button>
-<script src="/resurse/js/tema.js"></script>
+    <%# PROF: Sectiunea 10 - Script inline (inainte de randarea continutului) care extrage tema si previne %>
+        <script>
+            (function () {
+                var t = localStorage.getItem('tema-pixelmania') || 'dark';
+                document.documentElement.setAttribute('data-tema', t);
+            })();
+        </script>
+        <button id="btn-tema" type="button" title="Schimba tema" aria-label="Schimba tema"
+            style="position:fixed; top:1rem; right:1rem; z-index:9000; background:transparent; border:1px solid currentColor; border-radius:50%; width:2.5rem; height:2.5rem; cursor:pointer; color:#ffd700; font-size:1.1rem;">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+        <script src="/resurse/js/tema.js"></script>
 
-<header style="text-align: center;">
-    <p id="banner-print" style="display: none;"><strong>Acesta este un proiect școlar!</strong></p>
-    <h1 class="titlu-site">
-        <i class="fa-solid fa-gamepad fa-static"></i>
-        Pixel Mania
-        <i class="fa-solid fa-gear fa-animat"></i>
-        <div class="reflexie">
-            <i class="fa-solid fa-gamepad fa-static"></i>
-            Pixel Mania
-            <i class="fa-solid fa-gear fa-animat"></i>
-        </div>
-    </h1>
-    <nav>
-        <label id="hamburger" for="ch-menu">
-            <div class="hamburger-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <span class="hamburger-text">Meniu</span>
-        </label>
-        <input type="checkbox" id="ch-menu">
-        <ul class="meniu">
-            <li>
-                <a href="/#welcome" class="item-label" title="Acasă">
-                    <i class="fa-solid fa-house icon-acasa"></i>
-                    <span class="text-nav">Acasă</span>
-                </a>
-                <ul>
-                    <li><a href="/#welcome"><i class="fa-solid fa-door-open"></i>&nbsp; Bine ați venit</a></li>
-                    <li><a href="/#promotii"><i class="fa-solid fa-tags"></i>&nbsp; Promoții</a></li>
-                    <li><a href="/#produse"><i class="fa-solid fa-gamepad"></i>&nbsp; Produse</a></li>
-                    <li><a href="/#orar"><i class="fa-regular fa-clock"></i>&nbsp; Orar</a></li>
-                    <li><a href="/#anunturi"><i class="fa-solid fa-bullhorn"></i>&nbsp; Anunțuri</a></li>
-                    <li><a href="/#index-intrebari"><i class="fa-solid fa-circle-question"></i>&nbsp; Întrebări</a></li>
-                    <li><a href="/#reparatii"><i class="fa-solid fa-screwdriver-wrench"></i>&nbsp; Restaurări</a></li>
-                    <li><a href="/#subsol"><i class="fa-solid fa-address-book"></i>&nbsp; Contact</a></li>
+        <header style="text-align: center;">
+            <p id="banner-print" style="display: none;"><strong>Acesta este un proiect școlar!</strong></p>
+            <h1 class="titlu-site">
+                <i class="fa-solid fa-gamepad fa-static"></i>
+                Pixel Mania
+                <i class="fa-solid fa-gear fa-animat"></i>
+                <div class="reflexie">
+                    <i class="fa-solid fa-gamepad fa-static"></i>
+                    Pixel Mania
+                    <i class="fa-solid fa-gear fa-animat"></i>
+                </div>
+            </h1>
+            <nav>
+                <label id="hamburger" for="ch-menu">
+                    <div class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="hamburger-text">Meniu</span>
+                </label>
+                <input type="checkbox" id="ch-menu">
+                <ul class="meniu">
+                    <li>
+                        <a href="/#welcome" class="item-label" title="Acasă">
+                            <i class="fa-solid fa-house icon-acasa"></i>
+                            <span class="text-nav">Acasă</span>
+                        </a>
+                        <ul>
+                            <li><a href="/#welcome"><i class="fa-solid fa-door-open"></i>&nbsp; Bine ați venit</a></li>
+                            <li><a href="/#promotii"><i class="fa-solid fa-tags"></i>&nbsp; Promoții</a></li>
+                            <li><a href="/#produse"><i class="fa-solid fa-gamepad"></i>&nbsp; Produse</a></li>
+                            <li><a href="/#orar"><i class="fa-regular fa-clock"></i>&nbsp; Orar</a></li>
+                            <li><a href="/#anunturi"><i class="fa-solid fa-bullhorn"></i>&nbsp; Anunțuri</a></li>
+                            <li><a href="/#index-intrebari"><i class="fa-solid fa-circle-question"></i>&nbsp;
+                                    Întrebări</a></li>
+                            <li><a href="/#reparatii"><i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;
+                                    Restaurări</a></li>
+                            <li><a href="/#subsol"><i class="fa-solid fa-address-book"></i>&nbsp; Contact</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="item-label">
+                            <i class="fa-solid fa-images icon-nav"></i>
+                            <span class="text-nav">Galerii</span>
+                        </span>
+                        <ul>
+                            <li><a href="/galerie-statica"><i class="fa-solid fa-image"></i>&nbsp; Galerie Statică</a>
+                            </li>
+                            <li><a href="/galerie-dinamica"><i class="fa-solid fa-photo-film"></i>&nbsp; Galerie
+                                    Dinamică</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/produse" class="item-label" title="Produse">
+                            <i class="fa-solid fa-box-open icon-nav"></i>
+                            <span class="text-nav">Produse</span>
+                        </a>
+                        <%# CERINTA ETAPA 6: subopt generate din enum (locals.marciMeniu vine din middleware) %>
+                            <ul>
+                                <li><a href="/produse"><i class="fa-solid fa-list"></i>&nbsp; toate</a></li>
+                                <% if (locals.marciMeniu) { %>
+                                    <% for (let m of locals.marciMeniu) { %>
+                                        <li><a href="/produse?marca=<%- encodeURIComponent(m) %>"><i
+                                                    class="fa-solid fa-gamepad"></i>&nbsp; <%- m %></a></li>
+                                        <% } %>
+                                            <% } %>
+                                                <%# BONUS 17 ETAPA 6: opt seturi in meniu produse %>
+                                                    <li><a href="/seturi"><i
+                                                                class="fa-solid fa-boxes-stacked"></i>&nbsp; seturi</a>
+                                                    </li>
+                            </ul>
+                    </li>
+                    <li>
+                        <a href="/inregistrare" class="item-label" title="Înregistrare">
+                            <i class="fa-solid fa-user-plus icon-nav"></i>
+                            <span class="text-nav">Înregistrare</span>
+                        </a>
+                    </li>
                 </ul>
-            </li>
-            <li>
-                <span class="item-label">
-                    <i class="fa-solid fa-images icon-nav"></i>
-                    <span class="text-nav">Galerii</span>
-                </span>
-                <ul>
-                    <li><a href="/galerie-statica"><i class="fa-solid fa-image"></i>&nbsp; Galerie Statică</a></li>
-                    <li><a href="/galerie-dinamica"><i class="fa-solid fa-photo-film"></i>&nbsp; Galerie Dinamică</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="/produse" class="item-label" title="Produse">
-                    <i class="fa-solid fa-box-open icon-nav"></i>
-                    <span class="text-nav">Produse</span>
-                </a>
-                <%# CERINTA ETAPA 6: subopt generate din enum (locals.marciMeniu vine din middleware) %>
-                <ul>
-                    <li><a href="/produse"><i class="fa-solid fa-list"></i>&nbsp; toate</a></li>
-                    <% if (locals.marciMeniu) { %>
-                        <% for (let m of locals.marciMeniu) { %>
-                            <li><a href="/produse?marca=<%- encodeURIComponent(m) %>"><i class="fa-solid fa-gamepad"></i>&nbsp; <%- m %></a></li>
-                        <% } %>
-                    <% } %>
-                    <%# BONUS 17 ETAPA 6: opt seturi in meniu produse %>
-                    <li><a href="/seturi"><i class="fa-solid fa-boxes-stacked"></i>&nbsp; seturi</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="/inregistrare" class="item-label" title="Înregistrare">
-                    <i class="fa-solid fa-user-plus icon-nav"></i>
-                    <span class="text-nav">Înregistrare</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+            </nav>
 
-</header>
+        </header>
 
-<%# PROF: Bonus 20 - Container-ul FIX care sta in baza ecranului, adaugat pe header.ejs deci vizibil pe ORICE pagina! %>
-<%# BONUS 20: Container fix comparare - apare pe orice pagina de produse %>
-<div id="container-comparare" style="display:none; position:fixed; bottom:1rem; left:50%; transform:translateX(-50%); z-index:8000; background:var(--culoare-card,#1a1a2e); border:1px solid var(--culoare-primara,#7c3aed); border-radius:12px; padding:0.75rem 1.25rem; box-shadow:0 8px 32px rgba(0,0,0,0.5); flex-direction:column; align-items:center; gap:0.5rem; min-width:280px;">
-    <p style="margin:0; font-size:0.85rem; color:var(--culoare-accent,#00e5ff); font-weight:bold;">
-        <i class="fa-solid fa-scale-balanced"></i> Comparare produse
-    </p>
-    <ul id="lista-comparare" style="list-style:none; padding:0; margin:0; width:100%;"></ul>
-    <button id="btn-afiseaza-comparare" class="btn btn-primary btn-sm" style="display:none; width:100%;">
-        <i class="fa-solid fa-table-columns"></i> Afiseaza comparare
-    </button>
-</div>
+        <%# PROF: Bonus 20 - Container-ul FIX care sta in baza ecranului, adaugat pe header.ejs deci vizibil pe ORICE
+            pagina! %>
+            <%# BONUS 20: Container fix comparare - apare pe orice pagina de produse %>
+                <div id="container-comparare"
+                    style="display:none; position:fixed; bottom:1rem; left:50%; transform:translateX(-50%); z-index:8000; background:var(--culoare-card,#1a1a2e); border:1px solid var(--culoare-primara,#7c3aed); border-radius:12px; padding:0.75rem 1.25rem; box-shadow:0 8px 32px rgba(0,0,0,0.5); flex-direction:column; align-items:center; gap:0.5rem; min-width:280px;">
+                    <p style="margin:0; font-size:0.85rem; color:var(--culoare-accent,#00e5ff); font-weight:bold;">
+                        <i class="fa-solid fa-scale-balanced"></i> Comparare produse
+                    </p>
+                    <ul id="lista-comparare" style="list-style:none; padding:0; margin:0; width:100%;"></ul>
+                    <button id="btn-afiseaza-comparare" class="btn btn-primary btn-sm"
+                        style="display:none; width:100%;">
+                        <i class="fa-solid fa-table-columns"></i> Afiseaza comparare
+                    </button>
+                </div>
 
-<%# Template pentru un item din lista de comparare %>
-<template id="tpl-item-comparare">
-    <li class="item-cmp" style="display:flex; justify-content:space-between; align-items:center; padding:0.25rem 0; border-bottom:1px solid rgba(255,255,255,0.08);">
-        <span class="cmp-nume" style="font-size:0.85rem; flex:1;"></span>
-        <button class="comparare-remove btn btn-sm btn-outline-danger" style="padding:0.1rem 0.4rem; margin-left:0.5rem;" title="Sterge din comparare">✕</button>
-    </li>
-</template>
+                <%# Template pentru un item din lista de comparare %>
+                    <template id="tpl-item-comparare">
+                        <li class="item-cmp"
+                            style="display:flex; justify-content:space-between; align-items:center; padding:0.25rem 0; border-bottom:1px solid rgba(255,255,255,0.08);">
+                            <span class="cmp-nume" style="font-size:0.85rem; flex:1;"></span>
+                            <button class="comparare-remove btn btn-sm btn-outline-danger"
+                                style="padding:0.1rem 0.4rem; margin-left:0.5rem;"
+                                title="Sterge din comparare">✕</button>
+                        </li>
+                    </template>
 
-<script src="/resurse/js/comparare.js"></script>
+                    <script src="/resurse/js/comparare.js"></script>

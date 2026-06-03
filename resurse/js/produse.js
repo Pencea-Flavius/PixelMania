@@ -84,7 +84,7 @@ window.addEventListener("DOMContentLoaded", function () {
     function aplicaFiltre(silentMode) {
         if (!validareInputuri(silentMode)) return;
 
-        // PROF: Sectiunea 3 - Aici extragem valoarea din inputuri dupa ce userul a introdus date
+        // PROF: Sectiunea 3 - input uri user
         let vNume = inpNume.value.trim().toLowerCase();
         let vDesc = inpDescriere.value.trim().toLowerCase();
         let vMarca = inpMarca.value;
@@ -168,19 +168,18 @@ window.addEventListener("DOMContentLoaded", function () {
             let nrB = parseInt(b.dataset.nrAccesorii);
             return semn * (nrA - nrB);
         });
-        // PROF: Sectiunea 5 - Aici se aseaza efectiv in HTML, reasezand la finalul div-ului parinte, folosind appendChild
+        // Asezare in pagina
         for (let p of vp) grid.appendChild(p);
     }
     document.getElementById("sortCresc").addEventListener("click", function () { sorteaza(1); });
     document.getElementById("sortDescresc").addEventListener("click", function () { sorteaza(-1); });
 
-    // PROF: Sectiunea 6 - Functia pentru calculul sumei care adauga un div plutitor
-    // ——— CALCUL: suma preturilor produselor vizibile. Div pozitie fixa, creat dinamic, dispare in 2s ———
+    // Calculul sumei care adauga un div plutitor
+    // Suma preturilor produselor vizibile. Div pozitie fixa, creat dinamic 
     function calculSuma() {
         if (!validareInputuri(false)) return;
         let suma = 0;
         for (let prod of document.getElementsByClassName("produs")) {
-            // PROF: Sectiunea 7 - CONDITIA VITALA: Adunam la suma DOAR daca produsul NU a fost ascuns de filtre!
             if (prod.style.display !== "none") {
                 suma += parseFloat(prod.querySelector(".val-pret").textContent.trim());
             }

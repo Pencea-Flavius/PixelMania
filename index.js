@@ -488,16 +488,16 @@ app.get("/produse", function (req, res) {
             afisareEroare(res, 2);
             return;
         }
-        client.query("select unnest(enum_range(null::marca_consola)) as val", function (err, rezMarci) {
+        client.query("select unnest(enum_range(null::marca_consola)) as val", function (err, rezMarci) {//functia care transforma un enum in coloana cu valori
             if (err) { afisareEroare(res, 2); return; }
-            client.query("select unnest(enum_range(null::stare_consola)) as val", function (err, rezStari) {
+            client.query("select unnest(enum_range(null::stare_consola)) as val", function (err, rezStari) {//functia care transforma un enum in coloana cu valori
                 if (err) { afisareEroare(res, 2); return; }
-                client.query("select unnest(enum_range(null::tip_livrare)) as val", function (err, rezLivrare) {
+                client.query("select unnest(enum_range(null::tip_livrare)) as val", function (err, rezLivrare) {//functia care transforma un enum in coloana cu valori
                     if (err) { afisareEroare(res, 2); return; }
-                    // PROF: Bonus 1 - Extragerea limitelor si atributelor din BD pentru generarea dinamica a celor 8 filtre
+                    // Extragerea limitelor si atributelor din BD pentru generarea dinamica a celor 8 filtre
                     client.query("select min(pret) as minp, max(pret) as maxp, min(an_lansare) as mina, max(an_lansare) as maxa, max(length(nume)) as maxlennume, max(length(descriere)) as maxlendesc from console", function (err, rezLimite) {
                         if (err) { afisareEroare(res, 2); return; }
-                        // BONUS 1 ETAPA 6: pentru text input -> sugestii cu numele tuturor produselor
+                        // Bonus 1 ETAPA 6: pentru text input -> sugestii cu numele tuturor produselor
                         client.query("select nume from console order by nume", function (err, rezNume) {
                             if (err) { afisareEroare(res, 2); return; }
                             client.query("select distinct extract(month from data_adaugare) as luna from console order by luna", function (err, rezLuni) {
